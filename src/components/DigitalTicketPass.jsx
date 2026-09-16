@@ -161,14 +161,14 @@ export default function DigitalTicketPass({ ticket, onOpenGallery }) {
           </div>
 
           <h4 className="font-heading font-black text-base text-white">
-            {ticket.venue || "Finca Mi Terrenito"}
+            {ticket.venue || "Sede Campestre (En Tu Entrada Digital)"}
           </h4>
 
           <p className="text-[11px] text-slate-300 font-mono mt-0.5">
-            {ticket.fullAddress || "Santa Rosa de Cabal - Pereira (Risaralda). GPS: 4.9158519, -75.626924"}
+            {ticket.fullAddress || "Ubicación Confidencial Desbloqueada"}
           </p>
 
-          {ticket.mapsUrl && (
+          {ticket.mapsUrl && ticket.mapsUrl !== '#' && (
             <a
               href={ticket.mapsUrl}
               target="_blank"

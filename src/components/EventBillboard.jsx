@@ -118,7 +118,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               {/* Lineup */}
               <div>
                 <span className="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-widest block mb-1.5">
-                  ARTISTAS / LINEUP HALLOWEEN
+                  ARTISTAS / LINEUP OFICIAL
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {monthlyEvent.lineup && monthlyEvent.lineup.map((artist, idx) => (

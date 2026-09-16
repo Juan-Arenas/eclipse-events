@@ -23,7 +23,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
               INSTALACIONES Y SEDE <span className="text-[#ff0033] drop-shadow-[0_0_15px_rgba(255,0,51,0.6)]">DEL FESTIVAL</span>
             </h2>
             <p className="text-slate-400 mt-2 text-base max-w-2xl">
-              Sede campestre privada acondicionada con la mejor logística para macro-eventos, festivales de Halloween, piscina nocturna y palcos VIP.
+              Sede campestre privada acondicionada con la mejor logística para macro-eventos, festivales de música electrónica, piscina nocturna y palcos VIP.
             </p>
           </div>
 

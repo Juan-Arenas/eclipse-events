@@ -52,9 +52,9 @@ export default function App() {
       eventTitle: 'ECLIPSE NEON FESTIVAL 2026',
       eventDate: 'Sábado, 24 de Octubre, 2026',
       eventTime: '08:00 PM - 06:00 AM',
-      venue: 'Finca Mi Terrenito (Santa Rosa de Cabal - Pereira)',
-      fullAddress: 'Finca Mi Terrenito, Coordenadas GPS: 4.9158519, -75.626924 (Risaralda)',
-      mapsUrl: 'https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158615,-75.6269243,3a,74.8y/data=!3m8!1e2!3m6!1sCIABIhARGMsr6SiNoILgMCMHpPUT!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fgps-cs-s%2FAHRPTWlcGXqwQ34G1w0bGyjmBHfWvGvF055_UzClQuSlgsEkeP7_hKrCXKorIZSbfxt7k5X_wwBfIqzKjfWkwMkGVpB3d7Q28gyaAeFzs55QSbmZcqyui-CrBTVVE75yVeiSSDWm39VlfMsV95XG%3Dw203-h152-k-no!7i1600!8i1200!4m7!3m6!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!10e5!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkxMy4wIKXMDSoASAFQAw%3D%3D',
+      venue: 'Sede Campestre (En Tu Entrada Digital)',
+      fullAddress: 'Ubicación Confidencial Activada',
+      mapsUrl: '#',
       tierName: 'Boleta VIP',
       tierDescription: 'Acceso preferencial + 1 Cóctel de bienvenida incluido.',
       quantity: 1,
@@ -69,7 +69,13 @@ export default function App() {
 
   const [tickets, setTickets] = useState(() => {
     const saved = localStorage.getItem('eclipse_user_tickets');
-    return saved ? JSON.parse(saved) : initialDefaultTickets;
+    const raw = saved ? JSON.parse(saved) : initialDefaultTickets;
+    return raw.map(t => ({
+      ...t,
+      venue: 'Sede Campestre (En Tu Entrada Digital)',
+      fullAddress: 'Ubicación Confidencial Activada',
+      mapsUrl: '#'
+    }));
   });
 
   // Sync with DB on mount & real-time listener

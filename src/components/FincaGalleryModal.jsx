@@ -27,7 +27,7 @@ export default function FincaGalleryModal({ isOpen, onClose }) {
               <span className="px-3 py-1 rounded-full bg-[#ff0033]/20 border border-[#ff0033]/40 text-[#ff0033] text-[11px] font-bold uppercase tracking-wider">
                 Galería Oficial HD
               </span>
-              <span className="text-slate-400 text-xs font-mono">Finca Mi Terrenito</span>
+              <span className="text-slate-400 text-xs font-mono">Instalaciones Sede VIP</span>
             </div>
             <h2 className="font-heading font-black text-2xl sm:text-3xl text-white mt-1">
               Colección Completa de Instalaciones
@@ -93,7 +93,7 @@ export default function FincaGalleryModal({ isOpen, onClose }) {
 
         {/* Footer info */}
         <div className="p-4 border-t border-white/10 bg-black/60 text-center text-xs text-slate-400">
-          Instalaciones Oficiales: <span className="text-white font-semibold">Finca Mi Terrenito</span>
+          Sede Campestre Oficial del Evento
         </div>
 
       </div>

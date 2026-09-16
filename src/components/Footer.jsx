@@ -47,34 +47,20 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
               </li>
               <li>
                 <button onClick={() => onNavigate('finca')} className="hover:text-[#ff0033] transition-colors">
-                  Finca Mi Terrenito
-                </button>
-              </li>
-              <li>
-                <button onClick={onOpenGallery} className="hover:text-[#ff0033] transition-colors">
-                  Galería de Fotos VIP
+                  Instalaciones Sede
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Finca Info */}
+          {/* Location Notice */}
           <div>
-            <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Ubicación Estrella</h4>
+            <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Ubicación del Evento</h4>
             <div className="space-y-2 text-xs text-slate-400">
               <p className="text-white font-semibold flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Finca Mi Terrenito
+                <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Sede Campestre Privada
               </p>
-              <p>Santa Rosa de Cabal - Pereira (Risaralda)</p>
-              <a
-                href={GOOGLE_MAPS_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[#ff0033] hover:underline font-bold pt-1"
-              >
-                <span>Ver en Google Maps</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
+              <p>📍 La ubicación exacta y el mapa en GPS se activan únicamente en tu pase digital al comprar tu entrada.</p>
             </div>
           </div>
 

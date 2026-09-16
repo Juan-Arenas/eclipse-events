@@ -1,18 +1,18 @@
 export const INITIAL_MONTHLY_EVENT = {
   id: "evt-monthly-main",
-  title: "ECLIPSE HALLOWEEN FESTIVAL 2026",
-  subtitle: "Noche de disfraces VIP, producción de luces neón, palcos y la experiencia de Halloween más impactante del año.",
-  venue: "Ubicación en tu Entrada Digital",
-  unlockedVenue: "Finca Mi Terrenito",
-  unlockedAddress: "Santa Rosa de Cabal - Pereira (Risaralda). Coordenadas GPS: 4.9158519, -75.626924",
-  date: "2026-10-30",
-  formattedDate: "Viernes, 30 de Octubre, 2026",
+  title: "ECLIPSE NEON FESTIVAL 2026",
+  subtitle: "Noche neón VIP, producción de sonido envolvente, show de luces láser, palcos y la experiencia de música electrónica más impactante del año.",
+  venue: "Sede Campestre (En Tu Entrada Digital)",
+  unlockedVenue: "Sede Campestre Exclusiva",
+  unlockedAddress: "Ubicación confidencial desbloqueada en tu pase digital al comprar",
+  date: "2026-10-24",
+  formattedDate: "Sábado, 24 de Octubre, 2026",
   time: "08:00 PM - 06:00 AM",
-  category: "Halloween / Festival VIP",
+  category: "Festival VIP / Neón",
   image: "/images/finca/IMG_0239.jpg",
   priceMin: 1,
-  tags: ["EDICIÓN ESPECIAL HALLOWEEN 🎃", "PROMO TEST WOMPI $1 COP", "AFORO EXCLUSIVO 300 BOLETAS"],
-  description: "Prepárate para la fiesta de disfraces más grande del año. Eclipse Events presenta la producción oficial de Halloween: sonido de alta fidelidad, show láser, concurso de disfraces, DJs de Melodic Techno & Progressive House, piscina nocturna y palcos VIP.",
+  tags: ["EDICIÓN ESPECIAL NEÓN ⚡", "BOLETAS TEST WOMPI $1 COP", "AFORO EXCLUSIVO 300 BOLETAS"],
+  description: "Prepárate para el festival neón más impresionante del año. Eclipse Events presenta su producción oficial: sonido de alta fidelidad, show láser, DJs de Melodic Techno & Progressive House, piscina nocturna y palcos VIP.",
   lineup: ["ALEXANDER SKY (Melodic Techno)", "NEON PULSE (Live Set)", "VALENTINA ROSS", "LUNAR ECHOES"],
   earlyBirdPromo: {
     enabled: true,
@@ -25,7 +25,7 @@ export const INITIAL_MONTHLY_EVENT = {
       name: "Boleta General", 
       priceNormal: 1,
       pricePromo: 1,
-      price: 1, // $1 COP para pruebas reales con Wompi
+      price: 1, // $1 COP para pruebas con Wompi
       quota: 300, 
       description: "Únicamente acceso al evento." 
     },
@@ -34,7 +34,7 @@ export const INITIAL_MONTHLY_EVENT = {
       name: "Boleta VIP", 
       priceNormal: 1,
       pricePromo: 1,
-      price: 1, // $1 COP para pruebas reales con Wompi
+      price: 1, // $1 COP para pruebas con Wompi
       quota: 100, 
       description: "Acceso preferencial al evento + 1 Cóctel de bienvenida incluido." 
     }
@@ -86,4 +86,4 @@ export const FINCA_PHOTOS = [
   }
 ];
 
-export const GOOGLE_MAPS_LINK = "https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158615,-75.6269243,3a,74.8y/data=!3m8!1e2!3m6!1sCIABIhARGMsr6SiNoILgMCMHpPUT!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fgps-cs-s%2FAHRPTWlcGXqwQ34G1w0bGyjmBHfWvGvF055_UzClQuSlgsEkeP7_hKrCXKorIZSbfxt7k5X_wwBfIqzKjfWkwMkGVpB3d7Q28gyaAeFzs55QSbmZcqyui-CrBTVVE75yVeiSSDWm39VlfMsV95XG%3Dw203-h152-k-no!7i1600!8i1200!4m7!3m6!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!10e5!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkxMy4wIKXMDSoASAFQAw%3D%3D";
+export const GOOGLE_MAPS_LINK = "#";
