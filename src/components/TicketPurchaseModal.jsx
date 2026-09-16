@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti';
 import DigitalTicketPass from './DigitalTicketPass';
 import TermsModal from './TermsModal';
 import { GOOGLE_MAPS_LINK } from '../data/initialData';
+import { wompiService } from '../services/wompiService';
 
 export default function TicketPurchaseModal({ 
   event, 
@@ -51,13 +52,14 @@ export default function TicketPurchaseModal({
       }
 
       setIsProcessing(true);
-      setTimeout(() => {
-        const nextNumber = (currentSeatIndex || 1);
-        const seatFormatted = `SILLA A-${String(nextNumber).padStart(3, '0')}`;
-        const ticketId = `ECLIPSE-${Math.floor(100000 + Math.random() * 900000)}`;
-        const qrHash = `ECLIPSE-TICKET-${ticketId}-${formData.dni}-${Date.now()}`;
-        const backupCode = `BAC-ECL-${Math.floor(1000 + Math.random() * 9000)}-${formData.dni.slice(-4)}`;
+      
+      const nextNumber = (currentSeatIndex || 1);
+      const seatFormatted = `SILLA A-${String(nextNumber).padStart(3, '0')}`;
+      const ticketId = `ECLIPSE-${Math.floor(100000 + Math.random() * 900000)}`;
+      const qrHash = `ECLIPSE-TICKET-${ticketId}-${formData.dni}-${Date.now()}`;
+      const backupCode = `BAC-ECL-${Math.floor(1000 + Math.random() * 9000)}-${formData.dni.slice(-4)}`;
 
+      const issueTicketPass = () => {
         const newTicket = {
           id: ticketId,
           qrHash: qrHash,
@@ -92,7 +94,28 @@ export default function TicketPurchaseModal({
           origin: { y: 0.6 },
           colors: ['#ff0033', '#ffffff', '#cbd5e1']
         });
-      }, 1200);
+      };
+
+      if (isDemoZeroMode || totalAmount === 0) {
+        setTimeout(issueTicketPass, 1000);
+      } else {
+        // Trigger Wompi Colombia Payment Gateway
+        wompiService.openCheckout({
+          amountInCop: totalAmount,
+          reference: `ECLIPSE-PAY-${ticketId}`,
+          customerEmail: formData.email,
+          customerFullName: formData.name,
+          customerPhoneNumber: formData.phone || '3000000000',
+          customerDni: formData.dni,
+          onSuccess: (transaction) => {
+            issueTicketPass();
+          },
+          onError: (error) => {
+            setIsProcessing(false);
+            alert("El pago no pudo ser completado o fue cancelado. Inténtalo nuevamente.");
+          }
+        });
+      }
     }
   };
 
