@@ -12,16 +12,14 @@ export default function ScrollReveal({ children, className = '' }) {
 
       const rect = el.getBoundingClientRect();
 
-      // Only shrink and fade out when more than 40% of element has scrolled off the top of screen
-      const startThreshold = -(rect.height * 0.4);
-
-      if (rect.top < startThreshold) {
-        const scrollPastThreshold = Math.abs(rect.top - startThreshold);
-        const fadeDistance = rect.height * 0.6;
+      // Start fading gently when top passes -80px, but keep opacity high (min 0.75) so it never disappears
+      if (rect.top < -80) {
+        const scrollPastThreshold = Math.abs(rect.top + 80);
+        const fadeDistance = rect.height;
         const fadeRatio = Math.min(1, scrollPastThreshold / fadeDistance);
 
-        const currentScale = Math.max(0.92, 1 - fadeRatio * 0.08);
-        const currentOpacity = Math.max(0.35, 1 - fadeRatio * 0.65);
+        const currentScale = Math.max(0.95, 1 - fadeRatio * 0.05);
+        const currentOpacity = Math.max(0.75, 1 - fadeRatio * 0.25);
 
         setScale(currentScale);
         setOpacity(currentOpacity);
