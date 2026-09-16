@@ -49,6 +49,24 @@
     0 0 50px rgba(255, 0, 51, 0.5);
 }
 
+/* 3D Glossy Crimson Extruded Block Text (Matching Reference Image) */
+.text-3d-glossy-crimson {
+  color: #ff0033;
+  background: linear-gradient(180deg, #ffffff 0%, #ff3355 25%, #ff0033 60%, #b30024 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 15px 25px rgba(255, 0, 51, 0.5));
+  text-shadow:
+    1px 1px 0 #cc0029,
+    2px 2px 0 #b30024,
+    3px 3px 0 #99001f,
+    4px 4px 0 #80001a,
+    5px 5px 0 #660015,
+    6px 6px 0 #4d0010,
+    7px 7px 0 #33000b,
+    8px 8px 12px rgba(0, 0, 0, 0.9);
+}
+
 /* Mirage Reflection (Efecto Espejismo Limpio sin solapes) */
 .mirage-container {
   position: relative;

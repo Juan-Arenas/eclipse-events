@@ -1,5 +1,6 @@
 import React from 'react';
 import { Ticket, Sparkles, MapPin, Zap } from 'lucide-react';
+import Interactive3DTitle from './Interactive3DTitle';
 
 export default function Hero({ onExplore, onSpotlightFinca }) {
   return (
@@ -16,23 +17,9 @@ export default function Hero({ onExplore, onSpotlightFinca }) {
           <span>Plataforma Oficial de Boletería & Eventos VIP</span>
         </div>
 
-        {/* 3D Main Title with Mirage (Efecto Espejismo Limpio) */}
-        <div className="mirage-container select-none mb-14">
-          
-          {/* Main 3D Title */}
-          <h1 className="font-heading font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight uppercase leading-none">
-            <span className="text-3d-chrome">ECLIPSE </span>
-            <span className="text-3d-neon-red">EVENTS</span>
-          </h1>
-
-          {/* Mirage Reflection (Espejismo) */}
-          <div className="mirage-reflection hidden sm:block" aria-hidden="true">
-            <h1 className="font-heading font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight uppercase leading-none">
-              <span className="text-[#cbd5e1]">ECLIPSE </span>
-              <span className="text-[#ff0033]">EVENTS</span>
-            </h1>
-          </div>
-
+        {/* Interactive 3D Main Title (Matching Reference Image) */}
+        <div className="mb-8 w-full">
+          <Interactive3DTitle />
         </div>
 
         {/* CTA Buttons (Under Mirage Reflection with clean clearance) */}
