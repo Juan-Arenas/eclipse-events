@@ -12,6 +12,7 @@ import AdminDashboardModal from './components/AdminDashboardModal';
 import ScrollReveal from './components/ScrollReveal';
 import Footer from './components/Footer';
 import { INITIAL_MONTHLY_EVENT } from './data/initialData';
+import { ticketService } from './services/ticketService';
 
 export default function App() {
   const [monthlyEvent, setMonthlyEvent] = useState(() => {
@@ -30,34 +31,50 @@ export default function App() {
     return saved !== null ? JSON.parse(saved) : true;
   });
 
+  const initialDefaultTickets = [
+    {
+      id: 'ECLIPSE-774921',
+      qrHash: 'ECLIPSE-TICKET-ECLIPSE-774921-1098765432-1700000000',
+      backupCode: 'BAC-ECL-8821-5432',
+      seatNumber: 'SILLA A-001',
+      eventId: 'evt-monthly-main',
+      eventTitle: 'ECLIPSE NEON FESTIVAL 2026',
+      eventDate: 'Sábado, 24 de Octubre, 2026',
+      eventTime: '08:00 PM - 06:00 AM',
+      venue: 'Finca Mi Terrenito (Santa Rosa de Cabal - Pereira)',
+      fullAddress: 'Finca Mi Terrenito, Coordenadas GPS: 4.9158519, -75.626924 (Risaralda)',
+      mapsUrl: 'https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158615,-75.6269243,3a,74.8y/data=!3m8!1e2!3m6!1sCIABIhARGMsr6SiNoILgMCMHpPUT!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fgps-cs-s%2FAHRPTWlcGXqwQ34G1w0bGyjmBHfWvGvF055_UzClQuSlgsEkeP7_hKrCXKorIZSbfxt7k5X_wwBfIqzKjfWkwMkGVpB3d7Q28gyaAeFzs55QSbmZcqyui-CrBTVVE75yVeiSSDWm39VlfMsV95XG%3Dw203-h152-k-no!7i1600!8i1200!4m7!3m6!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!10e5!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkxMy4wIKXMDSoASAFQAw%3D%3D',
+      tierName: 'Boleta VIP',
+      tierDescription: 'Acceso preferencial + 1 Cóctel de bienvenida incluido.',
+      quantity: 1,
+      totalPrice: 0,
+      holderName: 'Juan Arenas',
+      holderDni: '1098765432',
+      holderEmail: 'juan@eclipseevents.com',
+      status: 'VALIDA',
+      purchaseDate: new Date().toLocaleDateString('es-CO')
+    }
+  ];
+
   const [tickets, setTickets] = useState(() => {
     const saved = localStorage.getItem('eclipse_user_tickets');
-    if (saved) return JSON.parse(saved);
-    return [
-      {
-        id: 'ECLIPSE-774921',
-        qrHash: 'ECLIPSE-TICKET-ECLIPSE-774921-1098765432-1700000000',
-        backupCode: 'BAC-ECL-8821-5432',
-        seatNumber: 'SILLA A-001',
-        eventId: 'evt-monthly-main',
-        eventTitle: 'ECLIPSE NEON FESTIVAL 2026',
-        eventDate: 'Sábado, 24 de Octubre, 2026',
-        eventTime: '08:00 PM - 06:00 AM',
-        venue: 'Finca Mi Terrenito (Santa Rosa de Cabal - Pereira)',
-        fullAddress: 'Finca Mi Terrenito, Coordenadas GPS: 4.9158519, -75.626924 (Risaralda)',
-        mapsUrl: 'https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158615,-75.6269243,3a,74.8y/data=!3m8!1e2!3m6!1sCIABIhARGMsr6SiNoILgMCMHpPUT!2e10!3e12!6shttps:%2F%2Flh3.googleusercontent.com%2Fgps-cs-s%2FAHRPTWlcGXqwQ34G1w0bGyjmBHfWvGvF055_UzClQuSlgsEkeP7_hKrCXKorIZSbfxt7k5X_wwBfIqzKjfWkwMkGVpB3d7Q28gyaAeFzs55QSbmZcqyui-CrBTVVE75yVeiSSDWm39VlfMsV95XG%3Dw203-h152-k-no!7i1600!8i1200!4m7!3m6!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!10e5!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkxMy4wIKXMDSoASAFQAw%3D%3D',
-        tierName: 'Boleta VIP',
-        tierDescription: 'Acceso preferencial + 1 Cóctel de bienvenida incluido.',
-        quantity: 1,
-        totalPrice: 0,
-        holderName: 'Juan Arenas',
-        holderDni: '1098765432',
-        holderEmail: 'juan@eclipseevents.com',
-        status: 'VALIDA',
-        purchaseDate: new Date().toLocaleDateString('es-CO')
-      }
-    ];
+    return saved ? JSON.parse(saved) : initialDefaultTickets;
   });
+
+  // Sync with DB on mount & real-time listener
+  useEffect(() => {
+    const loadDbTickets = async () => {
+      const fetched = await ticketService.getTickets(initialDefaultTickets);
+      setTickets(fetched);
+    };
+    loadDbTickets();
+
+    const unsubscribe = ticketService.subscribeToChanges(() => {
+      loadDbTickets();
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('eclipse_monthly_event', JSON.stringify(monthlyEvent));
@@ -101,40 +118,26 @@ export default function App() {
     setIsPurchaseModalOpen(true);
   };
 
-  const handleTicketPurchased = (newTicket) => {
+  const handleTicketPurchased = async (newTicket) => {
     setTickets(prev => [newTicket, ...prev]);
     setSeatCounter(prev => prev + 1);
+    await ticketService.createTicket(newTicket);
   };
 
-  const handleDeleteTicket = (ticketId) => {
+  const handleDeleteTicket = async (ticketId) => {
     setTickets(prev => prev.filter(t => t.id !== ticketId));
+    await ticketService.deleteTicket(ticketId);
   };
 
   const handleValidateTicket = (queryInput) => {
-    const cleanQuery = queryInput.trim().toUpperCase();
+    const result = ticketService.validateTicket(tickets, queryInput);
     
-    const foundIndex = tickets.findIndex(
-      t => t.id.toUpperCase() === cleanQuery || 
-           t.qrHash.toUpperCase() === cleanQuery ||
-           (t.backupCode && t.backupCode.toUpperCase() === cleanQuery) ||
-           t.holderDni === cleanQuery
-    );
-
-    if (foundIndex === -1) {
-      return { success: false, message: 'ENTRADA INVÁLIDA O CÓDIGO DE RESPALDO NO ENCONTRADO' };
+    // Update local state sync immediately
+    if (result.success) {
+      setTickets(prev => prev.map(t => t.id === result.ticket.id ? result.ticket : t));
     }
 
-    const ticket = tickets[foundIndex];
-    if (ticket.status === 'USADA') {
-      return { success: false, ticket, message: 'ENTRADA YA UTILIZADA EN PUERTA' };
-    }
-
-    const updatedTickets = [...tickets];
-    const timestampStr = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' (' + new Date().toLocaleDateString('es-CO') + ')';
-    updatedTickets[foundIndex] = { ...ticket, status: 'USADA', usedTimestamp: timestampStr };
-    setTickets(updatedTickets);
-
-    return { success: true, ticket: updatedTickets[foundIndex] };
+    return result;
   };
 
   return (
