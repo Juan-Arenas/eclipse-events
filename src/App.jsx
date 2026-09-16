@@ -133,8 +133,12 @@ export default function App() {
     const result = ticketService.validateTicket(tickets, queryInput);
     
     // Update local state sync immediately
-    if (result.success) {
-      setTickets(prev => prev.map(t => t.id === result.ticket.id ? result.ticket : t));
+    if (result.success && result.ticket) {
+      setTickets(prev => {
+        const nextTickets = prev.map(t => t.id === result.ticket.id ? result.ticket : t);
+        localStorage.setItem('eclipse_user_tickets', JSON.stringify(nextTickets));
+        return nextTickets;
+      });
     }
 
     return result;

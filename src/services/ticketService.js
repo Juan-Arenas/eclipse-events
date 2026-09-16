@@ -100,7 +100,7 @@ export const ticketService = {
   },
 
   // 3. Validate ticket and mark as USADA in DB with robust fuzzy matching
-  async validateTicket(ticketsList, queryInput) {
+  validateTicket(ticketsList, queryInput) {
     if (!queryInput) {
       return { success: false, message: 'CÓDIGO O CÉDULA VACÍA' };
     }
@@ -153,15 +153,14 @@ export const ticketService = {
     const timestampStr = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' (' + new Date().toLocaleDateString('es-CO') + ')';
     const updatedTicket = { ...ticket, status: 'USADA', usedTimestamp: timestampStr };
 
+    // Update Supabase DB in background
     if (isSupabaseConfigured()) {
-      try {
-        await supabase
-          .from('tickets')
-          .update({ status: 'USADA', used_timestamp: timestampStr })
-          .eq('id', ticket.id);
-      } catch (err) {
-        console.warn('Supabase update error:', err);
-      }
+      supabase
+        .from('tickets')
+        .update({ status: 'USADA', used_timestamp: timestampStr })
+        .eq('id', ticket.id)
+        .then(() => {})
+        .catch(err => console.warn('Supabase update error:', err));
     }
 
     if (syncChannel) {
