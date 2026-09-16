@@ -2,7 +2,7 @@ export const INITIAL_MONTHLY_EVENT = {
   id: "evt-monthly-main",
   title: "ECLIPSE HALLOWEEN FESTIVAL 2026",
   subtitle: "Noche de disfraces VIP, producción de luces neón, palcos y la experiencia de Halloween más impactante del año.",
-  venue: "Zona Campestre (Pereira / Santa Rosa)",
+  venue: "Ubicación en tu Entrada Digital",
   unlockedVenue: "Finca Mi Terrenito",
   unlockedAddress: "Santa Rosa de Cabal - Pereira (Risaralda). Coordenadas GPS: 4.9158519, -75.626924",
   date: "2026-10-30",
@@ -10,31 +10,31 @@ export const INITIAL_MONTHLY_EVENT = {
   time: "08:00 PM - 06:00 AM",
   category: "Halloween / Festival VIP",
   image: "/images/finca/IMG_0239.jpg",
-  priceMin: 0,
-  tags: ["EDICIÓN ESPECIAL HALLOWEEN 🎃", "PROMO PRIMEROS 20 COMPRADORES", "AFORO EXCLUSIVO 300 BOLETAS"],
-  description: "Prepárate para la fiesta de disfraces más grande de la región. Eclipse Events presenta la producción oficial de Halloween en nuestra sede campestre: sonido de alta fidelidad, show láser, concurso de disfraces, DJs de Melodic Techno & Progressive House, piscina nocturna y palcos VIP.",
+  priceMin: 1,
+  tags: ["EDICIÓN ESPECIAL HALLOWEEN 🎃", "PROMO TEST WOMPI $1 COP", "AFORO EXCLUSIVO 300 BOLETAS"],
+  description: "Prepárate para la fiesta de disfraces más grande del año. Eclipse Events presenta la producción oficial de Halloween: sonido de alta fidelidad, show láser, concurso de disfraces, DJs de Melodic Techno & Progressive House, piscina nocturna y palcos VIP.",
   lineup: ["ALEXANDER SKY (Melodic Techno)", "NEON PULSE (Live Set)", "VALENTINA ROSS", "LUNAR ECHOES"],
   earlyBirdPromo: {
     enabled: true,
     totalQuota: 20,
-    remainingStock: 14, // 14/20 cupos restantes con precio especial
+    remainingStock: 14,
   },
   tiers: [
     { 
       id: "sencilla", 
       name: "Boleta General", 
-      priceNormal: 25000,
-      pricePromo: 19900,
-      price: 0, // $0 COP when in Demo Test Mode
+      priceNormal: 1,
+      pricePromo: 1,
+      price: 1, // $1 COP para pruebas reales con Wompi
       quota: 300, 
       description: "Únicamente acceso al evento." 
     },
     { 
       id: "vip", 
       name: "Boleta VIP", 
-      priceNormal: 28000,
-      pricePromo: 24900,
-      price: 0, // $0 COP when in Demo Test Mode
+      priceNormal: 1,
+      pricePromo: 1,
+      price: 1, // $1 COP para pruebas reales con Wompi
       quota: 100, 
       description: "Acceso preferencial al evento + 1 Cóctel de bienvenida incluido." 
     }

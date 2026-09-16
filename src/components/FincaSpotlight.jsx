@@ -23,7 +23,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
               INSTALACIONES Y SEDE <span className="text-[#ff0033] drop-shadow-[0_0_15px_rgba(255,0,51,0.6)]">DEL FESTIVAL</span>
             </h2>
             <p className="text-slate-400 mt-2 text-base max-w-2xl">
-              Ubicación privilegiada en la zona campestre del Eje Cafetero (Pereira). El escenario perfecto para macro-eventos, festivales de Halloween, piscina nocturna y palcos VIP.
+              Sede campestre privada acondicionada con la mejor logística para macro-eventos, festivales de Halloween, piscina nocturna y palcos VIP.
             </p>
           </div>
 
@@ -136,7 +136,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
 
               <div className="p-3.5 bg-black/60 rounded-xl border border-white/10 text-xs text-slate-400 space-y-1">
                 <p className="flex items-center gap-1.5 text-white font-semibold">
-                  <Navigation className="w-3.5 h-3.5 text-[#ff0033]" /> Zona Campestre (Pereira / Santa Rosa)
+                  <Navigation className="w-3.5 h-3.5 text-[#ff0033]" /> Ubicación en tu Pase Digital
                 </p>
                 <p className="text-[11px] text-slate-400 pt-1">
                   📍 Al comprar tu entrada, tu Pase Digital QR revelará el nombre de la finca, la dirección exacta y la ruta directa a Google Maps.

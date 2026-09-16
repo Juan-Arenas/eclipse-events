@@ -33,18 +33,18 @@ export default function Hero({ onExplore, onSpotlightFinca }) {
           </button>
 
           <button
-            onClick={onSpotlightFinca}
+            onClick={onExplore}
             className="btn-silver px-8 py-4 rounded-2xl text-sm font-bold uppercase tracking-wider flex items-center gap-3"
           >
-            <MapPin className="w-5 h-5 text-[#ff0033]" />
-            <span>Galería Sede Secreta</span>
+            <Sparkles className="w-5 h-5 text-[#ff0033]" />
+            <span>Ver Boletas & Precios</span>
           </button>
         </div>
 
-        {/* User Quote - Positioned DOWN below buttons to avoid mirage overlap */}
+        {/* User Quote / Slogan */}
         <div className="max-w-2xl mx-auto mb-10 px-6 py-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md shadow-lg">
-          <p className="font-heading font-medium text-lg sm:text-xl text-slate-200 tracking-wide italic">
-            “Vive la noche. Compra tu entrada. Sé parte del evento.”
+          <p className="font-heading font-black text-xl sm:text-2xl text-white tracking-widest uppercase">
+            Entradas Limitadas
           </p>
         </div>
 

@@ -20,8 +20,10 @@ export default function App() {
     if (!saved) return INITIAL_MONTHLY_EVENT;
     try {
       const parsed = JSON.parse(saved);
-      if (!parsed.image || parsed.image.includes('finca-main-night') || parsed.image.includes('generated') || parsed.image.includes('finca_main')) {
-        parsed.image = '/images/finca/IMG_0239.jpg';
+      parsed.image = '/images/finca/IMG_0239.jpg';
+      parsed.venue = 'Ubicación en tu Entrada Digital';
+      if (parsed.tiers) {
+        parsed.tiers = parsed.tiers.map(t => ({ ...t, price: 1, pricePromo: 1, priceNormal: 1 }));
       }
       return parsed;
     } catch (e) {
@@ -34,10 +36,10 @@ export default function App() {
     return saved ? JSON.parse(saved) : 2;
   });
 
-  // Demo $0 COP mode state for live testing (toggleable in secret admin panel)
+  // Wompi real mode ($1 COP per ticket for real gateway test)
   const [isDemoZeroMode, setIsDemoZeroMode] = useState(() => {
     const saved = localStorage.getItem('eclipse_demo_zero_mode');
-    return saved !== null ? JSON.parse(saved) : true;
+    return saved !== null ? JSON.parse(saved) : false;
   });
 
   const initialDefaultTickets = [
