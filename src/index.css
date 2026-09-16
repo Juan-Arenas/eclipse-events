@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #07070a;
+    --bg-surface: #0e0e15;
+    --bg-card: #14141e;
+    --red-neon: #ff0033;
+    --red-glow: rgba(255, 0, 51, 0.5);
+    --silver-primary: #e2e8f0;
+    --silver-shine: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #64748b 100%);
+    --silver-border: rgba(226, 232, 240, 0.15);
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #07070a;
+    color: #f1f5f9;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* 3D Text & Mirage (Espejismo) Effects */
+.text-3d-chrome {
+  color: #ffffff;
+  text-shadow: 
+    0 1px 0 #cbd5e1,
+    0 2px 0 #94a3b8,
+    0 3px 0 #64748b,
+    0 4px 0 #475569,
+    0 5px 0 #334155,
+    0 6px 1px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.text-3d-neon-red {
+  color: #ff0033;
+  text-shadow: 
+    0 1px 0 #e6002e,
+    0 2px 0 #cc0029,
+    0 3px 0 #b30024,
+    0 4px 0 #99001f,
+    0 5px 0 #80001a,
+    0 6px 1px rgba(0, 0, 0, 0.9),
+    0 0 25px rgba(255, 0, 51, 0.9),
+    0 0 50px rgba(255, 0, 51, 0.5);
+}
+
+/* Mirage Reflection (Efecto Espejismo Limpio sin solapes) */
+.mirage-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 3.5rem;
+}
+
+.mirage-reflection {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 90%;
+  transform: scaleY(-0.85);
+  opacity: 0.28;
+  filter: blur(1.5px);
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, rgba(255, 0, 51, 0.8) 0%, transparent 65%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(255, 0, 51, 0.8) 0%, transparent 65%);
+}
+
+/* Metallic & Neon Utility Classes */
+.bg-metallic-dark {
+  background: radial-gradient(circle at 50% 0%, #171724 0%, #0a0a0f 60%, #050508 100%);
+}
+
+.bg-metallic-card {
+  background: linear-gradient(145deg, rgba(22, 22, 32, 0.85) 0%, rgba(12, 12, 18, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+.bg-metallic-card:hover {
+  border-color: rgba(255, 0, 51, 0.5);
+  box-shadow: 0 10px 35px -5px rgba(255, 0, 51, 0.3);
+}
+
+.btn-neon-red {
+  background: linear-gradient(135deg, #ff0033 0%, #cc0029 100%);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 0, 51, 0.45);
+  transition: all 0.25s ease-out;
+}
+
+.btn-neon-red:hover {
+  background: linear-gradient(135deg, #ff1a47 0%, #e6002e 100%);
+  box-shadow: 0 0 35px rgba(255, 0, 51, 0.8);
+  transform: translateY(-2px);
+}
+
+.btn-silver {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f8fafc;
+  transition: all 0.25s ease-out;
+}
+
+.btn-silver:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+/* Fast, Crisp Scroll Reveal (Sin bugs ni espacios vacíos negros) */
+.scroll-reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #07070a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f1f2e;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff0033;
+}
