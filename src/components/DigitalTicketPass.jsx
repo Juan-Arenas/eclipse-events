@@ -143,12 +143,20 @@ export default function DigitalTicketPass({ ticket }) {
             </div>
           )}
 
-          <div className="inline-block p-2 bg-slate-100 rounded-xl mb-2">
+          <div className="inline-block p-2.5 bg-[#f8fafc] rounded-2xl mb-2 relative border border-slate-300 shadow-inner">
             <QRCodeSVG 
               value={ticket.qrHash}
-              size={155}
+              size={165}
               level="H"
               fgColor={ticket.status === 'USADA' ? "#991b1b" : "#08080c"}
+              imageSettings={{
+                src: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff0033' stroke='%23ffffff' stroke-width='2'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/></svg>",
+                x: undefined,
+                y: undefined,
+                height: 32,
+                width: 32,
+                excavate: true,
+              }}
             />
           </div>
 
