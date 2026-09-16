@@ -8,7 +8,7 @@ export default function FincaGalleryModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const categories = ["Todas", "Piscina", "Escenario", "VIP", "Nocturna"];
+  const categories = ["Todas", "Piscina", "Escenario", "VIP", "Nocturna", "Instalaciones", "Acceso"];
 
   const filteredPhotos = selectedCategory === "Todas" 
     ? FINCA_PHOTOS 

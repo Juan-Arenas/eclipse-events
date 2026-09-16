@@ -1,23 +1,23 @@
 export const INITIAL_MONTHLY_EVENT = {
   id: "evt-monthly-main",
-  title: "ECLIPSE NEON FESTIVAL 2026",
-  subtitle: "El evento exclusivo del mes en nuestra Sede Secreta VIP. Música electrónica, iluminación neón y producción de máximo nivel.",
-  venue: "Sede Secreta VIP (Zona Pereira)",
+  title: "ECLIPSE HALLOWEEN FESTIVAL 2026",
+  subtitle: "Noche de disfraces VIP, producción de luces neón, palcos y la experiencia de Halloween más impactante del año.",
+  venue: "Zona Campestre (Pereira / Santa Rosa)",
   unlockedVenue: "Finca Mi Terrenito",
   unlockedAddress: "Santa Rosa de Cabal - Pereira (Risaralda). Coordenadas GPS: 4.9158519, -75.626924",
-  date: "2026-10-24",
-  formattedDate: "Sábado, 24 de Octubre, 2026",
+  date: "2026-10-30",
+  formattedDate: "Viernes, 30 de Octubre, 2026",
   time: "08:00 PM - 06:00 AM",
-  category: "Electrónica / Festival VIP",
-  image: "/images/finca_main.jpg",
+  category: "Halloween / Festival VIP",
+  image: "/images/finca/IMG_0239.jpg",
   priceMin: 0,
-  tags: ["PRÓXIMO EVENTO DEL MES", "PROMO PRIMEROS 20 COMPRADORES", "AFORO EXCLUSIVO"],
-  description: "Prepárate para la noche más impactante del mes. Eclipse Events presenta en nuestra Sede Secreta VIP una producción gigantesca con sonido de alta fidelidad, show de fuegos fríos, DJs de Melodic Techno & Progressive House, piscina nocturna y zonas VIP exclusivas.",
+  tags: ["EDICIÓN ESPECIAL HALLOWEEN 🎃", "PROMO PRIMEROS 20 COMPRADORES", "AFORO EXCLUSIVO 300 BOLETAS"],
+  description: "Prepárate para la fiesta de disfraces más grande de la región. Eclipse Events presenta la producción oficial de Halloween en nuestra sede campestre: sonido de alta fidelidad, show láser, concurso de disfraces, DJs de Melodic Techno & Progressive House, piscina nocturna y palcos VIP.",
   lineup: ["ALEXANDER SKY (Melodic Techno)", "NEON PULSE (Live Set)", "VALENTINA ROSS", "LUNAR ECHOES"],
   earlyBirdPromo: {
     enabled: true,
     totalQuota: 20,
-    remainingStock: 14, // 14/20 cupos restantes
+    remainingStock: 14, // 14/20 cupos restantes con precio especial
   },
   tiers: [
     { 
@@ -26,7 +26,7 @@ export const INITIAL_MONTHLY_EVENT = {
       priceNormal: 25000,
       pricePromo: 19900,
       price: 0, // $0 COP when in Demo Test Mode
-      quota: 500, 
+      quota: 300, 
       description: "Únicamente acceso al evento." 
     },
     { 
@@ -35,7 +35,7 @@ export const INITIAL_MONTHLY_EVENT = {
       priceNormal: 28000,
       pricePromo: 24900,
       price: 0, // $0 COP when in Demo Test Mode
-      quota: 150, 
+      quota: 100, 
       description: "Acceso preferencial al evento + 1 Cóctel de bienvenida incluido." 
     }
   ]
@@ -46,29 +46,43 @@ export const FINCA_PHOTOS = [
     id: "finca-1",
     title: "Escenario Principal & Mansión Nocturna",
     category: "Nocturna",
-    url: "/images/finca_main.jpg",
-    desc: "Vista de la mansión iluminada en rojo neón con el escenario principal de eventos."
+    url: "/images/finca/IMG_0239.jpg",
+    desc: "Vista real de la mansión iluminada con montaje para producción de eventos VIP."
   },
   {
     id: "finca-2",
     title: "Piscina Neón & Zona de Cócteles",
     category: "Piscina",
-    url: "/images/finca_pool.jpg",
-    desc: "Piscina temperada con iluminación subacuática en rojo vivo y asoleadoras plateadas."
+    url: "/images/finca/IMG_0240.jpg",
+    desc: "Piscina campestre con zona de asoleadoras e iluminación ambiente nocturna."
   },
   {
     id: "finca-3",
-    title: "Espectáculo de Luces Láser",
+    title: "Montaje Técnico & Luces Láser",
     category: "Escenario",
-    url: "/images/finca_stage.jpg",
-    desc: "Montaje técnico de última generación con cañones láser y efectos de pirotecnia."
+    url: "/images/finca/IMG_0241.jpg",
+    desc: "Estructura para montaje de sonido envolvente de alta fidelidad y efectos de pirotecnia fría."
   },
   {
     id: "finca-4",
     title: "Palco VIP & Lounge Exclusivo",
     category: "VIP",
-    url: "/images/finca_vip.jpg",
-    desc: "Salón VIP elevado con servicio de mesa, sofás en cuero negro y acabados metálicos."
+    url: "/images/finca/IMG_0242.jpg",
+    desc: "Salón VIP elevado reservado con atención de meseros y atención personalizada."
+  },
+  {
+    id: "finca-5",
+    title: "Zonas Verdes & Arquitectura Campestre",
+    category: "Instalaciones",
+    url: "/images/finca/IMG_0243.jpg",
+    desc: "Amplias áreas verdes y espacios abiertos ideales para eventos de gran aforo."
+  },
+  {
+    id: "finca-6",
+    title: "Parqueadero Privado Custodiado",
+    category: "Acceso",
+    url: "/images/finca/IMG_0244.jpg",
+    desc: "Estacionamiento privado dentro de las instalaciones con control de acceso por QR."
   }
 ];
 

@@ -20,10 +20,10 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
               <Sparkles className="w-3.5 h-3.5" /> Sede Oficial de la Fiesta
             </div>
             <h2 className="font-heading font-black text-4xl sm:text-5xl text-white uppercase tracking-tight">
-              NUESTRA SEDE <span className="text-[#ff0033] drop-shadow-[0_0_15px_rgba(255,0,51,0.6)]">SECRETA VIP</span>
+              INSTALACIONES Y SEDE <span className="text-[#ff0033] drop-shadow-[0_0_15px_rgba(255,0,51,0.6)]">DEL FESTIVAL</span>
             </h2>
             <p className="text-slate-400 mt-2 text-base max-w-2xl">
-              Ubicación privilegiada en la zona campestre del Eje Cafetero (Pereira). El escenario perfecto para macro-eventos, fiestas en piscina nocturnas y festivales neón.
+              Ubicación privilegiada en la zona campestre del Eje Cafetero (Pereira). El escenario perfecto para macro-eventos, festivales de Halloween, piscina nocturna y palcos VIP.
             </p>
           </div>
 
@@ -33,7 +33,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
               className="btn-neon-red px-6 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2"
             >
               <ImageIcon className="w-4 h-4" />
-              <span>Ver todas las fotos (+12)</span>
+              <span>Ver Fotos Reales de la Finca ({FINCA_PHOTOS.length})</span>
             </button>
           </div>
         </div>
@@ -73,16 +73,16 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                 >
                   <ImageIcon className="w-8 h-8 text-white mb-2" />
                   <span className="font-heading font-black text-xl text-white uppercase tracking-wider">
-                    Ver más fotos
+                    Ver Fotos Reales
                   </span>
-                  <span className="text-xs text-slate-200 mt-1">Colección completa (+12 Fotos)</span>
+                  <span className="text-xs text-slate-200 mt-1">Galería de la Finca ({FINCA_PHOTOS.length} Fotos)</span>
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Venue Specs & Secret Location Notice */}
+        {/* Venue Specs & Location Notice */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 bg-metallic-card p-8 rounded-3xl border border-white/10">
           
           {/* Specs */}
@@ -131,38 +131,38 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
             </div>
           </div>
 
-          {/* SECRET LOCATION BOX */}
+          {/* LOCATION NOTICE BOX */}
           <div className="bg-gradient-to-b from-[#141420] to-[#0a0a0f] p-6 rounded-2xl border-2 border-[#ff0033]/40 flex flex-col justify-between relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 right-0 bg-[#ff0033] text-white text-[10px] font-black uppercase px-3 py-1 rounded-bl-xl">
-              DIRECCIÓN PRIVADA
+              EN TU BOLETA
             </div>
 
             <div>
               <div className="w-12 h-12 rounded-full bg-[#ff0033]/20 border border-[#ff0033]/40 text-[#ff0033] flex items-center justify-center mb-4">
-                <Lock className="w-6 h-6" />
+                <MapPin className="w-6 h-6" />
               </div>
               
               <h4 className="font-heading font-black text-xl text-white mb-2">
-                Ubicación Protegida
+                Ubicación del Evento
               </h4>
 
               <p className="text-slate-300 text-xs leading-relaxed mb-4">
-                Para evitar malos entendidos y garantizar la exclusividad VIP, la dirección exacta y mapa en GPS <strong className="text-white">se revelan únicamente al comprar tu entrada</strong>.
+                Por organización de logística y control de aforo, la dirección exacta y enlace directo de navegación GPS <strong className="text-white">se incluyen ordenadamente en tu entrada digital</strong>.
               </p>
 
-              <div className="p-3 bg-black/60 rounded-xl border border-white/10 text-xs text-slate-400 space-y-1">
+              <div className="p-3.5 bg-black/60 rounded-xl border border-white/10 text-xs text-slate-400 space-y-1">
                 <p className="flex items-center gap-1.5 text-white font-semibold">
-                  <Navigation className="w-3.5 h-3.5 text-[#ff0033]" /> Zona Campestre (Pereira)
+                  <Navigation className="w-3.5 h-3.5 text-[#ff0033]" /> Zona Campestre (Pereira / Santa Rosa)
                 </p>
-                <p className="text-[11px] text-slate-400">
-                  📍 El nombre exacto del lugar, la dirección y la ruta en Google Maps se generarán en tu Pase Digital QR.
+                <p className="text-[11px] text-slate-400 pt-1">
+                  📍 Al comprar tu entrada, tu Pase Digital QR revelará el nombre de la finca, la dirección exacta y la ruta directa a Google Maps.
                 </p>
               </div>
             </div>
 
             <div className="pt-4 border-t border-white/10 mt-4 text-center">
-              <span className="text-[11px] text-[#ff0033] font-bold uppercase tracking-wider block">
-                🔒 Compra tu entrada para desbloquear la ubicación
+              <span className="text-[11px] text-emerald-400 font-bold uppercase tracking-wider block">
+                ✓ Información completa de ruta en tu Pase Digital
               </span>
             </div>
           </div>

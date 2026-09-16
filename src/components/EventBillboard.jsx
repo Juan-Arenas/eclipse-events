@@ -41,7 +41,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
 
               <div className="absolute bottom-4 left-4 right-4 text-left">
                 <span className="text-[10px] text-[#ff0033] font-mono font-bold uppercase tracking-widest block">
-                  Sede Secreta (Eje Cafetero)
+                  Zona Campestre (Pereira / Santa Rosa)
                 </span>
                 <h3 className="font-heading font-black text-2xl sm:text-3xl text-white uppercase leading-none">
                   {monthlyEvent.title}
@@ -53,7 +53,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <ImageIcon className="w-4 h-4 text-[#ff0033]" /> Fotos de las Instalaciones VIP
+                  <ImageIcon className="w-4 h-4 text-[#ff0033]" /> Fotos de las Instalaciones
                 </span>
                 <button
                   onClick={onOpenGallery}
@@ -136,7 +136,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               {/* Lineup */}
               <div>
                 <span className="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-widest block mb-1.5">
-                  ARTISTAS / LINEUP
+                  ARTISTAS / LINEUP HALLOWEEN
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {monthlyEvent.lineup && monthlyEvent.lineup.map((artist, idx) => (
@@ -155,14 +155,14 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               <div className="bg-white/5 p-3.5 rounded-2xl border border-white/10 space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-white text-xs flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Sede Secreta VIP (Eje Cafetero)
+                    <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Ubicación del Evento (En Tu Boleta)
                   </span>
-                  <span className="text-[10px] text-[#ff0033] font-bold flex items-center gap-1">
-                    <Lock className="w-3 h-3" /> UBICACIÓN PROTEGIDA
+                  <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" /> INFORMACIÓN EN TU ENTRADA
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-400 leading-tight">
-                  La dirección exacta y mapa en GPS se desbloquean en tu pase QR tras ordenar.
+                  La dirección exacta y ubicación en GPS se activan en tu boleta digital tras recibir tu entrada.
                 </p>
               </div>
 
