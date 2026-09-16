@@ -99,24 +99,55 @@ export const ticketService = {
     return newTicket;
   },
 
-  // 3. Validate ticket and mark as USADA in DB
+  // 3. Validate ticket and mark as USADA in DB with robust fuzzy matching
   async validateTicket(ticketsList, queryInput) {
-    const cleanQuery = queryInput.trim().toUpperCase();
+    if (!queryInput) {
+      return { success: false, message: 'CÓDIGO O CÉDULA VACÍA' };
+    }
 
-    const foundIndex = ticketsList.findIndex(
-      t => t.id.toUpperCase() === cleanQuery || 
-           t.qrHash.toUpperCase() === cleanQuery ||
-           (t.backupCode && t.backupCode.toUpperCase() === cleanQuery) ||
-           t.holderDni === cleanQuery
-    );
+    const rawQuery = String(queryInput).trim();
+    const cleanQuery = rawQuery.toUpperCase();
+    const alphaOnlyQuery = cleanQuery.replace(/[^A-Z0-9]/g, '');
+
+    const foundIndex = ticketsList.findIndex(t => {
+      const tId = String(t.id || '').toUpperCase();
+      const tQrHash = String(t.qrHash || '').toUpperCase();
+      const tBackup = String(t.backupCode || '').toUpperCase();
+      const tDni = String(t.holderDni || '').trim();
+
+      const tIdAlpha = tId.replace(/[^A-Z0-9]/g, '');
+      const tQrAlpha = tQrHash.replace(/[^A-Z0-9]/g, '');
+      const tBackupAlpha = tBackup.replace(/[^A-Z0-9]/g, '');
+
+      // 1. Exact match
+      if (tId === cleanQuery || tQrHash === cleanQuery || tBackup === cleanQuery || tDni === cleanQuery) {
+        return true;
+      }
+
+      // 2. Substring match (if query contains QR hash or QR hash contains query)
+      if (cleanQuery.length >= 4) {
+        if (tQrHash.includes(cleanQuery) || cleanQuery.includes(tQrHash)) return true;
+        if (tId.includes(cleanQuery) || cleanQuery.includes(tId)) return true;
+        if (tBackup.includes(cleanQuery) || cleanQuery.includes(tBackup)) return true;
+      }
+
+      // 3. Alphanumeric match (ignoring hyphens and spaces)
+      if (alphaOnlyQuery.length >= 4) {
+        if (tQrAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tQrAlpha)) return true;
+        if (tIdAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tIdAlpha)) return true;
+        if (tBackupAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tBackupAlpha)) return true;
+      }
+
+      return false;
+    });
 
     if (foundIndex === -1) {
-      return { success: false, message: 'ENTRADA INVÁLIDA O CÓDIGO DE RESPALDO NO ENCONTRADO' };
+      return { success: false, message: 'ENTRADA INVÁLIDA O CÓDIGO NO ENCONTRADO EN BASE DE DATOS' };
     }
 
     const ticket = ticketsList[foundIndex];
     if (ticket.status === 'USADA') {
-      return { success: false, ticket, message: 'ENTRADA YA UTILIZADA EN PUERTA' };
+      return { success: false, ticket, message: '🚨 ALERTA: ENTRADA YA UTILIZADA Y DAÑADA EN PUERTA' };
     }
 
     const timestampStr = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' (' + new Date().toLocaleDateString('es-CO') + ')';

@@ -97,20 +97,10 @@ export default function Navbar({
 
           {/* Right Actions */}
           <div className="flex items-center gap-3">
-            {/* Validador QR */}
-            <button
-              onClick={openQRModal}
-              title="Escáner y Validación de Acceso QR"
-              className="btn-silver px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 border border-white/20 hover:border-[#ff0033]/60 group"
-            >
-              <QrCode className="w-4 h-4 text-[#ff0033] group-hover:scale-110 transition-transform" />
-              <span className="hidden sm:inline">Validar QR</span>
-            </button>
-
             {/* Mis Entradas */}
             <button
               onClick={openTicketsModal}
-              className="btn-neon-red px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 relative"
+              className="btn-neon-red px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 relative shadow-lg"
             >
               <Ticket className="w-4 h-4" />
               <span>Mis Entradas</span>

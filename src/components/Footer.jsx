@@ -52,12 +52,7 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
               </li>
               <li>
                 <button onClick={onOpenGallery} className="hover:text-[#ff0033] transition-colors">
-                  Galería de Fotos HD
-                </button>
-              </li>
-              <li>
-                <button onClick={openQRModal} className="hover:text-[#ff0033] transition-colors">
-                  Validador QR Puerta
+                  Galería de Fotos VIP
                 </button>
               </li>
             </ul>
