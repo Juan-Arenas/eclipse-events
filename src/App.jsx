@@ -119,7 +119,11 @@ export default function App() {
   };
 
   const handleTicketPurchased = async (newTicket) => {
-    setTickets(prev => [newTicket, ...prev]);
+    setTickets(prev => {
+      const updated = [newTicket, ...prev];
+      localStorage.setItem('eclipse_user_tickets', JSON.stringify(updated));
+      return updated;
+    });
     setSeatCounter(prev => prev + 1);
     await ticketService.createTicket(newTicket);
   };

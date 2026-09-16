@@ -99,17 +99,32 @@ export const ticketService = {
     return newTicket;
   },
 
-  // 3. Validate ticket and mark as USADA in DB with robust fuzzy matching
+  // 3. Validate ticket and mark as USADA in DB with robust 4-tier matching & local storage sync
   validateTicket(ticketsList, queryInput) {
     if (!queryInput) {
       return { success: false, message: 'CÓDIGO O CÉDULA VACÍA' };
     }
 
+    // Combine ticketsList from React state with localStorage tickets to ensure 100% up-to-date data
+    let combinedTickets = [...(ticketsList || [])];
+    try {
+      const localSaved = localStorage.getItem(LOCAL_TICKETS_KEY);
+      if (localSaved) {
+        const parsed = JSON.parse(localSaved);
+        parsed.forEach(t => {
+          if (!combinedTickets.some(existing => existing.id === t.id)) {
+            combinedTickets.push(t);
+          }
+        });
+      }
+    } catch (e) {}
+
     const rawQuery = String(queryInput).trim();
     const cleanQuery = rawQuery.toUpperCase();
     const alphaOnlyQuery = cleanQuery.replace(/[^A-Z0-9]/g, '');
+    const digitsOnly = cleanQuery.replace(/[^0-9]/g, '');
 
-    const foundIndex = ticketsList.findIndex(t => {
+    const foundIndex = combinedTickets.findIndex(t => {
       const tId = String(t.id || '').toUpperCase();
       const tQrHash = String(t.qrHash || '').toUpperCase();
       const tBackup = String(t.backupCode || '').toUpperCase();
@@ -124,18 +139,24 @@ export const ticketService = {
         return true;
       }
 
-      // 2. Substring match (if query contains QR hash or QR hash contains query)
+      // 2. Substring match (if query contains QR hash/ID or vice versa)
       if (cleanQuery.length >= 4) {
         if (tQrHash.includes(cleanQuery) || cleanQuery.includes(tQrHash)) return true;
-        if (tId.includes(cleanQuery) || cleanQuery.includes(tId)) return true;
-        if (tBackup.includes(cleanQuery) || cleanQuery.includes(tBackup)) return true;
+        if (tId && (tId.includes(cleanQuery) || cleanQuery.includes(tId))) return true;
+        if (tBackup && (tBackup.includes(cleanQuery) || cleanQuery.includes(tBackup))) return true;
+        if (tDni && (tDni.includes(cleanQuery) || cleanQuery.includes(tDni))) return true;
       }
 
       // 3. Alphanumeric match (ignoring hyphens and spaces)
       if (alphaOnlyQuery.length >= 4) {
         if (tQrAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tQrAlpha)) return true;
-        if (tIdAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tIdAlpha)) return true;
-        if (tBackupAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tBackupAlpha)) return true;
+        if (tIdAlpha && (tIdAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tIdAlpha))) return true;
+        if (tBackupAlpha && (tBackupAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tBackupAlpha))) return true;
+      }
+
+      // 4. DNI Digits match (e.g. if query contains DNI digits)
+      if (digitsOnly.length >= 6 && tDni && (digitsOnly.includes(tDni) || tDni.includes(digitsOnly))) {
+        return true;
       }
 
       return false;
@@ -145,13 +166,21 @@ export const ticketService = {
       return { success: false, message: 'ENTRADA INVÁLIDA O CÓDIGO NO ENCONTRADO EN BASE DE DATOS' };
     }
 
-    const ticket = ticketsList[foundIndex];
+    const ticket = combinedTickets[foundIndex];
     if (ticket.status === 'USADA') {
       return { success: false, ticket, message: '🚨 ALERTA: ENTRADA YA UTILIZADA Y DAÑADA EN PUERTA' };
     }
 
     const timestampStr = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' (' + new Date().toLocaleDateString('es-CO') + ')';
     const updatedTicket = { ...ticket, status: 'USADA', usedTimestamp: timestampStr };
+
+    // Update LocalStorage synchronously
+    try {
+      const saved = localStorage.getItem(LOCAL_TICKETS_KEY);
+      const list = saved ? JSON.parse(saved) : combinedTickets;
+      const updatedList = list.map(item => item.id === ticket.id ? updatedTicket : item);
+      localStorage.setItem(LOCAL_TICKETS_KEY, JSON.stringify(updatedList));
+    } catch (e) {}
 
     // Update Supabase DB in background
     if (isSupabaseConfigured()) {
