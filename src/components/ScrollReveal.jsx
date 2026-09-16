@@ -12,18 +12,21 @@ export default function ScrollReveal({ children, className = '' }) {
 
       const rect = el.getBoundingClientRect();
 
-      // Only shrink and fade out when element's top is scrolling past top of screen (rect.top < -50)
-      if (rect.top < -50) {
-        const scrollPastTop = Math.abs(rect.top + 50);
-        const fadeRatio = Math.min(1, scrollPastTop / (rect.height * 0.8));
+      // Only shrink and fade out when more than 40% of element has scrolled off the top of screen
+      const startThreshold = -(rect.height * 0.4);
 
-        const currentScale = Math.max(0.85, 1 - fadeRatio * 0.15);
-        const currentOpacity = Math.max(0.1, 1 - fadeRatio * 1.1);
+      if (rect.top < startThreshold) {
+        const scrollPastThreshold = Math.abs(rect.top - startThreshold);
+        const fadeDistance = rect.height * 0.6;
+        const fadeRatio = Math.min(1, scrollPastThreshold / fadeDistance);
+
+        const currentScale = Math.max(0.92, 1 - fadeRatio * 0.08);
+        const currentOpacity = Math.max(0.35, 1 - fadeRatio * 0.65);
 
         setScale(currentScale);
         setOpacity(currentOpacity);
       } else {
-        // 100% visible and full scale when inside or entering viewport
+        // 100% visible and full scale when inside viewport
         setScale(1);
         setOpacity(1);
       }
