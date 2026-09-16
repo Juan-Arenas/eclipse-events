@@ -48,23 +48,14 @@ export default function Hero({ onExplore, onSpotlightFinca }) {
           </p>
         </div>
 
-        {/* Live Stats Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl w-full mx-auto pt-6 border-t border-white/10 text-slate-300">
-          <div className="flex flex-col items-center">
-            <span className="font-heading font-black text-3xl text-white">100%</span>
-            <span className="text-xs text-slate-400 uppercase tracking-widest mt-1">Acceso QR Seguro</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="font-heading font-black text-3xl text-[#ff0033] drop-shadow-[0_0_10px_rgba(255,0,51,0.5)]">VIP</span>
-            <span className="text-xs text-slate-400 uppercase tracking-widest mt-1">Palcos Exclusivos</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="font-heading font-black text-3xl text-white">5.000+</span>
-            <span className="text-xs text-slate-400 uppercase tracking-widest mt-1">Asistentes Felices</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="font-heading font-black text-3xl text-slate-200">4.9★</span>
-            <span className="text-xs text-slate-400 uppercase tracking-widest mt-1">Valoración Fans</span>
+        {/* Live Rating / Reviews Bar */}
+        <div className="flex justify-center max-w-md w-full mx-auto pt-6 border-t border-white/10 text-slate-300">
+          <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 backdrop-blur-md shadow-lg">
+            <span className="font-heading font-black text-3xl text-amber-400 drop-shadow-[0_0_12px_rgba(251,191,36,0.6)]">4.9★</span>
+            <div className="text-left">
+              <span className="text-xs font-black text-white uppercase tracking-wider block">VALORACIÓN FANS</span>
+              <span className="text-[10px] text-slate-400 font-mono block">Reseñas y experiencia 100% positiva</span>
+            </div>
           </div>
         </div>
 
