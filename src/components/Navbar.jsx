@@ -93,7 +93,7 @@ export default function Navbar({
               }`}
             >
               <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5" /> Galería Finca
+                <MapPin className="w-3.5 h-3.5" /> Instalaciones Sede
               </span>
             </button>
           </nav>

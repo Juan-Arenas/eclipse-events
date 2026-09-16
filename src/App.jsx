@@ -17,7 +17,16 @@ import { ticketService } from './services/ticketService';
 export default function App() {
   const [monthlyEvent, setMonthlyEvent] = useState(() => {
     const saved = localStorage.getItem('eclipse_monthly_event');
-    return saved ? JSON.parse(saved) : INITIAL_MONTHLY_EVENT;
+    if (!saved) return INITIAL_MONTHLY_EVENT;
+    try {
+      const parsed = JSON.parse(saved);
+      if (!parsed.image || parsed.image.includes('finca-main-night') || parsed.image.includes('generated') || parsed.image.includes('finca_main')) {
+        parsed.image = '/images/finca/IMG_0239.jpg';
+      }
+      return parsed;
+    } catch (e) {
+      return INITIAL_MONTHLY_EVENT;
+    }
   });
 
   const [seatCounter, setSeatCounter] = useState(() => {
@@ -216,6 +225,7 @@ export default function App() {
         onClose={() => setIsTicketsModalOpen(false)}
         tickets={tickets}
         onDeleteTicket={handleDeleteTicket}
+        onOpenGallery={() => setIsGalleryOpen(true)}
       />
 
       <QRValidatorModal

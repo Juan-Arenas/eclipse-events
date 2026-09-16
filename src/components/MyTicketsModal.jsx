@@ -2,7 +2,7 @@ import React from 'react';
 import { X, Ticket, Trash2 } from 'lucide-react';
 import DigitalTicketPass from './DigitalTicketPass';
 
-export default function MyTicketsModal({ isOpen, onClose, tickets, onDeleteTicket }) {
+export default function MyTicketsModal({ isOpen, onClose, tickets, onDeleteTicket, onOpenGallery }) {
   if (!isOpen) return null;
 
   return (
@@ -58,7 +58,7 @@ export default function MyTicketsModal({ isOpen, onClose, tickets, onDeleteTicke
                   </div>
 
                   {/* Render Custom Ticket Pass (Matching TIKET 2.webp layout) */}
-                  <DigitalTicketPass ticket={t} />
+                  <DigitalTicketPass ticket={t} onOpenGallery={onOpenGallery} />
                 </div>
               ))}
             </div>

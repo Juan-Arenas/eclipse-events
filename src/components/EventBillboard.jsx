@@ -49,37 +49,19 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               </div>
             </div>
 
-            {/* INTEGRATED VENUE PHOTOS (No separado sino ahí mismo para no saturar) */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <ImageIcon className="w-4 h-4 text-[#ff0033]" /> Fotos de las Instalaciones
+            {/* LOCKED GALLERY & LOCATION NOTICE (Visible only on ticket pass) */}
+            <div className="bg-white/5 p-4 rounded-2xl border border-white/10 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                  <ImageIcon className="w-4 h-4 text-[#ff0033]" /> Galería Reales de la Sede
                 </span>
-                <button
-                  onClick={onOpenGallery}
-                  className="text-[11px] text-[#ff0033] hover:underline font-bold"
-                >
-                  Ver todas (+12) &rarr;
-                </button>
+                <span className="text-[10px] text-amber-400 font-bold bg-amber-400/10 px-2.5 py-0.5 rounded-full border border-amber-400/30 flex items-center gap-1">
+                  <Lock className="w-3 h-3" /> EN TU BOLETA DIGITAL
+                </span>
               </div>
-
-              {/* 4 Thumbnails horizontal row */}
-              <div className="grid grid-cols-4 gap-2">
-                {FINCA_PHOTOS.slice(0, 4).map((photo) => (
-                  <div
-                    key={photo.id}
-                    onClick={onOpenGallery}
-                    className="h-16 rounded-xl overflow-hidden cursor-pointer border border-white/10 hover:border-[#ff0033] transition-all group relative"
-                  >
-                    <img
-                      src={photo.url}
-                      alt={photo.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors"></div>
-                  </div>
-                ))}
-              </div>
+              <p className="text-[11px] text-slate-400 leading-snug">
+                Para mantener la privacidad y confidencialidad de la finca, la galería de fotos reales de las instalaciones y el mapa de llegada en GPS se activan únicamente en tu boleta digital tras confirmar tu entrada.
+              </p>
             </div>
 
           </div>

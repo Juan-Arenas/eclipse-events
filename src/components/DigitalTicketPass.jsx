@@ -2,7 +2,7 @@ import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { MapPin, Navigation, ExternalLink, Sparkles, CheckCircle2, ShieldCheck, User, Calendar, Lock, Wine } from 'lucide-react';
 
-export default function DigitalTicketPass({ ticket }) {
+export default function DigitalTicketPass({ ticket, onOpenGallery }) {
   if (!ticket) return null;
 
   const isVip = ticket.tierName?.toLowerCase().includes('vip');
@@ -180,6 +180,15 @@ export default function DigitalTicketPass({ ticket }) {
               <ExternalLink className="w-3 h-3 opacity-80" />
             </a>
           )}
+
+          {/* UNLOCKED FINCA PHOTO GALLERY BUTTON (Accessible ONLY on ticket pass) */}
+          <button
+            onClick={() => onOpenGallery && onOpenGallery()}
+            className="w-full btn-silver py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 mt-2"
+          >
+            <ImageIcon className="w-3.5 h-3.5 text-[#ff0033]" />
+            <span>Ver Galería de Fotos Reales de la Finca</span>
+          </button>
         </div>
 
         {/* SECRET BACKUP SECURITY CODE */}

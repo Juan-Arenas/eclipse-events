@@ -29,57 +29,41 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
 
           <div className="flex items-center gap-3">
             <button
-              onClick={onOpenGallery}
+              onClick={onSelectEvent}
               className="btn-neon-red px-6 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2"
             >
-              <ImageIcon className="w-4 h-4" />
-              <span>Ver Fotos Reales de la Finca ({FINCA_PHOTOS.length})</span>
+              <Lock className="w-4 h-4" />
+              <span>Desbloquear Galería & Ubicación al Comprar</span>
             </button>
           </div>
         </div>
 
-        {/* Gallery Preview Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
-          {previewPhotos.map((photo, idx) => (
-            <div
-              key={photo.id}
-              onClick={onOpenGallery}
-              className="group relative h-72 rounded-2xl overflow-hidden cursor-pointer border border-white/10 hover:border-[#ff0033]/60 transition-all duration-300 shadow-xl"
-            >
-              <img
-                src={photo.url}
-                alt={photo.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#08080c] via-black/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
-              
-              <div className="absolute top-3 left-3 bg-[#08080c]/80 backdrop-blur-md border border-white/15 px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
-                {photo.category}
+        {/* Confidential Venue Specs & Ticket Unlock Banner */}
+        <div className="p-8 rounded-3xl bg-gradient-to-r from-[#181826] via-[#0c0c14] to-[#141422] border-2 border-[#ff0033]/40 shadow-2xl mb-12 relative overflow-hidden">
+          <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#ff0033]/10 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+            <div className="md:col-span-8 space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
+                <Lock className="w-3.5 h-3.5" /> ACCESO CONFIDENCIAL A LA GALERÍA
               </div>
-
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="font-heading font-bold text-white text-base leading-snug group-hover:text-[#ff0033] transition-colors">
-                  {photo.title}
-                </h3>
-                <p className="text-slate-300 text-xs line-clamp-1 mt-1 font-medium">
-                  {photo.desc}
-                </p>
-              </div>
-
-              {idx === 3 && (
-                <div 
-                  onClick={onOpenGallery}
-                  className="absolute inset-0 bg-[#08080c]/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 text-center group-hover:bg-[#ff0033]/90 transition-colors"
-                >
-                  <ImageIcon className="w-8 h-8 text-white mb-2" />
-                  <span className="font-heading font-black text-xl text-white uppercase tracking-wider">
-                    Ver Fotos Reales
-                  </span>
-                  <span className="text-xs text-slate-200 mt-1">Galería de la Finca ({FINCA_PHOTOS.length} Fotos)</span>
-                </div>
-              )}
+              <h3 className="font-heading font-black text-2xl sm:text-3xl text-white uppercase">
+                FOTOS REALES DE LA SEDE Y MAPA GPS EN TU ENTRADA
+              </h3>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Por motivos de privacidad del predio y control de acceso exclusivo, la galería completa con todas las fotografías de la finca, la ubicación exacta y el mapa de llegada en GPS son <strong>visibles únicamente para las personas que adquieren su entrada</strong>.
+              </p>
             </div>
-          ))}
+
+            <div className="md:col-span-4 flex flex-col justify-center">
+              <button
+                onClick={onSelectEvent}
+                className="w-full btn-neon-red py-4 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,0,51,0.5)]"
+              >
+                <span>COMPRAR BOLETA / VER MI ENTRADA</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Venue Specs & Location Notice */}
