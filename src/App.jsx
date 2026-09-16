@@ -130,7 +130,8 @@ export default function App() {
     }
 
     const updatedTickets = [...tickets];
-    updatedTickets[foundIndex] = { ...ticket, status: 'USADA' };
+    const timestampStr = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' (' + new Date().toLocaleDateString('es-CO') + ')';
+    updatedTickets[foundIndex] = { ...ticket, status: 'USADA', usedTimestamp: timestampStr };
     setTickets(updatedTickets);
 
     return { success: true, ticket: updatedTickets[foundIndex] };

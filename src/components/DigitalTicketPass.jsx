@@ -130,13 +130,25 @@ export default function DigitalTicketPass({ ticket }) {
         </div>
 
         {/* Dynamic QR & Barcode Block */}
-        <div className="bg-white p-4 rounded-2xl text-center shadow-2xl border-2 border-slate-900">
+        <div className="relative bg-white p-4 rounded-2xl text-center shadow-2xl border-2 border-slate-900 overflow-hidden">
+          {ticket.status === 'USADA' && (
+            <div className="absolute inset-0 bg-red-950/80 backdrop-blur-xs z-30 flex flex-col items-center justify-center p-3 animate-fade-in border-4 border-red-600">
+              <span className="px-3 py-1 bg-red-600 text-white font-black text-xs uppercase tracking-widest rounded-lg shadow-lg rotate-[-6deg]">
+                ⚠️ BOLETA DAÑADA / ENTRADA CONSUMIDA
+              </span>
+              <p className="text-[11px] font-mono text-red-200 mt-2 font-bold text-center">
+                INGRESADO EN PUERTA <br/>
+                {ticket.usedTimestamp || 'ACCESO REGISTRADO'}
+              </p>
+            </div>
+          )}
+
           <div className="inline-block p-2 bg-slate-100 rounded-xl mb-2">
             <QRCodeSVG 
               value={ticket.qrHash}
               size={155}
               level="H"
-              fgColor="#08080c"
+              fgColor={ticket.status === 'USADA' ? "#991b1b" : "#08080c"}
             />
           </div>
 
@@ -146,7 +158,7 @@ export default function DigitalTicketPass({ ticket }) {
               {Array.from({ length: 42 }).map((_, i) => (
                 <div
                   key={i}
-                  className="bg-black h-full rounded-sm"
+                  className={`${ticket.status === 'USADA' ? 'bg-red-700' : 'bg-black'} h-full rounded-sm`}
                   style={{ width: `${(i % 3 === 0 ? 3 : i % 2 === 0 ? 1 : 2)}px` }}
                 ></div>
               ))}
