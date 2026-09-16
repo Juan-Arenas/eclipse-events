@@ -37,17 +37,20 @@ export default function Navbar({
           <div className="flex items-center gap-3">
             <div 
               onClick={handleStarClick}
-              title="Eclipse Events VIP"
-              className="relative w-11 h-11 rounded-full bg-gradient-to-tr from-[#ff0033] via-[#ff3355] to-slate-200 p-[2px] shadow-[0_0_20px_rgba(255,0,51,0.5)] cursor-pointer hover:scale-105 active:scale-95 transition-all duration-200 group"
+              title="Eclipse Events VIP (Acceso Secreto Dueños)"
+              className="relative w-12 h-12 rounded-full bg-gradient-to-tr from-[#ff0033] via-[#ff3355] to-slate-200 p-[2px] shadow-[0_0_22px_rgba(255,0,51,0.7)] cursor-pointer hover:scale-105 active:scale-95 transition-all duration-200 group"
             >
               <div className="w-full h-full bg-[#08080c] rounded-full flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-radial from-red-600/30 to-transparent animate-pulse"></div>
-                <Sparkles className={`w-5 h-5 text-[#ff0033] transition-transform ${starClicks > 0 ? 'scale-125 rotate-45' : 'group-hover:scale-110'}`} />
+                <img 
+                  src="/images/eclipse_icon_logo.png" 
+                  alt="Eclipse VIP Logo" 
+                  className={`w-full h-full object-cover rounded-full transition-transform duration-300 ${starClicks > 0 ? 'scale-125 rotate-12' : 'group-hover:scale-110'}`}
+                />
               </div>
 
               {/* Secret click feedback counter */}
               {starClicks > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#ff0033] text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center animate-ping">
+                <span className="absolute -top-1 -right-1 bg-[#ff0033] text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center animate-bounce shadow-lg border border-black z-30">
                   {starClicks}
                 </span>
               )}
