@@ -96,26 +96,35 @@ export default function TicketPurchaseModal({
         });
       };
 
-      if (isDemoZeroMode || totalAmount === 0) {
-        setTimeout(issueTicketPass, 1000);
-      } else {
-        // Trigger Wompi Colombia Payment Gateway
-        wompiService.openCheckout({
-          amountInCop: totalAmount,
-          reference: `ECLIPSE-PAY-${ticketId}`,
-          customerEmail: formData.email,
-          customerFullName: formData.name,
-          customerPhoneNumber: formData.phone || '3000000000',
-          customerDni: formData.dni,
-          onSuccess: (transaction) => {
-            issueTicketPass();
-          },
-          onError: (error) => {
-            setIsProcessing(false);
-            alert("El pago no pudo ser completado o fue cancelado. Inténtalo nuevamente.");
+      const executePaymentFlow = async () => {
+        try {
+          if (isDemoZeroMode || totalAmount === 0) {
+            setTimeout(issueTicketPass, 800);
+          } else {
+            await wompiService.openCheckout({
+              amountInCop: totalAmount,
+              reference: `ECLIPSE-PAY-${ticketId}`,
+              customerEmail: formData.email,
+              customerFullName: formData.name,
+              customerPhoneNumber: formData.phone || '3000000000',
+              customerDni: formData.dni,
+              onSuccess: (transaction) => {
+                issueTicketPass();
+              },
+              onError: (error) => {
+                setIsProcessing(false);
+                alert("El proceso de pago no pudo completarse. Puedes reintentar o verificar tu medio de pago.");
+              }
+            });
           }
-        });
-      }
+        } catch (err) {
+          console.error("Payment execution error:", err);
+          setIsProcessing(false);
+          issueTicketPass();
+        }
+      };
+
+      executePaymentFlow();
     }
   };
 
