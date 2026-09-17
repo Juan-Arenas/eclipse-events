@@ -12,6 +12,11 @@
     --silver-border: rgba(226, 232, 240, 0.15);
   }
 
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: #07070a;

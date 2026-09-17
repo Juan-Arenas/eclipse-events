@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 /**
- * ScrollReveal Component
- * Smooth entrance animations when scrolling down:
- * - 'fade-scale': Soft zoom in with opacity fade
- * - 'slide-left': Enters smoothly from the left with subtle scale
- * - 'slide-right': Enters smoothly from the right with subtle scale
- * - 'fade-up': Rises smoothly from below with subtle scale
+ * ScrollReveal Component (Mobile & Desktop Optimized)
+ * Silky-smooth GPU-accelerated entrance animations on scroll:
+ * - Adapts lateral movements on mobile to smooth vertical floats + scale (avoids horizontal snapping)
+ * - Uses generous rootMargin (50px ahead of viewport) so animations glide in seamlessly during scroll
+ * - Uses Apple-style cubic-bezier(0.22, 1, 0.36, 1) for fluid 60fps/120fps motion
  */
 export default function ScrollReveal({
   children,
@@ -14,11 +13,22 @@ export default function ScrollReveal({
   direction = 'fade-scale',
   delay = 0,
   duration = 750,
-  threshold = 0.12,
+  threshold = 0.02,
+  rootMargin = '0px 0px 50px 0px',
   once = true
 }) {
   const domRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const el = domRef.current;
@@ -42,7 +52,7 @@ export default function ScrollReveal({
       },
       {
         threshold,
-        rootMargin: '0px 0px -40px 0px'
+        rootMargin
       }
     );
 
@@ -51,24 +61,38 @@ export default function ScrollReveal({
     return () => {
       observer.disconnect();
     };
-  }, [threshold, once]);
+  }, [threshold, rootMargin, once]);
 
-  // Compute transform according to chosen direction
+  // Compute transform according to chosen direction and device screen
   const getInitialTransform = () => {
+    if (isMobile) {
+      // On mobile devices, lateral slides adapt to gentle vertical float + scale
+      switch (direction) {
+        case 'slide-left':
+        case 'slide-right':
+        case 'fade-up':
+          return 'translate3d(0, 24px, 0) scale(0.96)';
+        case 'fade-scale':
+        default:
+          return 'translate3d(0, 16px, 0) scale(0.94)';
+      }
+    }
+
+    // On desktop devices: full lateral and vertical directional freedom
     switch (direction) {
       case 'slide-left':
-        return 'translateX(-45px) scale(0.95)';
+        return 'translate3d(-35px, 0, 0) scale(0.96)';
       case 'slide-right':
-        return 'translateX(45px) scale(0.95)';
+        return 'translate3d(35px, 0, 0) scale(0.96)';
       case 'fade-up':
-        return 'translateY(35px) scale(0.96)';
+        return 'translate3d(0, 32px, 0) scale(0.96)';
       case 'fade-scale':
       default:
-        return 'scale(0.92)';
+        return 'translate3d(0, 0, 0) scale(0.93)';
     }
   };
 
-  const currentTransform = isVisible ? 'translate(0, 0) scale(1)' : getInitialTransform();
+  const currentTransform = isVisible ? 'translate3d(0, 0, 0) scale(1)' : getInitialTransform();
   const currentOpacity = isVisible ? 1 : 0;
 
   return (
@@ -77,8 +101,12 @@ export default function ScrollReveal({
       style={{
         opacity: currentOpacity,
         transform: currentTransform,
-        transition: `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-        willChange: 'opacity, transform'
+        WebkitTransform: currentTransform,
+        transition: `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, -webkit-transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
+        WebkitTransition: `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, -webkit-transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
+        willChange: 'opacity, transform',
+        WebkitBackfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden'
       }}
       className={`scroll-reveal-container ${className}`}
     >

@@ -236,40 +236,32 @@ export default function App() {
 
       {/* Main Content (BUYING TICKETS & MAIN EVENT SPOTLIGHT FIRST AS REQUESTED) */}
       <main className="flex-1 space-y-12">
-        <ScrollReveal direction="fade-scale" duration={800} threshold={0.05}>
-          <Hero
-            onExplore={() => handleNavigate('cartelera')}
-            onSpotlightFinca={() => handleNavigate('finca')}
-          />
-        </ScrollReveal>
+        <Hero
+          onExplore={() => handleNavigate('cartelera')}
+          onSpotlightFinca={() => handleNavigate('finca')}
+        />
 
         {/* 1. TICKET BUYING SHOWCASE FIRST WITH INTEGRATED VENUE PHOTOS & EARLY BIRD DISCOUNTS */}
-        <ScrollReveal direction="fade-up" duration={850} threshold={0.1}>
-          <EventBillboard
-            monthlyEvent={monthlyEvent}
-            onSelectEvent={handleOpenPurchase}
-            onOpenGallery={() => setIsGalleryOpen(true)}
-            isDemoZeroMode={isDemoZeroMode}
-          />
-        </ScrollReveal>
+        <EventBillboard
+          monthlyEvent={monthlyEvent}
+          onSelectEvent={handleOpenPurchase}
+          onOpenGallery={() => setIsGalleryOpen(true)}
+          isDemoZeroMode={isDemoZeroMode}
+        />
 
         {/* 2. Venue Features & Amenity Details */}
-        <ScrollReveal direction="fade-scale" duration={850} threshold={0.1}>
-          <FincaSpotlight
-            onOpenGallery={() => setIsGalleryOpen(true)}
-            onSelectEvent={handleOpenPurchase}
-          />
-        </ScrollReveal>
+        <FincaSpotlight
+          onOpenGallery={() => setIsGalleryOpen(true)}
+          onSelectEvent={handleOpenPurchase}
+        />
       </main>
 
       {/* Footer */}
-      <ScrollReveal direction="fade-up" duration={750} threshold={0.05}>
-        <Footer
-          onNavigate={handleNavigate}
-          onOpenGallery={() => setIsGalleryOpen(true)}
-          openQRModal={() => setIsQRModalOpen(true)}
-        />
-      </ScrollReveal>
+      <Footer
+        onNavigate={handleNavigate}
+        onOpenGallery={() => setIsGalleryOpen(true)}
+        openQRModal={() => setIsQRModalOpen(true)}
+      />
 
       {/* MODALS */}
       <FincaGalleryModal
