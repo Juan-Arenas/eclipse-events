@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import { INITIAL_MONTHLY_EVENT } from './data/initialData';
 import { ticketService } from './services/ticketService';
 import { wompiService } from './services/wompiService';
+import { eventConfigService } from './services/eventConfigService';
 
 export default function App() {
   const [monthlyEvent, setMonthlyEvent] = useState(() => {
@@ -93,6 +94,36 @@ export default function App() {
 
     return () => unsubscribe();
   }, []);
+
+  // Real-time synchronization of DJs / Lineup and Event Config from Supabase
+  useEffect(() => {
+    const loadDbConfig = async () => {
+      const config = await eventConfigService.getEventConfig(INITIAL_MONTHLY_EVENT);
+      if (config) {
+        setMonthlyEvent(prev => ({
+          ...prev,
+          ...config,
+          lineup: config.lineup || prev.lineup
+        }));
+      }
+    };
+    loadDbConfig();
+
+    const unsubscribeConfig = eventConfigService.subscribeToChanges((updated) => {
+      setMonthlyEvent(prev => ({
+        ...prev,
+        ...updated,
+        lineup: updated.lineup || prev.lineup
+      }));
+    });
+
+    return () => unsubscribeConfig();
+  }, []);
+
+  const handleUpdateMonthlyEvent = (updated) => {
+    setMonthlyEvent(updated);
+    eventConfigService.saveEventConfig(updated);
+  };
 
   // Handle Wompi Redirect Callback (if user was redirected after payment)
   useEffect(() => {
@@ -304,7 +335,7 @@ export default function App() {
         isOpen={isAdminModalOpen}
         onClose={() => setIsAdminModalOpen(false)}
         monthlyEvent={monthlyEvent}
-        onUpdateMonthlyEvent={setMonthlyEvent}
+        onUpdateMonthlyEvent={handleUpdateMonthlyEvent}
         tickets={tickets}
         onTicketPurchased={handleTicketPurchased}
         currentSeatIndex={seatCounter}

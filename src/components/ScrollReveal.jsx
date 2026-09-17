@@ -12,10 +12,10 @@ export default function ScrollReveal({
   className = '',
   direction = 'fade-scale',
   delay = 0,
-  duration = 750,
-  threshold = 0.02,
-  rootMargin = '0px 0px 50px 0px',
-  once = true
+  duration = 1100,
+  threshold = 0.05,
+  rootMargin = '0px 0px -40px 0px',
+  once = false
 }) {
   const domRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -47,7 +47,11 @@ export default function ScrollReveal({
             observer.unobserve(el);
           }
         } else if (!once) {
-          setIsVisible(false);
+          // Si el usuario sube y los elementos de abajo salen por la parte inferior de la pantalla,
+          // se ocultan suavemente en reversa (entry.boundingClientRect.top > 0)
+          if (entry.boundingClientRect.top > 0) {
+            setIsVisible(false);
+          }
         }
       },
       {
@@ -63,32 +67,30 @@ export default function ScrollReveal({
     };
   }, [threshold, rootMargin, once]);
 
-  // Compute transform according to chosen direction and device screen
+  // Transformación inicial (antes de entrar o al guardarse en reversa)
   const getInitialTransform = () => {
     if (isMobile) {
-      // On mobile devices, lateral slides adapt to gentle vertical float + scale
       switch (direction) {
         case 'slide-left':
         case 'slide-right':
         case 'fade-up':
-          return 'translate3d(0, 24px, 0) scale(0.96)';
+          return 'translate3d(0, 36px, 0) scale(0.95)';
         case 'fade-scale':
         default:
-          return 'translate3d(0, 16px, 0) scale(0.94)';
+          return 'translate3d(0, 26px, 0) scale(0.93)';
       }
     }
 
-    // On desktop devices: full lateral and vertical directional freedom
     switch (direction) {
       case 'slide-left':
-        return 'translate3d(-35px, 0, 0) scale(0.96)';
+        return 'translate3d(-48px, 0, 0) scale(0.95)';
       case 'slide-right':
-        return 'translate3d(35px, 0, 0) scale(0.96)';
+        return 'translate3d(48px, 0, 0) scale(0.95)';
       case 'fade-up':
-        return 'translate3d(0, 32px, 0) scale(0.96)';
+        return 'translate3d(0, 42px, 0) scale(0.95)';
       case 'fade-scale':
       default:
-        return 'translate3d(0, 0, 0) scale(0.93)';
+        return 'translate3d(0, 30px, 0) scale(0.93)';
     }
   };
 
@@ -102,8 +104,8 @@ export default function ScrollReveal({
         opacity: currentOpacity,
         transform: currentTransform,
         WebkitTransform: currentTransform,
-        transition: `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, -webkit-transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
-        WebkitTransition: `opacity ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms, -webkit-transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
+        transition: `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, -webkit-transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+        WebkitTransition: `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, -webkit-transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
         willChange: 'opacity, transform',
         WebkitBackfaceVisibility: 'hidden',
         backfaceVisibility: 'hidden'

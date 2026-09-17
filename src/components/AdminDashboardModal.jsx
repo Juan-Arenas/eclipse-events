@@ -47,6 +47,13 @@ export default function AdminDashboardModal({
   ]);
   const [newArtistName, setNewArtistName] = useState('');
   const [artistsSavedSuccess, setArtistsSavedSuccess] = useState(false);
+  const [isSavingArtists, setIsSavingArtists] = useState(false);
+
+  React.useEffect(() => {
+    if (monthlyEvent?.lineup && Array.isArray(monthlyEvent.lineup)) {
+      setArtistsList(monthlyEvent.lineup);
+    }
+  }, [monthlyEvent?.lineup]);
 
   const handleAddArtist = (e) => {
     e.preventDefault();
@@ -61,14 +68,16 @@ export default function AdminDashboardModal({
     setArtistsList(updated);
   };
 
-  const handleSaveArtists = () => {
+  const handleSaveArtists = async () => {
+    setIsSavingArtists(true);
     const updated = {
       ...monthlyEvent,
       lineup: artistsList
     };
-    onUpdateMonthlyEvent(updated);
+    await onUpdateMonthlyEvent(updated);
+    setIsSavingArtists(false);
     setArtistsSavedSuccess(true);
-    setTimeout(() => setArtistsSavedSuccess(false), 3000);
+    setTimeout(() => setArtistsSavedSuccess(false), 3500);
   };
 
   const handleManualIssueSubmit = (e) => {
@@ -378,7 +387,7 @@ export default function AdminDashboardModal({
                     Gestión de DJs & Artistas del Festival
                   </h4>
                   <p className="text-slate-400 text-xs">
-                    Agrega, elimina o actualiza los DJs que se muestran en el cartel oficial de la web en tiempo real.
+                    Agrega, elimina o actualiza los DJs que se muestran en el cartel oficial. Los cambios se guardan directamente en Supabase para persistir en la web permanentemente.
                   </p>
                 </div>
                 <span className="px-3 py-1 rounded-full bg-[#ff0033]/20 border border-[#ff0033]/40 text-[#ff0033] text-xs font-bold font-mono">
@@ -389,7 +398,7 @@ export default function AdminDashboardModal({
               {artistsSavedSuccess && (
                 <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500 text-emerald-400 text-xs font-bold flex items-center gap-2 animate-fade-in">
                   <CheckCircle2 className="w-5 h-5" />
-                  <span>¡Lineup de DJs y Artistas guardado exitosamente en la web!</span>
+                  <span>¡Lineup de DJs guardado exitosamente en Supabase y publicado en vivo!</span>
                 </div>
               )}
 
@@ -448,11 +457,12 @@ export default function AdminDashboardModal({
               {/* Save button */}
               <button
                 type="button"
+                disabled={isSavingArtists}
                 onClick={handleSaveArtists}
-                className="w-full btn-neon-red py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2"
+                className="w-full btn-neon-red py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <CheckCircle2 className="w-5 h-5" />
-                <span>Guardar y Publicar Lineup de DJs</span>
+                <span>{isSavingArtists ? "Guardando en Supabase..." : "Guardar Lineup en Supabase & Publicar"}</span>
               </button>
             </div>
           )}

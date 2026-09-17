@@ -17,6 +17,8 @@ export const ticketService = {
         const { data, error } = await supabase
           .from('tickets')
           .select('*')
+          .neq('id', 'ECLIPSE_GLOBAL_EVENT_CONFIG')
+          .neq('status', 'SYSTEM_CONFIG')
           .order('created_at', { ascending: false });
 
         if (!error && data) {
@@ -220,6 +222,9 @@ export const ticketService = {
       const channel = supabase
         .channel('public:tickets')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'tickets' }, (payload) => {
+          if (payload.new?.id === 'ECLIPSE_GLOBAL_EVENT_CONFIG' || payload.old?.id === 'ECLIPSE_GLOBAL_EVENT_CONFIG') {
+            return;
+          }
           onTicketUpdated(payload);
         })
         .subscribe();

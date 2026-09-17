@@ -18,7 +18,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 bg-metallic-card p-8 rounded-3xl border border-white/10">
           
           {/* Specs - Slide Left */}
-          <ScrollReveal direction="slide-left" duration={850} className="lg:col-span-2">
+          <ScrollReveal direction="slide-left" duration={1100} once={false} className="lg:col-span-2">
             <div className="space-y-6">
               <h3 className="font-heading font-bold text-2xl text-white flex items-center gap-2">
                 <MapPin className="w-6 h-6 text-[#ff0033]" />
@@ -66,7 +66,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
           </ScrollReveal>
 
           {/* LOCATION NOTICE BOX - Slide Right */}
-          <ScrollReveal direction="slide-right" duration={850} delay={120} className="lg:col-span-1 h-full">
+          <ScrollReveal direction="slide-right" duration={1100} delay={120} once={false} className="lg:col-span-1 h-full">
             <div className="bg-gradient-to-b from-[#141420] to-[#0a0a0f] p-6 rounded-2xl border-2 border-[#ff0033]/40 flex flex-col justify-between relative overflow-hidden shadow-2xl h-full">
               <div className="absolute top-0 right-0 bg-[#ff0033] text-white text-[10px] font-black uppercase px-3 py-1 rounded-bl-xl">
                 EN TU BOLETA

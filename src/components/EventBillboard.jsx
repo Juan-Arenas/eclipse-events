@@ -18,7 +18,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
         <div className="bg-metallic-card rounded-[36px] border-2 border-white/15 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-0 relative">
           
           {/* Column 1: Poster Showcase (Lg: 6 cols) - Slide In from Left */}
-          <ScrollReveal direction="slide-left" duration={850} className="lg:col-span-6 h-full">
+          <ScrollReveal direction="slide-left" duration={1100} once={false} className="lg:col-span-6 h-full">
             <div className="relative flex flex-col justify-center p-6 sm:p-8 bg-gradient-to-b from-[#141422] to-[#0a0a0f] h-full">
             
             {/* Poster Header */}
@@ -46,7 +46,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
           </ScrollReveal>
 
           {/* Column 2: Event Details, Pricing & Direct Ticket Purchase (Lg: 6 cols) - Slide In from Right */}
-          <ScrollReveal direction="slide-right" duration={850} delay={120} className="lg:col-span-6 h-full">
+          <ScrollReveal direction="slide-right" duration={1100} delay={120} once={false} className="lg:col-span-6 h-full">
             <div className="p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-gradient-to-b from-[#12121a] to-[#0a0a0f] border-t lg:border-t-0 lg:border-l border-white/10 h-full">
             
             <div className="space-y-4">
