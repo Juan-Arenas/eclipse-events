@@ -285,7 +285,7 @@ export default function QRValidatorModal({ isOpen, onClose, tickets, onValidateT
                       >
                         <div>
                           <span className="font-bold text-white block">
-                            {t.seatNumber || 'SILLA A-001'} — {t.holderName}
+                            {t.tierName || 'Boleta Oficial'} — {t.holderName}
                           </span>
                           <span className="text-slate-400 font-mono text-[11px]">
                             C.C. {t.holderDni} • {t.tierName}
@@ -321,7 +321,7 @@ export default function QRValidatorModal({ isOpen, onClose, tickets, onValidateT
               </div>
 
               <div className="bg-black/80 p-5 rounded-2xl border border-emerald-500/40 text-left text-xs space-y-2 text-slate-200 max-w-md mx-auto shadow-inner">
-                <p><span className="text-slate-400">Silla Asignada:</span> <strong className="text-[#ff0033] font-mono text-base">{scanResult.ticket.seatNumber || "SILLA A-001"}</strong></p>
+                <p><span className="text-slate-400">Tipo de Entrada:</span> <strong className="text-[#ff0033] font-mono text-base">{scanResult.ticket.tierName || "Boleta Oficial"}</strong></p>
                 <p><span className="text-slate-400">Titular:</span> <strong>{scanResult.ticket.holderName}</strong> (C.C. {scanResult.ticket.holderDni})</p>
                 <p><span className="text-slate-400">Localidad:</span> <span className="text-emerald-400 font-bold">{scanResult.ticket.tierName}</span></p>
                 {scanResult.ticket.tierDescription && (
@@ -359,7 +359,7 @@ export default function QRValidatorModal({ isOpen, onClose, tickets, onValidateT
 
               {scanResult.ticket && (
                 <div className="bg-black/80 p-5 rounded-2xl border border-rose-500/40 text-left text-xs space-y-2 text-slate-200 max-w-md mx-auto shadow-inner">
-                  <p><span className="text-slate-400">Silla Asignada:</span> <strong className="text-white font-mono">{scanResult.ticket.seatNumber}</strong></p>
+                  <p><span className="text-slate-400">Tipo de Entrada:</span> <strong className="text-white font-mono">{scanResult.ticket.tierName || "Boleta Oficial"}</strong></p>
                   <p><span className="text-slate-400">Titular Registrado:</span> <strong>{scanResult.ticket.holderName}</strong> (C.C. {scanResult.ticket.holderDni})</p>
                   <p><span className="text-slate-400">Fecha de Ingreso Previo:</span> <span className="text-amber-400 font-mono">{scanResult.ticket.usedTimestamp || 'Previamente consumido'}</span></p>
                   <div className="pt-2 border-t border-rose-500/30 text-rose-400 font-bold text-[11px]">

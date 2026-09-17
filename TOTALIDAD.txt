@@ -1,0 +1,76 @@
+Totalidad De Ajustes
+3 iteraciones en la paleta de colores y acabados: Definición final en Metálico Oscuro, Plata Pulido y Rojo Neón (#ff0033) con iluminación glow, glassmorphism y desenfoques (backdrop-blur).
+
+Tipografía de alta gama: Integración de Google Fonts (Outfit para títulos impactantes y Plus Jakarta Sans para lectura limpia).
+
+Efectos 3D de texto y reflejos: Título con biselado cromo, sombreados con relieve y efecto reflejo tipo mirage (espejismo).
+
+-Video 3D de Cabecera
+3 cambios/actualizaciones en la fuente del video 3D:
+
+Render 3D con texto y diamantes en movimiento.
+
+
+optimizado para reproducción continua en bucle (loop, autoPlay, muted, playsInline y precarga automática).
+
+Motor con IntersectionObserver: Detección de viewport con curvas cúbicas suaves (cubic-bezier(0.16, 1, 0.3, 1)).
+
+Animaciones direccionales:
+
+Fade + Scale: Zoom suave al entrar en foco.
+
+Slide-Left (Entrada izquierda): Póster del evento y amenidades de la finca.
+
+Slide-Right (Entrada derecha): Panel de compra de boletas y recuadro de ubicación.
+
+
+Integración oficial con Wompi: Tarjetas de crédito/débito, PSE, Nequi y Bancolombia.
+Firma criptográfica de integridad SHA-256: 
+
+Concatenación de referencia, centavos, COP y secreto de integridad para máxima seguridad bancaria.
+
+Redirección segura a Web Checkout: Redirección directa que elimina fallos o bloqueos por extensiones en el navegador.
+
+Verificación automática: Detección de retorno de pasarela y verificación por API REST (/transactions/:id).
+
+Regla estricta de seguridad: La boleta SÓLO se emite si el banco devuelve el estado APPROVED. Transacciones declinadas o en error no generan boleta.
+
+Asistente Sandbox: Detección inteligente de modo pruebas y recordatorio de tarjeta oficial (4242 4242 4242 4242).
+
+Tipos de boleta: Boleta General y Boleta VIP (+ 1 Cóctel de bienvenida).
+
+Bóveda de entradas ("Mis Entradas"): Modal para consultar, ver y descargar las boletas adquiridas.
+
+Efectos interactivos: Lluvia de confeti animado (canvas-confetti) al aprobarse el pago.
+
+Cifrado único generado a partir del ID de entrada, cédula y marca de tiempo.
+
+Código de respaldo anti-fraude: Código alfanumérico secundario (BAC-ECL-XXXX-XXXX).
+
+Diseño Ticket Pass VIP: Formato físico digital inspirado en pases de festival con degradados metálicos.
+
+Escáner QR en tiempo real: Módulo para validar entradas en el acceso al evento usando la cámara del teléfono o subiendo una imagen del QR.
+
+Control de reingreso: El sistema marca la boleta como UTILIZADA para que una misma entrada no pueda ser ingresada dos veces.
+
+Protección de ubicación: Ni la dirección exacta ni el enlace a Google Maps son públicos; se mantienen ocultos y solo se revelan en el Pase Digital del comprador.
+
+Galería bloqueada: Las fotos reales de las instalaciones quedan restringidas para asistentes confirmados.
+
+Supabase: Conexión en la nube para guardar y sincronizar boletas vendidas.
+
+Listener en tiempo real: Actualización automática entre diferentes dispositivos sin recargar.
+
+Doble respaldo local: Sincronización en localStorage y sessionStorage para no perder compras ante fallos de conexión.
+
+Acceso restringido: Se abre con triple clic en el sello de verificación del footer, protegido por contraseña.
+
+Emisión manual de boletas: Para generar entradas oficiales con QR a clientes que pagan directamente por Nequi o transferencia bancaria.
+
+Gestor de eventos: Cambio de fechas, alineación de DJs, precios y aforo.
+Métricas en vivo: Total de entradas vendidas, dinero recaudado y tabla de compradores.
+Panel Wompi simplificado: Retiro de llaves del panel para mayor limpieza visual.
+
+Filtro +18 Años: Checkbox obligatorio y modal de Términos, Condiciones y Política de Privacidad de Eclipse Events.
+
+Redes Oficiales: Botón oficial con enlace a Instagram @eclipse_fullvibes_events.

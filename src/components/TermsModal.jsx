@@ -19,7 +19,7 @@ export default function TermsModal({ isOpen, onClose }) {
                 Términos, Condiciones & Política de Privacidad
               </h3>
               <p className="text-slate-400 text-xs">
-                Cláusulas legales y restricción estricta de edad (+18 Años) - Eclipse Events.
+                Cláusulas legales y restricción de edad (+16 Años <u className="underline font-bold text-rose-300">con un adulto responsable</u>) - Eclipse Events.
               </p>
             </div>
           </div>
@@ -35,15 +35,18 @@ export default function TermsModal({ isOpen, onClose }) {
         {/* Content Body */}
         <div className="p-6 sm:p-8 overflow-y-auto flex-1 space-y-6 text-xs text-slate-300 leading-relaxed">
           
-          {/* Strict Age Restriction Highlight */}
+          {/* Age Restriction & Liability Exoneration Highlight */}
           <div className="p-5 rounded-2xl bg-rose-950/40 border-2 border-rose-500/60 flex items-start gap-4 shadow-lg">
             <UserCheck className="w-8 h-8 text-rose-400 shrink-0 mt-1" />
             <div>
               <h4 className="font-heading font-black text-base text-white uppercase tracking-wider">
-                🚫 RESTRICCIÓN ABSOLUTA Y ESTRICTA: PROHIBIDO MENORES DE EDAD (+18 AÑOS)
+                ⚠️ CONDICIÓN DE INGRESO Y EXONERACIÓN: INGRESO PERMITIDO DESDE LOS +16 AÑOS <u className="underline font-black decoration-rose-400 decoration-2">CON UN ADULTO RESPONSABLE</u>
               </h4>
-              <p className="text-slate-200 text-xs mt-1">
-                Eclipse Events exige la presentación obligatoria de la <strong>Cédula de Ciudadanía Original o Documento Oficial con Foto</strong> en la entrada del evento. <span className="text-rose-400 font-bold">Bajo ninguna circunstancia se permitirá el ingreso a menores de 18 años</span>, y la compra de boletería realizada por o para un menor de edad no dará derecho a devolución ni reembolso de dinero.
+              <p className="text-slate-200 text-xs mt-2 leading-relaxed">
+                Eclipse Events autoriza el ingreso de asistentes a partir de los <strong>16 años de edad</strong>, con la condición expresa de que los menores de edad asistan bajo la supervisión, custodia y autorización directa de un <u className="underline font-bold text-white">adulto responsable acompañante</u>. 
+              </p>
+              <p className="text-rose-300 text-xs mt-2 leading-relaxed font-semibold bg-black/50 p-3 rounded-xl border border-rose-500/30">
+                ⚖️ <strong>EXONERACIÓN TOTAL DE RESPONSABILIDAD:</strong> Todo menor de 18 años (16 y 17 años) ingresa bajo la <u className="underline font-black text-white">exclusiva, absoluta e indelegable responsabilidad de sus padres, acudientes legales o adulto responsable acompañante</u>. Eclipse Events, sus organizadores, patrocinadores y la administración del recinto quedan <u className="underline font-black text-white">completamente exonerados de cualquier responsabilidad civil, médica, legal o penal</u> derivada del comportamiento, incidentes, extravío de pertenencias o actos imputables al menor durante o después del evento. Se exigirá documento de identidad original con foto en puerta.
               </p>
             </div>
           </div>
@@ -96,7 +99,7 @@ export default function TermsModal({ isOpen, onClose }) {
             onClick={onClose}
             className="btn-neon-red px-8 py-3 rounded-xl text-xs font-black uppercase tracking-wider"
           >
-            Entendido y Acepto Términos (+18 Años)
+            Entendido y Acepto Términos (+16 Años con Adulto Responsable)
           </button>
         </div>
 

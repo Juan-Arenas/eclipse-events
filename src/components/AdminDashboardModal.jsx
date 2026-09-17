@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, LayoutDashboard, Edit3, PlusCircle, CheckCircle2, QrCode, Zap, ToggleLeft, ToggleRight } from 'lucide-react';
+import { X, LayoutDashboard, Edit3, PlusCircle, CheckCircle2, QrCode, Zap, ToggleLeft, ToggleRight, Music, Trash2, Plus } from 'lucide-react';
 
 export default function AdminDashboardModal({ 
   isOpen, 
@@ -38,6 +38,39 @@ export default function AdminDashboardModal({
 
   const [savedSuccess, setSavedSuccess] = useState(false);
 
+  // DJs & Artists Lineup State
+  const [artistsList, setArtistsList] = useState(monthlyEvent?.lineup || [
+    "ALEXANDER SKY (Melodic Techno)",
+    "NEON PULSE (Live Set)",
+    "VALENTINA ROSS",
+    "LUNAR ECHOES"
+  ]);
+  const [newArtistName, setNewArtistName] = useState('');
+  const [artistsSavedSuccess, setArtistsSavedSuccess] = useState(false);
+
+  const handleAddArtist = (e) => {
+    e.preventDefault();
+    if (!newArtistName.trim()) return;
+    const updated = [...artistsList, newArtistName.trim()];
+    setArtistsList(updated);
+    setNewArtistName('');
+  };
+
+  const handleRemoveArtist = (indexToRemove) => {
+    const updated = artistsList.filter((_, idx) => idx !== indexToRemove);
+    setArtistsList(updated);
+  };
+
+  const handleSaveArtists = () => {
+    const updated = {
+      ...monthlyEvent,
+      lineup: artistsList
+    };
+    onUpdateMonthlyEvent(updated);
+    setArtistsSavedSuccess(true);
+    setTimeout(() => setArtistsSavedSuccess(false), 3000);
+  };
+
   const handleManualIssueSubmit = (e) => {
     e.preventDefault();
     if (!manualData.name || !manualData.dni) {
@@ -45,8 +78,7 @@ export default function AdminDashboardModal({
       return;
     }
 
-    const nextNumber = (currentSeatIndex || 1);
-    const seatFormatted = `SILLA A-${String(nextNumber).padStart(3, '0')}`;
+    const seatFormatted = "AFORO GENERAL";
     const ticketId = `ECLIPSE-MAN-${Math.floor(100000 + Math.random() * 900000)}`;
     const qrHash = `ECLIPSE-TICKET-${ticketId}-${manualData.dni}-${Date.now()}`;
     const backupCode = `BAC-ECL-${Math.floor(1000 + Math.random() * 9000)}-${manualData.dni.slice(-4)}`;
@@ -66,7 +98,7 @@ export default function AdminDashboardModal({
       fullAddress: "Ubicación Confidencial Activada",
       mapsUrl: "#",
       tierName: isVip ? "Boleta VIP" : "Boleta General",
-      tierDescription: isVip ? "Acceso preferencial + 1 Cóctel de bienvenida incluido." : "Únicamente acceso al evento.",
+      tierDescription: isVip ? "Acceso preferencial + Eclipse Drinks Adicional incluido." : "Únicamente acceso al evento.",
       quantity: 1,
       totalPrice: isDemoZeroMode ? 0 : 1,
       holderName: manualData.name,
@@ -177,6 +209,15 @@ export default function AdminDashboardModal({
             </button>
 
             <button
+              onClick={() => setTab('artists')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${
+                tab === 'artists' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
+              }`}
+            >
+              <Music className="w-4 h-4" /> DJs & Artistas
+            </button>
+
+            <button
               onClick={() => setTab('metrics')}
               className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all ${
                 tab === 'metrics' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
@@ -206,20 +247,20 @@ export default function AdminDashboardModal({
                 <div className="p-5 rounded-2xl bg-emerald-500/20 border border-emerald-500 text-slate-100 space-y-2 animate-fade-in">
                   <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
                     <CheckCircle2 className="w-5 h-5" />
-                    <span>¡Boleta tachada/emitida exitosamente!</span>
+                    <span>¡Boleta oficial emitida exitosamente!</span>
                   </div>
                   <p className="text-xs text-slate-300">
-                    Se asignó la <strong className="text-emerald-400">{issuedSuccess.seatNumber}</strong> a <strong>{issuedSuccess.holderName}</strong> (C.C. {issuedSuccess.holderDni}).
+                    Se emitió la boleta oficial para <strong>{issuedSuccess.holderName}</strong> (C.C. {issuedSuccess.holderDni}) con acceso a <strong className="text-emerald-400">{issuedSuccess.seatNumber}</strong>.
                   </p>
                 </div>
               )}
 
               <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
                 <h4 className="font-heading font-black text-xl text-white mb-1">
-                  Emitir / Tachar Boleta (Venta Externa)
+                  Emitir Boleta Oficial (Venta Presencial / Externa)
                 </h4>
                 <p className="text-slate-400 text-xs">
-                  Ingresa los datos del comprador para tachar una boleta de la preventa y asignarle su silla consecutiva.
+                  Ingresa los datos del comprador para emitir una boleta oficial de acceso general y generar su código QR único.
                 </p>
               </div>
 
@@ -259,7 +300,7 @@ export default function AdminDashboardModal({
                       className="w-full bg-[#12121c] border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ff0033]"
                     >
                       <option value="sencilla">Boleta General (Entrada)</option>
-                      <option value="vip">Boleta VIP (Entrada + 1 Cóctel)</option>
+                      <option value="vip">Boleta VIP (Entrada + Eclipse Drinks Adicional)</option>
                     </select>
                   </div>
 
@@ -280,7 +321,7 @@ export default function AdminDashboardModal({
                   className="w-full btn-neon-red py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2"
                 >
                   <PlusCircle className="w-5 h-5" />
-                  <span>Tachar Silla & Emitir Boleta</span>
+                  <span>Emitir Boleta Oficial</span>
                 </button>
               </form>
             </div>
@@ -327,6 +368,95 @@ export default function AdminDashboardModal({
             </form>
           )}
 
+          {/* TAB: DJS & ARTISTAS */}
+          {tab === 'artists' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className="bg-white/5 p-4 rounded-2xl border border-white/10 flex items-center justify-between">
+                <div>
+                  <h4 className="font-heading font-black text-xl text-white mb-1 flex items-center gap-2">
+                    <Music className="w-5 h-5 text-[#ff0033]" />
+                    Gestión de DJs & Artistas del Festival
+                  </h4>
+                  <p className="text-slate-400 text-xs">
+                    Agrega, elimina o actualiza los DJs que se muestran en el cartel oficial de la web en tiempo real.
+                  </p>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-[#ff0033]/20 border border-[#ff0033]/40 text-[#ff0033] text-xs font-bold font-mono">
+                  {artistsList.length} Artistas
+                </span>
+              </div>
+
+              {artistsSavedSuccess && (
+                <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500 text-emerald-400 text-xs font-bold flex items-center gap-2 animate-fade-in">
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span>¡Lineup de DJs y Artistas guardado exitosamente en la web!</span>
+                </div>
+              )}
+
+              {/* Form to add new artist */}
+              <form onSubmit={handleAddArtist} className="flex gap-2">
+                <input
+                  type="text"
+                  value={newArtistName}
+                  onChange={(e) => setNewArtistName(e.target.value)}
+                  placeholder="Nombre del DJ / Artista (ej: ALEXANDER SKY - Melodic Techno)"
+                  className="flex-1 bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ff0033]"
+                />
+                <button
+                  type="submit"
+                  className="btn-silver px-5 py-3 rounded-xl text-xs font-bold uppercase flex items-center gap-2 border border-white/20 hover:border-[#ff0033] hover:text-[#ff0033] transition-colors"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Agregar DJ</span>
+                </button>
+              </form>
+
+              {/* List of current artists */}
+              <div className="space-y-2">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Lineup Actual en el Cartel:</p>
+                {artistsList.length === 0 ? (
+                  <p className="text-xs text-slate-400 bg-white/5 p-4 rounded-xl">No hay DJs en la lista. Agrega al menos uno.</p>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {artistsList.map((artist, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-[#ff0033]/50 transition-all"
+                      >
+                        <div className="flex items-center gap-2.5 overflow-hidden">
+                          <span className="w-6 h-6 rounded-full bg-[#ff0033]/20 text-[#ff0033] flex items-center justify-center text-xs font-black font-mono flex-shrink-0">
+                            {idx + 1}
+                          </span>
+                          <span className="text-xs sm:text-sm font-bold text-white truncate">
+                            {artist}
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveArtist(idx)}
+                          className="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white transition-colors flex-shrink-0 ml-2"
+                          title="Eliminar DJ"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Save button */}
+              <button
+                type="button"
+                onClick={handleSaveArtists}
+                className="w-full btn-neon-red py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2"
+              >
+                <CheckCircle2 className="w-5 h-5" />
+                <span>Guardar y Publicar Lineup de DJs</span>
+              </button>
+            </div>
+          )}
+
           {/* TAB 3: METRICS */}
           {tab === 'metrics' && (
             <div className="space-y-6">
@@ -338,7 +468,7 @@ export default function AdminDashboardModal({
                   <table className="w-full text-left text-xs text-slate-300">
                     <thead className="bg-white/10 text-slate-200 uppercase text-[10px] font-bold">
                       <tr>
-                        <th className="p-3">Silla #</th>
+                        <th className="p-3">Acceso</th>
                         <th className="p-3">Comprador</th>
                         <th className="p-3">Cédula</th>
                         <th className="p-3">Tipo Boleta</th>
@@ -348,7 +478,7 @@ export default function AdminDashboardModal({
                     <tbody className="divide-y divide-white/10 font-mono">
                       {tickets.map(t => (
                         <tr key={t.id}>
-                          <td className="p-3 font-bold text-[#ff0033]">{t.seatNumber || 'SILLA A-001'}</td>
+                          <td className="p-3 font-bold text-[#ff0033]">{t.seatNumber || 'AFORO GENERAL'}</td>
                           <td className="p-3 font-sans text-white">{t.holderName}</td>
                           <td className="p-3">{t.holderDni}</td>
                           <td className="p-3 text-white font-bold">{t.tierName}</td>

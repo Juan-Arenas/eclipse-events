@@ -34,9 +34,9 @@ export default function DigitalTicketPass({ ticket, onOpenGallery }) {
           </div>
 
           <div className="text-right">
-            <span className="text-[9px] text-slate-400 font-mono block uppercase">UBICACIÓN</span>
+            <span className="text-[9px] text-slate-400 font-mono block uppercase">ACCESO</span>
             <span className="text-xs font-mono font-black text-[#ff0033] bg-black/90 px-3 py-1 rounded-lg border border-[#ff0033]/50 shadow-md">
-              {ticket.seatNumber || "SILLA A-001"}
+              AFORO GENERAL
             </span>
           </div>
         </div>
@@ -65,7 +65,7 @@ export default function DigitalTicketPass({ ticket, onOpenGallery }) {
             {isVip ? (
               <span className="text-amber-400 flex items-center gap-1">
                 <Wine className="w-3.5 h-3.5 text-[#ff0033]" />
-                Acceso Preferencial + 1 Cóctel Incluido
+                Acceso Preferencial + Eclipse Drinks Adicional Incluido
               </span>
             ) : (
               <span className="text-slate-300 flex items-center gap-1">

@@ -36,7 +36,7 @@ export const INITIAL_MONTHLY_EVENT = {
       pricePromo: 1500,
       price: 1500, // $1.500 COP (Mínimo API Wompi en Colombia)
       quota: 100, 
-      description: "Acceso preferencial al evento + 1 Cóctel de bienvenida incluido." 
+      description: "Acceso preferencial al evento + Eclipse Drinks Adicional incluido." 
     }
   ]
 };

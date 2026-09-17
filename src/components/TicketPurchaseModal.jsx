@@ -47,14 +47,12 @@ export default function TicketPurchaseModal({
       }
 
       if (!acceptedTerms) {
-        alert("Debes aceptar los Términos, Condiciones y Política de Privacidad (+18 Años) para continuar.");
+        alert("Debes aceptar los Términos, Condiciones y Política de Privacidad (+16 Años con un adulto responsable) para continuar.");
         return;
       }
 
       setIsProcessing(true);
       
-      const nextNumber = (currentSeatIndex || 1);
-      const seatFormatted = `SILLA A-${String(nextNumber).padStart(3, '0')}`;
       const ticketId = `ECLIPSE-${Math.floor(100000 + Math.random() * 900000)}`;
       const qrHash = `ECLIPSE-TICKET-${ticketId}-${formData.dni}-${Date.now()}`;
       const backupCode = `BAC-ECL-${Math.floor(1000 + Math.random() * 9000)}-${formData.dni.slice(-4)}`;
@@ -64,7 +62,7 @@ export default function TicketPurchaseModal({
           id: ticketId,
           qrHash: qrHash,
           backupCode: backupCode,
-          seatNumber: seatFormatted,
+          seatNumber: "AFORO GENERAL",
           eventId: event.id,
           eventTitle: event.title,
           eventDate: event.formattedDate,
@@ -251,7 +249,7 @@ export default function TicketPurchaseModal({
                         </span>
                         <p className="text-xs text-slate-300 bg-black/40 p-2.5 rounded-xl border border-white/10">
                           • Acceso preferencial sin filas.<br />
-                          • <strong>1 Cóctel de bienvenida incluido.</strong>
+                          • <strong>Eclipse Drinks Adicional incluido.</strong>
                         </p>
                       </div>
 
@@ -274,7 +272,7 @@ export default function TicketPurchaseModal({
                 <div className="flex items-center justify-between bg-white/5 p-4 rounded-2xl border border-white/10">
                   <div>
                     <span className="text-sm font-bold text-white block">Cantidad de Entradas</span>
-                    <span className="text-xs text-slate-400">Asignación consecutiva de sillas</span>
+                    <span className="text-xs text-slate-400">Acceso General / Aforo Oficial</span>
                   </div>
 
                   <div className="flex items-center gap-3 bg-black/50 border border-white/20 rounded-xl p-1">
@@ -324,7 +322,7 @@ export default function TicketPurchaseModal({
 
                   <div>
                     <label className="text-xs font-bold text-slate-300 block mb-1.5 flex items-center gap-1">
-                      <Hash className="w-3.5 h-3.5 text-[#ff0033]" /> Cédula ID (Obligatoria +18) *
+                      <Hash className="w-3.5 h-3.5 text-[#ff0033]" /> Documento / Cédula ID (+16 Años) *
                     </label>
                     <input
                       type="text"
@@ -366,7 +364,7 @@ export default function TicketPurchaseModal({
                   </div>
                 </div>
 
-                {/* MANDATORY LEGAL TERMS & PRIVACY POLICY CHECKBOX (+18) */}
+                {/* MANDATORY LEGAL TERMS & PRIVACY POLICY CHECKBOX (+16 AÑOS CON ADULTO RESPONSABLE) */}
                 <div className="p-4 rounded-2xl bg-rose-950/30 border border-rose-500/40 space-y-2">
                   <div className="flex items-start gap-2.5">
                     <input
@@ -378,7 +376,7 @@ export default function TicketPurchaseModal({
                       className="mt-1 w-4 h-4 rounded border-slate-700 bg-black text-[#ff0033] focus:ring-[#ff0033]"
                     />
                     <label htmlFor="termsCheckbox" className="text-xs text-slate-300 leading-snug cursor-pointer">
-                      Declaro que soy <strong>MAYOR DE 18 AÑOS</strong> y acepto plenamente los{' '}
+                      Declaro que soy <strong>MAYOR DE 16 AÑOS</strong> (o asisto bajo la supervisión de un <u className="underline font-bold text-rose-300">adulto responsable</u>) y acepto plenamente los{' '}
                       <button
                         type="button"
                         onClick={() => setIsTermsModalOpen(true)}
@@ -386,7 +384,7 @@ export default function TicketPurchaseModal({
                       >
                         Términos, Condiciones y Políticas de Privacidad
                       </button>{' '}
-                      de Eclipse Events. Entiendo que se exigirá Cédula Original en la entrada sin excepciones.
+                      de Eclipse Events. Entiendo que los menores de edad ingresan bajo la <u className="underline font-bold text-rose-300">exclusiva responsabilidad de su adulto responsable acompañante</u>, eximiendo a la organización de toda responsabilidad legal.
                     </label>
                   </div>
                 </div>

@@ -48,7 +48,7 @@ export default function App() {
       id: 'ECLIPSE-774921',
       qrHash: 'ECLIPSE-TICKET-ECLIPSE-774921-1098765432-1700000000',
       backupCode: 'BAC-ECL-8821-5432',
-      seatNumber: 'SILLA A-001',
+      seatNumber: 'AFORO GENERAL',
       eventId: 'evt-monthly-main',
       eventTitle: 'ECLIPSE NEON FESTIVAL 2026',
       eventDate: 'Sábado, 24 de Octubre, 2026',
@@ -57,7 +57,7 @@ export default function App() {
       fullAddress: 'Ubicación Confidencial Activada',
       mapsUrl: '#',
       tierName: 'Boleta VIP',
-      tierDescription: 'Acceso preferencial + 1 Cóctel de bienvenida incluido.',
+      tierDescription: 'Acceso preferencial + Eclipse Drinks Adicional incluido.',
       quantity: 1,
       totalPrice: 0,
       holderName: 'Juan Arenas',
@@ -111,8 +111,7 @@ export default function App() {
         const pendingInfoRaw = sessionStorage.getItem(`eclipse_pending_info_${reference}`);
         const pendingInfo = pendingInfoRaw ? JSON.parse(pendingInfoRaw) : {};
 
-        const nextNumber = seatCounter;
-        const seatFormatted = `SILLA A-${String(nextNumber).padStart(3, '0')}`;
+        const seatFormatted = "AFORO GENERAL";
         const ticketId = `ECLIPSE-${Math.floor(100000 + Math.random() * 900000)}`;
 
         const newTicket = {
