@@ -48,6 +48,44 @@ export const wompiService = {
     });
   },
 
+  // Generate official Wompi Web Checkout standalone URL
+  async buildWebCheckoutUrl({ amountInCop, reference, integritySecret = getWompiIntegritySecret() }) {
+    const publicKey = getWompiPublicKey();
+    const effectiveAmountCop = Math.max(1500, Number(amountInCop) || 1500);
+    const amountInCents = Math.round(effectiveAmountCop * 100);
+    const currency = 'COP';
+    const redirectUrl = encodeURIComponent(window.location.origin + window.location.pathname);
+
+    const integrityHash = await generateIntegritySignature(reference, amountInCents, currency, integritySecret);
+    
+    let url = `https://checkout.wompi.co/p/?public-key=${publicKey}&currency=${currency}&amount-in-cents=${amountInCents}&reference=${reference}&redirect-url=${redirectUrl}`;
+    if (integrityHash) {
+      url += `&signature:integrity=${integrityHash}`;
+    }
+    return url;
+  },
+
+  // Query Wompi API to verify transaction status by ID
+  async verifyTransaction(transactionId) {
+    if (!transactionId) return null;
+    const publicKey = getWompiPublicKey();
+    const isTest = publicKey.startsWith('pub_test_');
+    const baseUrl = isTest ? 'https://sandbox.wompi.co/v1' : 'https://production.wompi.co/v1';
+
+    try {
+      const response = await fetch(`${baseUrl}/transactions/${transactionId}`);
+      if (!response.ok) {
+        console.warn(`Wompi API error HTTP ${response.status}`);
+        return null;
+      }
+      const json = await response.json();
+      return json?.data || null;
+    } catch (err) {
+      console.error('Error verificando transacción Wompi:', err);
+      return null;
+    }
+  },
+
   // Launch official Wompi Checkout Widget - STRICT PAYMENT VERIFICATION & 1 CUOTA DEFAULT
   async openCheckout({
     amountInCop,
@@ -68,20 +106,34 @@ export const wompiService = {
     const currency = 'COP';
 
     try {
-      await this.loadScript();
-
       const integrityHash = await generateIntegritySignature(reference, amountInCents, currency, integritySecret);
-
       const cleanPhone = (customerPhoneNumber || '').replace(/\D/g, '').slice(-10) || '3000000000';
       const cleanDni = (customerDni || '').replace(/\D/g, '') || '1098765432';
 
-      if (window.WidgetCheckout) {
+      // Save pending purchase details in local session for redirect verification
+      sessionStorage.setItem('eclipse_pending_ref', reference);
+      sessionStorage.setItem(`eclipse_pending_info_${reference}`, JSON.stringify({
+        customerEmail,
+        customerFullName,
+        customerDni: cleanDni,
+        amountInCop: effectiveAmountCop
+      }));
+
+      // Try loading script for widget
+      let scriptLoaded = false;
+      try {
+        scriptLoaded = await this.loadScript();
+      } catch (scriptErr) {
+        console.warn('Wompi widget script could not be loaded (likely blocked by ad-blocker). Using redirect checkout.');
+      }
+
+      if (scriptLoaded && window.WidgetCheckout) {
         const checkoutOptions = {
           currency: currency,
           amountInCents: amountInCents,
           reference: reference,
           publicKey: publicKey,
-          redirectUrl: window.location.href,
+          redirectUrl: window.location.origin + window.location.pathname,
           defaultInstallments: 1, // Pago de una sola cuota (sin cuotas)
           customerData: {
             email: customerEmail,
@@ -112,20 +164,14 @@ export const wompiService = {
           if (transaction && transaction.status === 'APPROVED') {
             onSuccess(transaction);
           } else {
-            onError(transaction || { status: 'NOT_APPROVED', message: 'La transacción no fue aprobada por el banco.' });
+            onError(transaction || { status: 'NOT_APPROVED', message: 'La transacción no fue aprobada por la entidad financiera.' });
           }
         });
 
       } else {
-        // Fallback Web Checkout URL
-        const redirectUrl = encodeURIComponent(window.location.href);
-        let checkoutUrl = `https://checkout.wompi.co/p/?public-key=${publicKey}&currency=${currency}&amount-in-cents=${amountInCents}&reference=${reference}&redirect-url=${redirectUrl}`;
-        if (integrityHash) {
-          checkoutUrl += `&signature:integrity=${integrityHash}`;
-        }
-        window.open(checkoutUrl, '_blank');
-        
-        onError({ status: 'REDIRECTED', message: 'Comprueba el estado de la transacción en tu banco.' });
+        // Fallback: Redirección directa a la pasarela Wompi Web Checkout
+        const checkoutUrl = await this.buildWebCheckoutUrl({ amountInCop: effectiveAmountCop, reference, integritySecret });
+        window.location.href = checkoutUrl;
       }
     } catch (err) {
       console.error('Error inicializando Wompi:', err);

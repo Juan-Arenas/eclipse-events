@@ -13,6 +13,7 @@ import ScrollReveal from './components/ScrollReveal';
 import Footer from './components/Footer';
 import { INITIAL_MONTHLY_EVENT } from './data/initialData';
 import { ticketService } from './services/ticketService';
+import { wompiService } from './services/wompiService';
 
 export default function App() {
   const [monthlyEvent, setMonthlyEvent] = useState(() => {
@@ -91,6 +92,61 @@ export default function App() {
     });
 
     return () => unsubscribe();
+  }, []);
+
+  // Handle Wompi Redirect Callback (if user was redirected after payment)
+  useEffect(() => {
+    const checkWompiRedirect = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const transactionId = urlParams.get('id');
+
+      if (!transactionId) return;
+
+      // Clean URL search params without page reload
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      const transaction = await wompiService.verifyTransaction(transactionId);
+      if (transaction && transaction.status === 'APPROVED') {
+        const reference = transaction.reference;
+        const pendingInfoRaw = sessionStorage.getItem(`eclipse_pending_info_${reference}`);
+        const pendingInfo = pendingInfoRaw ? JSON.parse(pendingInfoRaw) : {};
+
+        const nextNumber = seatCounter;
+        const seatFormatted = `SILLA A-${String(nextNumber).padStart(3, '0')}`;
+        const ticketId = `ECLIPSE-${Math.floor(100000 + Math.random() * 900000)}`;
+
+        const newTicket = {
+          id: ticketId,
+          qrHash: `ECLIPSE-TICKET-${ticketId}-${pendingInfo.customerDni || '1098765432'}-${Date.now()}`,
+          backupCode: `BAC-ECL-${Math.floor(1000 + Math.random() * 9000)}-${(pendingInfo.customerDni || '5432').slice(-4)}`,
+          seatNumber: seatFormatted,
+          eventId: monthlyEvent.id,
+          eventTitle: monthlyEvent.title,
+          eventDate: monthlyEvent.formattedDate,
+          eventTime: monthlyEvent.time,
+          venue: "Sede Campestre (En Tu Entrada Digital)",
+          fullAddress: "Ubicación Confidencial Activada",
+          mapsUrl: "#",
+          tierName: "Boleta General Wompi",
+          tierDescription: "Entrada confirmada vía Wompi Checkout",
+          quantity: 1,
+          totalPrice: (transaction.amount_in_cents || 150000) / 100,
+          holderName: pendingInfo.customerFullName || transaction.customer_data?.full_name || 'Comprador Eclipse',
+          holderDni: pendingInfo.customerDni || '1098765432',
+          holderEmail: pendingInfo.customerEmail || transaction.customer_email || 'cliente@eclipseevents.com',
+          status: 'VALIDA',
+          purchaseDate: new Date().toLocaleDateString('es-CO')
+        };
+
+        await handleTicketPurchased(newTicket);
+        setIsTicketsModalOpen(true);
+        alert(`🎉 ¡Pago Aprobado por Wompi!\nSe ha emitido con éxito tu entrada (${seatFormatted}) a nombre de ${newTicket.holderName}.`);
+      } else if (transaction) {
+        alert(`❌ Transacción Wompi ${transaction.status}: El pago no fue aprobado. No se realizó el cobro ni se emitió la entrada.`);
+      }
+    };
+
+    checkWompiRedirect();
   }, []);
 
   useEffect(() => {
