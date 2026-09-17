@@ -95,7 +95,7 @@ export const wompiService = {
     }
   },
 
-  // Launch official Wompi Checkout Widget - STRICT PAYMENT VERIFICATION & 1 CUOTA DEFAULT
+  // Launch official Wompi Checkout - Direct Full Portal Redirection (Fail-safe, 0 JS errors)
   async openCheckout({
     amountInCop,
     reference,
@@ -111,14 +111,9 @@ export const wompiService = {
 
     // Wompi API minimum threshold in Colombia is 1,500 COP (150,000 cents)
     const effectiveAmountCop = Math.max(1500, Number(amountInCop) || 1500);
-    const amountInCents = Math.round(effectiveAmountCop * 100);
-    const currency = 'COP';
+    const cleanDni = (customerDni || '').replace(/\D/g, '') || '1098765432';
 
     try {
-      const integrityHash = await generateIntegritySignature(reference, amountInCents, currency, integritySecret);
-      const cleanPhone = (customerPhoneNumber || '').replace(/\D/g, '').slice(-10) || '3000000000';
-      const cleanDni = (customerDni || '').replace(/\D/g, '') || '1098765432';
-
       // Save pending purchase details in local session for redirect verification
       sessionStorage.setItem('eclipse_pending_ref', reference);
       sessionStorage.setItem(`eclipse_pending_info_${reference}`, JSON.stringify({
@@ -128,75 +123,7 @@ export const wompiService = {
         amountInCop: effectiveAmountCop
       }));
 
-      // Try loading script for widget
-      let scriptLoaded = false;
-      try {
-        scriptLoaded = await this.loadScript();
-      } catch (scriptErr) {
-        console.warn('Wompi widget script could not be loaded (likely blocked by ad-blocker). Using redirect checkout.');
-      }
-
-      if (scriptLoaded && window.WidgetCheckout) {
-        try {
-          const checkoutOptions = {
-            currency: currency,
-            amountInCents: amountInCents,
-            reference: reference,
-            publicKey: publicKey,
-            redirectUrl: window.location.origin + window.location.pathname,
-            defaultInstallments: 1, // Pago de una sola cuota (sin cuotas)
-            customerData: {
-              email: customerEmail,
-              fullName: customerFullName,
-              phoneNumber: cleanPhone,
-              phoneNumberPrefix: '+57',
-              legalId: cleanDni,
-              legalIdType: 'CC'
-            }
-          };
-
-          if (integrityHash) {
-            checkoutOptions.signature = {
-              integrity: integrityHash
-            };
-          }
-
-          const checkout = new window.WidgetCheckout(checkoutOptions);
-          let handled = false;
-
-          checkout.open((result) => {
-            if (handled) return;
-            handled = true;
-
-            const transaction = result?.transaction;
-
-            // REGLA DE SEGURIDAD STRICTA: La boleta ÚNICAMENTE se emite si la transacción fue APROBADA
-            if (transaction && transaction.status === 'APPROVED') {
-              onSuccess(transaction);
-            } else if (transaction && transaction.status) {
-              onError(transaction);
-            } else {
-              // Si el widget interno de Wompi falla o cierra sin status, redirigimos a Web Checkout oficial
-              this.buildWebCheckoutUrl({
-                amountInCop: effectiveAmountCop,
-                reference,
-                customerEmail,
-                customerFullName,
-                customerDni: cleanDni,
-                integritySecret
-              }).then(url => {
-                window.location.href = url;
-              });
-            }
-          });
-
-          return;
-        } catch (widgetErr) {
-          console.warn('Wompi Widget Checkout crash caught, falling back to Web Checkout redirect:', widgetErr);
-        }
-      }
-
-      // Fallback: Redirección directa a la pasarela Wompi Web Checkout
+      // Direct Web Checkout Redirection to Wompi official payment portal
       const checkoutUrl = await this.buildWebCheckoutUrl({
         amountInCop: effectiveAmountCop,
         reference,
@@ -205,6 +132,7 @@ export const wompiService = {
         customerDni: cleanDni,
         integritySecret
       });
+
       window.location.href = checkoutUrl;
     } catch (err) {
       console.error('Error inicializando Wompi:', err);
