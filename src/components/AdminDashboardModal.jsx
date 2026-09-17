@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, LayoutDashboard, Edit3, PlusCircle, CheckCircle2, QrCode, Zap, DollarSign, ToggleLeft, ToggleRight } from 'lucide-react';
+import { X, LayoutDashboard, Edit3, PlusCircle, CheckCircle2, QrCode, Zap, ToggleLeft, ToggleRight } from 'lucide-react';
 
 export default function AdminDashboardModal({ 
   isOpen, 
@@ -37,28 +37,6 @@ export default function AdminDashboardModal({
   });
 
   const [savedSuccess, setSavedSuccess] = useState(false);
-
-  const [wompiPublicKey, setWompiPublicKey] = useState(() => localStorage.getItem('eclipse_wompi_public_key') || '');
-  const [wompiIntegritySecret, setWompiIntegritySecret] = useState(() => localStorage.getItem('eclipse_wompi_integrity_secret') || '');
-  const [wompiSavedSuccess, setWompiSavedSuccess] = useState(false);
-
-  const handleWompiKeysSave = (e) => {
-    e.preventDefault();
-    if (wompiPublicKey.trim()) {
-      localStorage.setItem('eclipse_wompi_public_key', wompiPublicKey.trim());
-    } else {
-      localStorage.removeItem('eclipse_wompi_public_key');
-    }
-
-    if (wompiIntegritySecret.trim()) {
-      localStorage.setItem('eclipse_wompi_integrity_secret', wompiIntegritySecret.trim());
-    } else {
-      localStorage.removeItem('eclipse_wompi_integrity_secret');
-    }
-
-    setWompiSavedSuccess(true);
-    setTimeout(() => setWompiSavedSuccess(false), 3000);
-  };
 
   const handleManualIssueSubmit = (e) => {
     e.preventDefault();
@@ -190,15 +168,6 @@ export default function AdminDashboardModal({
             </button>
 
             <button
-              onClick={() => setTab('wompi_keys')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${
-                tab === 'wompi_keys' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
-              }`}
-            >
-              <DollarSign className="w-4 h-4 text-emerald-400" /> Wompi Dinero Real
-            </button>
-
-            <button
               onClick={() => setTab('edit_event')}
               className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${
                 tab === 'edit_event' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
@@ -317,70 +286,6 @@ export default function AdminDashboardModal({
             </div>
           )}
 
-          {/* TAB 2: WOMPI PRODUCTION KEYS */}
-          {tab === 'wompi_keys' && (
-            <form onSubmit={handleWompiKeysSave} className="space-y-6">
-              {wompiSavedSuccess && (
-                <div className="p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500 text-emerald-400 text-xs font-bold flex items-center gap-2 animate-fade-in">
-                  <CheckCircle2 className="w-5 h-5" />
-                  <span>¡Llaves Wompi guardadas exitosamente! El sistema procesará cobros reales.</span>
-                </div>
-              )}
-
-              <div className="bg-white/5 p-5 rounded-2xl border border-white/10 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-heading font-black text-xl text-white flex items-center gap-2">
-                    <DollarSign className="w-5 h-5 text-emerald-400" /> Configuración de Pagos Reales (Wompi Producción)
-                  </h4>
-                  <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/40 font-bold uppercase">
-                    Dinero Real & Tarjetas Reales
-                  </span>
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Para recibir pagos reales con dinero de tarjetas de crédito/débito, Nequi y PSE en tu cuenta bancaria, ingresa tus llaves de <strong>PRODUCCIÓN</strong> que obtienes en tu panel de Wompi (<a href="https://comercios.wompi.co" target="_blank" rel="noreferrer" className="text-[#ff0033] underline font-bold">comercios.wompi.co</a> &rarr; Desarrollo &rarr; Llaves de API).
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="text-xs font-bold text-slate-300 block mb-1">
-                    Llave Pública de Producción (Comienza por pub_prod_...)
-                  </label>
-                  <input
-                    type="text"
-                    value={wompiPublicKey}
-                    onChange={(e) => setWompiPublicKey(e.target.value)}
-                    placeholder="pub_prod_xxxxxxxxxxxxxxxxxxxxxxxx"
-                    className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white font-mono focus:outline-none focus:border-[#ff0033]"
-                  />
-                  <span className="text-[11px] text-slate-400 mt-1 block">
-                    Nota: Si está en blanco, se usará la llave de pruebas de Wompi.
-                  </span>
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold text-slate-300 block mb-1">
-                    Secreto de Integridad de Producción (Comienza por prod_integrity_...)
-                  </label>
-                  <input
-                    type="text"
-                    value={wompiIntegritySecret}
-                    onChange={(e) => setWompiIntegritySecret(e.target.value)}
-                    placeholder="prod_integrity_xxxxxxxxxxxxxxxxxxxxxxxx"
-                    className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-sm text-white font-mono focus:outline-none focus:border-[#ff0033]"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full btn-neon-red py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2"
-              >
-                <CheckCircle2 className="w-5 h-5" />
-                <span>Guardar Llaves Wompi Producción</span>
-              </button>
-            </form>
-          )}
           {tab === 'edit_event' && (
             <form onSubmit={handleSaveSubmit} className="space-y-6">
               {savedSuccess && (

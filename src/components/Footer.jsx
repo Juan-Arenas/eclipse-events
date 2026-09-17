@@ -2,6 +2,24 @@ import React from 'react';
 import { Sparkles, MapPin, ExternalLink, Share2, Globe, MessageCircle, Phone, Mail, ShieldCheck } from 'lucide-react';
 import { GOOGLE_MAPS_LINK } from '../data/initialData';
 
+function InstagramIcon({ className = "w-4 h-4" }) {
+  return (
+    <svg 
+      className={className} 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
 export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
   return (
     <footer className="bg-[#050508] border-t border-white/10 pt-16 pb-12 relative overflow-hidden">
@@ -10,7 +28,7 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-[#ff0033]/10 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           
           {/* Brand Info */}
           <div className="md:col-span-1 space-y-4">
@@ -24,14 +42,15 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
               Plataforma líder en venta de entradas digitales, eventos nocturnos VIP y gestión con control de acceso mediante código QR.
             </p>
             <div className="flex items-center gap-3 pt-2">
-              <a href="#" className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-[#ff0033] hover:border-[#ff0033] transition-colors">
-                <Globe className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-[#ff0033] hover:border-[#ff0033] transition-colors">
-                <MessageCircle className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-[#ff0033] hover:border-[#ff0033] transition-colors">
-                <Share2 className="w-4 h-4" />
+              <a
+                href="https://instagram.com/eclipse_fullvibes_events"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Instagram Oficial @eclipse_fullvibes_events"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-[#ff0033]/40 text-slate-200 hover:text-white hover:bg-[#ff0033]/20 hover:border-[#ff0033] transition-all text-xs font-semibold shadow-[0_0_15px_rgba(255,0,51,0.25)]"
+              >
+                <InstagramIcon className="w-4 h-4 text-[#ff0033]" />
+                <span className="font-mono text-[11px]">@eclipse_fullvibes_events</span>
               </a>
             </div>
           </div>
@@ -84,12 +103,6 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
             </div>
           </div>
 
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© 2026 Eclipse Events. Todos los derechos reservados.</p>
-          <p className="font-mono text-[11px]">Metálico, Plata & Rojo Neón • Plataforma de Eventos VIP</p>
         </div>
 
       </div>

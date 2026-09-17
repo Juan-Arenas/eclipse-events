@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calendar, Clock, MapPin, Ticket, Sparkles, Lock, Music, Zap, Image as ImageIcon, Flame, Tag, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { FINCA_PHOTOS } from '../data/initialData';
+import ScrollReveal from './ScrollReveal';
 
 export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGallery, isDemoZeroMode }) {
   if (!monthlyEvent) return null;
@@ -16,8 +17,9 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
         {/* Main Event Showcase & Direct Ticket Purchase Card (BUYING FIRST AS REQUESTED) */}
         <div className="bg-metallic-card rounded-[36px] border-2 border-white/15 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-0 relative">
           
-          {/* Column 1: Poster & Integrated Venue Photo Thumbnails (Lg: 6 cols) */}
-          <div className="lg:col-span-6 relative flex flex-col justify-between p-6 sm:p-8 bg-gradient-to-b from-[#141422] to-[#0a0a0f]">
+          {/* Column 1: Poster & Integrated Venue Photo Thumbnails (Lg: 6 cols) - Slide In from Left */}
+          <ScrollReveal direction="slide-left" duration={850} className="lg:col-span-6 h-full">
+            <div className="relative flex flex-col justify-between p-6 sm:p-8 bg-gradient-to-b from-[#141422] to-[#0a0a0f] h-full">
             
             {/* Poster Header */}
             <div className="relative h-80 rounded-3xl overflow-hidden border border-white/15 shadow-xl mb-4 group">
@@ -64,10 +66,12 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               </p>
             </div>
 
-          </div>
+            </div>
+          </ScrollReveal>
 
-          {/* Column 2: Event Details, Pricing & Direct Ticket Purchase (Lg: 6 cols) */}
-          <div className="lg:col-span-6 p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-gradient-to-b from-[#12121a] to-[#0a0a0f] border-t lg:border-t-0 lg:border-l border-white/10">
+          {/* Column 2: Event Details, Pricing & Direct Ticket Purchase (Lg: 6 cols) - Slide In from Right */}
+          <ScrollReveal direction="slide-right" duration={850} delay={120} className="lg:col-span-6 h-full">
+            <div className="p-6 sm:p-8 flex flex-col justify-between space-y-6 bg-gradient-to-b from-[#12121a] to-[#0a0a0f] border-t lg:border-t-0 lg:border-l border-white/10 h-full">
             
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
@@ -166,7 +170,8 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               </div>
             </div>
 
-          </div>
+            </div>
+          </ScrollReveal>
 
         </div>
 

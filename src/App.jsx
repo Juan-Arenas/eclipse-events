@@ -236,7 +236,7 @@ export default function App() {
 
       {/* Main Content (BUYING TICKETS & MAIN EVENT SPOTLIGHT FIRST AS REQUESTED) */}
       <main className="flex-1 space-y-12">
-        <ScrollReveal>
+        <ScrollReveal direction="fade-scale" duration={800} threshold={0.05}>
           <Hero
             onExplore={() => handleNavigate('cartelera')}
             onSpotlightFinca={() => handleNavigate('finca')}
@@ -244,7 +244,7 @@ export default function App() {
         </ScrollReveal>
 
         {/* 1. TICKET BUYING SHOWCASE FIRST WITH INTEGRATED VENUE PHOTOS & EARLY BIRD DISCOUNTS */}
-        <ScrollReveal>
+        <ScrollReveal direction="fade-up" duration={850} threshold={0.1}>
           <EventBillboard
             monthlyEvent={monthlyEvent}
             onSelectEvent={handleOpenPurchase}
@@ -254,7 +254,7 @@ export default function App() {
         </ScrollReveal>
 
         {/* 2. Venue Features & Amenity Details */}
-        <ScrollReveal>
+        <ScrollReveal direction="fade-scale" duration={850} threshold={0.1}>
           <FincaSpotlight
             onOpenGallery={() => setIsGalleryOpen(true)}
             onSelectEvent={handleOpenPurchase}
@@ -263,11 +263,13 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer
-        onNavigate={handleNavigate}
-        onOpenGallery={() => setIsGalleryOpen(true)}
-        openQRModal={() => setIsQRModalOpen(true)}
-      />
+      <ScrollReveal direction="fade-up" duration={750} threshold={0.05}>
+        <Footer
+          onNavigate={handleNavigate}
+          onOpenGallery={() => setIsGalleryOpen(true)}
+          openQRModal={() => setIsQRModalOpen(true)}
+        />
+      </ScrollReveal>
 
       {/* MODALS */}
       <FincaGalleryModal

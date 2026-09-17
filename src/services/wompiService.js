@@ -30,6 +30,11 @@ async function generateIntegritySignature(reference, amountInCents, currency = '
 }
 
 export const wompiService = {
+  // Check if current Wompi keys are in sandbox/test mode
+  isSandboxMode() {
+    return getWompiPublicKey().startsWith('pub_test_');
+  },
+
   // Load Wompi Widget Script dynamically
   loadScript() {
     return new Promise((resolve, reject) => {

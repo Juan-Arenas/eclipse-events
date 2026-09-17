@@ -401,6 +401,37 @@ export default function TicketPurchaseModal({
                   </span>
                 </div>
 
+                {/* Sandbox Info Callout for Test Mode */}
+                {wompiService.isSandboxMode() && !isDemoZeroMode && (
+                  <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-amber-300 flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Wompi en Modo Sandbox (Pruebas)
+                      </span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-bold border border-amber-400/40">
+                        SIMULACIÓN
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-amber-100/80 leading-relaxed">
+                      Wompi <strong>rechaza tarjetas reales</strong> en modo pruebas. Para aprobar el pago en la pasarela, usa la tarjeta de prueba oficial:
+                    </p>
+                    <div className="bg-black/50 p-2.5 rounded-xl border border-amber-500/20 font-mono text-[11px] text-white flex flex-wrap items-center justify-between gap-2">
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">NÚMERO DE TARJETA:</span>
+                        <strong className="text-amber-300 tracking-wider">4242 4242 4242 4242</strong>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">VENCE:</span>
+                        <strong className="text-amber-300">12/28</strong>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 text-[10px] block">CVC:</span>
+                        <strong className="text-amber-300">123</strong>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex gap-3">
                   <button
                     type="button"
