@@ -17,7 +17,7 @@ export default function TicketPurchaseModal({
   if (!isOpen || !event) return null;
 
   const [step, setStep] = useState(1); // 1: Tier, 2: Info & Payment, 3: Success
-  const [selectedTier, setSelectedTier] = useState(event.tiers[0] || { id: "sencilla", name: "Boleta General", priceNormal: 25000, pricePromo: 19900, description: "Únicamente acceso al evento." });
+  const [selectedTier, setSelectedTier] = useState(event.tiers[0] || { id: "sencilla", name: "Boleta General", priceNormal: 1500, pricePromo: 1500, price: 1500, description: "Únicamente acceso al evento." });
   const [quantity, setQuantity] = useState(1);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
@@ -217,8 +217,7 @@ export default function TicketPurchaseModal({
                           <span className="font-heading font-black text-xl text-emerald-400">$0 COP</span>
                         ) : (
                           <div className="text-right">
-                            <span className="line-through text-slate-500 text-xs block">$25.000</span>
-                            <span className="font-heading font-black text-lg text-emerald-400">$19.900 COP</span>
+                            <span className="font-heading font-black text-lg text-emerald-400">$1.500 COP</span>
                           </div>
                         )}
                       </div>
@@ -257,8 +256,7 @@ export default function TicketPurchaseModal({
                           <span className="font-heading font-black text-xl text-emerald-400">$0 COP</span>
                         ) : (
                           <div className="text-right">
-                            <span className="line-through text-slate-500 text-xs block">$28.000</span>
-                            <span className="font-heading font-black text-lg text-emerald-400">$24.900 COP</span>
+                            <span className="font-heading font-black text-lg text-emerald-400">$1.500 COP</span>
                           </div>
                         )}
                       </div>
