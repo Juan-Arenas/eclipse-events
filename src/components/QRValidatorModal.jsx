@@ -3,8 +3,6 @@ import { X, QrCode, ShieldCheck, CheckCircle2, XCircle, Scan, KeyRound, Camera, 
 import { Html5Qrcode } from 'html5-qrcode';
 
 export default function QRValidatorModal({ isOpen, onClose, tickets, onValidateTicket }) {
-  if (!isOpen) return null;
-
   const [inputHash, setInputHash] = useState('');
   const [scanResult, setScanResult] = useState(null);
   const [activeMode, setActiveMode] = useState('camera'); // 'camera' | 'manual' | 'backup'
@@ -100,6 +98,8 @@ export default function QRValidatorModal({ isOpen, onClose, tickets, onValidateT
       }
     };
   }, [isOpen, activeMode, scanResult]);
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fade-in overflow-y-auto">

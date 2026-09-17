@@ -1,6 +1,6 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { MapPin, Navigation, ExternalLink, Sparkles, CheckCircle2, ShieldCheck, User, Calendar, Lock, Wine } from 'lucide-react';
+import { MapPin, Navigation, ExternalLink, Sparkles, CheckCircle2, ShieldCheck, User, Calendar, Lock, Wine, Image as ImageIcon } from 'lucide-react';
 
 export default function DigitalTicketPass({ ticket, onOpenGallery }) {
   if (!ticket) return null;
