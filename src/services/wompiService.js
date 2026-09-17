@@ -49,7 +49,7 @@ export const wompiService = {
   },
 
   // Generate official Wompi Web Checkout standalone URL
-  async buildWebCheckoutUrl({ amountInCop, reference, integritySecret = getWompiIntegritySecret() }) {
+  async buildWebCheckoutUrl({ amountInCop, reference, customerEmail, customerFullName, customerDni, integritySecret = getWompiIntegritySecret() }) {
     const publicKey = getWompiPublicKey();
     const effectiveAmountCop = Math.max(1500, Number(amountInCop) || 1500);
     const amountInCents = Math.round(effectiveAmountCop * 100);
@@ -61,6 +61,15 @@ export const wompiService = {
     let url = `https://checkout.wompi.co/p/?public-key=${publicKey}&currency=${currency}&amount-in-cents=${amountInCents}&reference=${reference}&redirect-url=${redirectUrl}`;
     if (integrityHash) {
       url += `&signature:integrity=${integrityHash}`;
+    }
+    if (customerEmail) {
+      url += `&customer-data:email=${encodeURIComponent(customerEmail)}`;
+    }
+    if (customerFullName) {
+      url += `&customer-data:full-name=${encodeURIComponent(customerFullName)}`;
+    }
+    if (customerDni) {
+      url += `&customer-data:legal-id=${encodeURIComponent(customerDni)}&customer-data:legal-id-type=CC`;
     }
     return url;
   },
@@ -128,51 +137,75 @@ export const wompiService = {
       }
 
       if (scriptLoaded && window.WidgetCheckout) {
-        const checkoutOptions = {
-          currency: currency,
-          amountInCents: amountInCents,
-          reference: reference,
-          publicKey: publicKey,
-          redirectUrl: window.location.origin + window.location.pathname,
-          defaultInstallments: 1, // Pago de una sola cuota (sin cuotas)
-          customerData: {
-            email: customerEmail,
-            fullName: customerFullName,
-            phoneNumber: cleanPhone,
-            phoneNumberPrefix: '+57',
-            legalId: cleanDni,
-            legalIdType: 'CC'
-          }
-        };
-
-        if (integrityHash) {
-          checkoutOptions.signature = {
-            integrity: integrityHash
+        try {
+          const checkoutOptions = {
+            currency: currency,
+            amountInCents: amountInCents,
+            reference: reference,
+            publicKey: publicKey,
+            redirectUrl: window.location.origin + window.location.pathname,
+            defaultInstallments: 1, // Pago de una sola cuota (sin cuotas)
+            customerData: {
+              email: customerEmail,
+              fullName: customerFullName,
+              phoneNumber: cleanPhone,
+              phoneNumberPrefix: '+57',
+              legalId: cleanDni,
+              legalIdType: 'CC'
+            }
           };
-        }
 
-        const checkout = new window.WidgetCheckout(checkoutOptions);
-        let handled = false;
-
-        checkout.open((result) => {
-          if (handled) return;
-          handled = true;
-
-          const transaction = result?.transaction;
-
-          // REGLA DE SEGURIDAD STRICTA: La boleta ÚNICAMENTE se emite si la transacción fue APROBADA
-          if (transaction && transaction.status === 'APPROVED') {
-            onSuccess(transaction);
-          } else {
-            onError(transaction || { status: 'NOT_APPROVED', message: 'La transacción no fue aprobada por la entidad financiera.' });
+          if (integrityHash) {
+            checkoutOptions.signature = {
+              integrity: integrityHash
+            };
           }
-        });
 
-      } else {
-        // Fallback: Redirección directa a la pasarela Wompi Web Checkout
-        const checkoutUrl = await this.buildWebCheckoutUrl({ amountInCop: effectiveAmountCop, reference, integritySecret });
-        window.location.href = checkoutUrl;
+          const checkout = new window.WidgetCheckout(checkoutOptions);
+          let handled = false;
+
+          checkout.open((result) => {
+            if (handled) return;
+            handled = true;
+
+            const transaction = result?.transaction;
+
+            // REGLA DE SEGURIDAD STRICTA: La boleta ÚNICAMENTE se emite si la transacción fue APROBADA
+            if (transaction && transaction.status === 'APPROVED') {
+              onSuccess(transaction);
+            } else if (transaction && transaction.status) {
+              onError(transaction);
+            } else {
+              // Si el widget interno de Wompi falla o cierra sin status, redirigimos a Web Checkout oficial
+              this.buildWebCheckoutUrl({
+                amountInCop: effectiveAmountCop,
+                reference,
+                customerEmail,
+                customerFullName,
+                customerDni: cleanDni,
+                integritySecret
+              }).then(url => {
+                window.location.href = url;
+              });
+            }
+          });
+
+          return;
+        } catch (widgetErr) {
+          console.warn('Wompi Widget Checkout crash caught, falling back to Web Checkout redirect:', widgetErr);
+        }
       }
+
+      // Fallback: Redirección directa a la pasarela Wompi Web Checkout
+      const checkoutUrl = await this.buildWebCheckoutUrl({
+        amountInCop: effectiveAmountCop,
+        reference,
+        customerEmail,
+        customerFullName,
+        customerDni: cleanDni,
+        integritySecret
+      });
+      window.location.href = checkoutUrl;
     } catch (err) {
       console.error('Error inicializando Wompi:', err);
       onError({ status: 'ERROR', message: 'Error al conectar con Wompi. La boleta no ha sido emitida.' });
