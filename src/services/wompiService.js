@@ -6,7 +6,7 @@ const WOMPI_WIDGET_SCRIPT_URL = 'https://checkout.wompi.co/widget.js';
 
 /**
  * Genera la firma de integridad SHA-256 requerida por Wompi
- * Cadena: Cadena concatenada (referencia + montoEnCentavos + moneda + secretoIntegridad)
+ * Cadena concatenada: (referencia + montoEnCentavos + moneda + secretoIntegridad)
  */
 async function generateIntegritySignature(reference, amountInCents, currency = 'COP', secret = WOMPI_INTEGRITY_SECRET) {
   if (!secret) return null;
@@ -42,7 +42,7 @@ export const wompiService = {
     });
   },
 
-  // Launch official Wompi Checkout Widget - STRICT PAYMENT VERIFICATION
+  // Launch official Wompi Checkout Widget - STRICT PAYMENT VERIFICATION & 1 CUOTA DEFAULT
   async openCheckout({
     amountInCop,
     reference,
@@ -72,6 +72,7 @@ export const wompiService = {
           reference: reference,
           publicKey: WOMPI_PUBLIC_KEY,
           redirectUrl: window.location.href,
+          defaultInstallments: 1, // Pago de una sola cuota (sin cuotas)
           customerData: {
             email: customerEmail,
             fullName: customerFullName,
@@ -96,11 +97,12 @@ export const wompiService = {
           handled = true;
 
           const transaction = result?.transaction;
-          // STRICT SECURITY RULE: Ticket is ONLY issued if Wompi returns APPROVED or PENDING!
-          if (transaction && (transaction.status === 'APPROVED' || transaction.status === 'PENDING')) {
+
+          // REGLA DE SEGURIDAD STRICTA: La boleta ÚNICAMENTE se emite si la transacción fue APROBADA
+          if (transaction && transaction.status === 'APPROVED') {
             onSuccess(transaction);
           } else {
-            onError(transaction || { status: 'CANCELLED', message: 'El pago no fue aprobado ni completado.' });
+            onError(transaction || { status: 'NOT_APPROVED', message: 'La transacción no fue aprobada por el banco.' });
           }
         });
 
@@ -113,7 +115,7 @@ export const wompiService = {
         }
         window.open(checkoutUrl, '_blank');
         
-        onError({ status: 'REDIRECTED', message: 'Redirigido a la pasarela Wompi para completar el pago.' });
+        onError({ status: 'REDIRECTED', message: 'Comprueba el estado de la transacción en tu banco.' });
       }
     } catch (err) {
       console.error('Error inicializando Wompi:', err);

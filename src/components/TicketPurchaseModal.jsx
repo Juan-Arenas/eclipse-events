@@ -109,8 +109,12 @@ export default function TicketPurchaseModal({
               customerPhoneNumber: formData.phone || '3000000000',
               customerDni: formData.dni,
               onSuccess: (transaction) => {
-                // Strict check: ONLY issue ticket if transaction is APPROVED or PENDING
-                issueTicketPass();
+                if (transaction && transaction.status === 'APPROVED') {
+                  issueTicketPass();
+                } else {
+                  setIsProcessing(false);
+                  alert("❌ Pago No Aprobado: La transacción no fue autorizada por el banco. Tu entrada NO ha sido emitida.");
+                }
               },
               onError: (error) => {
                 setIsProcessing(false);
