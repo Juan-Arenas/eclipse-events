@@ -416,15 +416,35 @@ export default function TicketPurchaseModal({
                     className="flex-1 btn-neon-red py-3.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2"
                   >
                     {isProcessing ? (
-                      <span className="animate-pulse">Emitiendo Boleta y Asignando Silla...</span>
+                      <span className="animate-pulse">Conectando con Pasarela Wompi...</span>
                     ) : (
                       <>
                         <ShieldCheck className="w-4 h-4" />
-                        <span>Confirmar Boleta Digital</span>
+                        <span>Pagar con Wompi (${totalAmount.toLocaleString('es-CO')} COP)</span>
                       </>
                     )}
                   </button>
                 </div>
+
+                {isProcessing && !isDemoZeroMode && (
+                  <div className="text-center pt-2 animate-fade-in">
+                    <p className="text-[11px] text-slate-400 mb-1">¿No se abre la ventana desplegable de Wompi?</p>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const ticketId = `ECLIPSE-${Math.floor(100000 + Math.random() * 900000)}`;
+                        const url = await wompiService.buildWebCheckoutUrl({
+                          amountInCop: totalAmount,
+                          reference: `ECLIPSE-PAY-${ticketId}`
+                        });
+                        window.location.href = url;
+                      }}
+                      className="text-xs text-[#ff0033] font-bold underline hover:text-white transition-colors"
+                    >
+                      ⚡ Clic aquí para abrir Wompi en Ventana Completa (Redirección Directa)
+                    </button>
+                  </div>
+                )}
               </form>
             )}
 
