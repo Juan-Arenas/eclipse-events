@@ -68,7 +68,7 @@ export const ticketService = {
           id: newTicket.id,
           qr_hash: newTicket.qrHash,
           backup_code: newTicket.backupCode,
-          seat_number: newTicket.seatNumber,
+          seat_number: newTicket.seatNumber || 'AFORO GENERAL',
           event_id: newTicket.eventId,
           event_title: newTicket.eventTitle,
           event_date: newTicket.eventDate,
@@ -78,16 +78,16 @@ export const ticketService = {
           maps_url: newTicket.mapsUrl,
           tier_name: newTicket.tierName,
           tier_description: newTicket.tierDescription,
-          quantity: newTicket.quantity,
-          total_price: newTicket.totalPrice,
+          quantity: newTicket.quantity || 1,
+          total_price: newTicket.totalPrice || 0,
           holder_name: newTicket.holderName,
           holder_dni: newTicket.holderDni,
           holder_email: newTicket.holderEmail,
-          status: 'VALIDA',
-          purchase_date: newTicket.purchaseDate
+          status: newTicket.status || 'VALIDA',
+          purchase_date: newTicket.purchaseDate || new Date().toLocaleDateString('es-CO')
         };
 
-        await supabase.from('tickets').insert([payload]);
+        await supabase.from('tickets').upsert([payload], { onConflict: 'id', ignoreDuplicates: true });
       } catch (err) {
         console.warn('Supabase insert error:', err);
       }
@@ -101,9 +101,9 @@ export const ticketService = {
     return newTicket;
   },
 
-  // 3. Validate ticket and mark as USADA in DB with robust 4-tier matching & local storage sync
+  // 3. Validate ticket and mark as USADA in DB with strict anti-spoofing matching & local storage sync
   validateTicket(ticketsList, queryInput) {
-    if (!queryInput) {
+    if (!queryInput || !String(queryInput).trim()) {
       return { success: false, message: 'CÓDIGO O CÉDULA VACÍA' };
     }
 
@@ -126,38 +126,33 @@ export const ticketService = {
     const alphaOnlyQuery = cleanQuery.replace(/[^A-Z0-9]/g, '');
     const digitsOnly = cleanQuery.replace(/[^0-9]/g, '');
 
+    // STRICT MATCHING: Eliminates arbitrary substring false positives
     const foundIndex = combinedTickets.findIndex(t => {
-      const tId = String(t.id || '').toUpperCase();
-      const tQrHash = String(t.qrHash || '').toUpperCase();
-      const tBackup = String(t.backupCode || '').toUpperCase();
-      const tDni = String(t.holderDni || '').trim();
+      const tId = String(t.id || '').toUpperCase().trim();
+      const tQrHash = String(t.qrHash || '').toUpperCase().trim();
+      const tBackup = String(t.backupCode || '').toUpperCase().trim();
+      const tDni = String(t.holderDni || '').replace(/\D/g, '').trim();
 
       const tIdAlpha = tId.replace(/[^A-Z0-9]/g, '');
-      const tQrAlpha = tQrHash.replace(/[^A-Z0-9]/g, '');
       const tBackupAlpha = tBackup.replace(/[^A-Z0-9]/g, '');
 
-      // 1. Exact match
-      if (tId === cleanQuery || tQrHash === cleanQuery || tBackup === cleanQuery || tDni === cleanQuery) {
+      // 1. Exact match with QR Hash (direct camera scan or full string)
+      if (rawQuery === t.qrHash || cleanQuery === tQrHash) {
         return true;
       }
 
-      // 2. Substring match (if query contains QR hash/ID or vice versa)
-      if (cleanQuery.length >= 4) {
-        if (tQrHash.includes(cleanQuery) || cleanQuery.includes(tQrHash)) return true;
-        if (tId && (tId.includes(cleanQuery) || cleanQuery.includes(tId))) return true;
-        if (tBackup && (tBackup.includes(cleanQuery) || cleanQuery.includes(tBackup))) return true;
-        if (tDni && (tDni.includes(cleanQuery) || cleanQuery.includes(tDni))) return true;
+      // 2. Exact match with Ticket ID (e.g. ECLIPSE-123456)
+      if (cleanQuery === tId || (alphaOnlyQuery.length >= 6 && alphaOnlyQuery === tIdAlpha)) {
+        return true;
       }
 
-      // 3. Alphanumeric match (ignoring hyphens and spaces)
-      if (alphaOnlyQuery.length >= 4) {
-        if (tQrAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tQrAlpha)) return true;
-        if (tIdAlpha && (tIdAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tIdAlpha))) return true;
-        if (tBackupAlpha && (tBackupAlpha.includes(alphaOnlyQuery) || alphaOnlyQuery.includes(tBackupAlpha))) return true;
+      // 3. Exact match with Backup Code (e.g. BAC-ECL-8821-5432)
+      if (cleanQuery === tBackup || (alphaOnlyQuery.length >= 6 && alphaOnlyQuery === tBackupAlpha)) {
+        return true;
       }
 
-      // 4. DNI Digits match (e.g. if query contains DNI digits)
-      if (digitsOnly.length >= 6 && tDni && (digitsOnly.includes(tDni) || tDni.includes(digitsOnly))) {
+      // 4. Exact full match with Holder DNI / Cédula (only if query contains at least 6 digits and matches entire DNI)
+      if (digitsOnly.length >= 6 && tDni && digitsOnly === tDni) {
         return true;
       }
 
@@ -165,12 +160,19 @@ export const ticketService = {
     });
 
     if (foundIndex === -1) {
-      return { success: false, message: 'ENTRADA INVÁLIDA O CÓDIGO NO ENCONTRADO EN BASE DE DATOS' };
+      return { 
+        success: false, 
+        message: '❌ ENTRADA INVÁLIDA O CÓDIGO NO ENCONTRADO EN BASE DE DATOS' 
+      };
     }
 
     const ticket = combinedTickets[foundIndex];
     if (ticket.status === 'USADA') {
-      return { success: false, ticket, message: '🚨 ALERTA: ENTRADA YA UTILIZADA Y DAÑADA EN PUERTA' };
+      return { 
+        success: false, 
+        ticket, 
+        message: `🚨 ALERTA DE SEGURIDAD: ENTRADA YA UTILIZADA PREVIAMENTE\nIngreso registrado: ${ticket.usedTimestamp || 'Acceso previo'}` 
+      };
     }
 
     const timestampStr = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' (' + new Date().toLocaleDateString('es-CO') + ')';

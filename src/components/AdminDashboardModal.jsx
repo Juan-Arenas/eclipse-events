@@ -82,15 +82,32 @@ export default function AdminDashboardModal({
 
   const handleManualIssueSubmit = (e) => {
     e.preventDefault();
-    if (!manualData.name || !manualData.dni) {
-      alert("Por favor completa el nombre y la cédula del comprador.");
+    const cleanName = manualData.name.trim();
+    const cleanDni = manualData.dni.replace(/[^a-zA-Z0-9]/g, '').trim();
+
+    if (!cleanName || cleanName.length < 3) {
+      alert("Por favor completa el nombre del comprador (mínimo 3 caracteres).");
+      return;
+    }
+
+    if (!cleanDni || cleanDni.length < 6) {
+      alert("Por favor completa la cédula o documento del comprador (mínimo 6 dígitos).");
       return;
     }
 
     const seatFormatted = "AFORO GENERAL";
     const ticketId = `ECLIPSE-MAN-${Math.floor(100000 + Math.random() * 900000)}`;
-    const qrHash = `ECLIPSE-TICKET-${ticketId}-${manualData.dni}-${Date.now()}`;
-    const backupCode = `BAC-ECL-${Math.floor(1000 + Math.random() * 9000)}-${manualData.dni.slice(-4)}`;
+
+    const randomBuf = new Uint8Array(6);
+    crypto.getRandomValues(randomBuf);
+    const secureRandom = Array.from(randomBuf).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+
+    const backupBuf = new Uint8Array(3);
+    crypto.getRandomValues(backupBuf);
+    const secureBackup = Array.from(backupBuf).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+
+    const qrHash = `ECLIPSE-TICKET-${ticketId}-${secureRandom}-${cleanDni}`;
+    const backupCode = `BAC-ECL-${secureBackup}-${cleanDni.slice(-4)}`;
 
     const isVip = manualData.tierType === 'vip';
 
@@ -110,9 +127,9 @@ export default function AdminDashboardModal({
       tierDescription: isVip ? "Acceso preferencial + Eclipse Drinks Adicional incluido." : "Únicamente acceso al evento.",
       quantity: 1,
       totalPrice: isDemoZeroMode ? 0 : 1,
-      holderName: manualData.name,
-      holderDni: manualData.dni,
-      holderEmail: manualData.email || 'venta_presencial@eclipse.com',
+      holderName: cleanName,
+      holderDni: cleanDni,
+      holderEmail: manualData.email ? manualData.email.trim() : 'venta_presencial@eclipse.com',
       status: 'VALIDA',
       purchaseDate: new Date().toLocaleDateString('es-CO')
     };

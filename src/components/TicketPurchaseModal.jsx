@@ -31,6 +31,8 @@ export default function TicketPurchaseModal({
   });
   const [isProcessing, setIsProcessing] = useState(false);
   const [purchasedTicket, setPurchasedTicket] = useState(null);
+  const [allIssuedTickets, setAllIssuedTickets] = useState([]);
+  const [selectedTicketIndex, setSelectedTicketIndex] = useState(0);
 
   // Price calculation
   const unitPrice = isDemoZeroMode ? 0 : (selectedTier.pricePromo || selectedTier.priceNormal || 0);
@@ -41,8 +43,23 @@ export default function TicketPurchaseModal({
     if (step === 1) {
       setStep(2);
     } else if (step === 2) {
-      if (!formData.name || !formData.dni || !formData.email) {
-        alert("Por favor completa los campos obligatorios: Nombre, Cédula/ID y Email.");
+      const trimmedName = formData.name.trim();
+      const cleanDni = formData.dni.replace(/[^a-zA-Z0-9]/g, '').trim();
+      const trimmedEmail = formData.email.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!trimmedName || trimmedName.length < 3) {
+        alert("Por favor ingresa tu nombre completo (mínimo 3 caracteres).");
+        return;
+      }
+
+      if (!cleanDni || cleanDni.length < 6) {
+        alert("Por favor ingresa un número de cédula o documento válido (mínimo 6 dígitos).");
+        return;
+      }
+
+      if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
+        alert("Por favor ingresa un correo electrónico válido (ejemplo: nombre@gmail.com).");
         return;
       }
 
@@ -52,12 +69,26 @@ export default function TicketPurchaseModal({
       }
 
       setIsProcessing(true);
-      
-      const ticketId = `ECLIPSE-${Math.floor(100000 + Math.random() * 900000)}`;
-      const qrHash = `ECLIPSE-TICKET-${ticketId}-${formData.dni}-${Date.now()}`;
-      const backupCode = `BAC-ECL-${Math.floor(1000 + Math.random() * 9000)}-${formData.dni.slice(-4)}`;
 
-      const issueTicketPass = () => {
+      const safeQty = Math.max(1, Math.min(10, Number(quantity) || 1));
+      const baseId = Math.floor(100000 + Math.random() * 900000);
+      const generatedTickets = [];
+
+      for (let i = 0; i < safeQty; i++) {
+        const ticketId = safeQty === 1 ? `ECLIPSE-${baseId}` : `ECLIPSE-${baseId}-${i + 1}`;
+
+        // Cryptographically secure token (64-bit entropy)
+        const randomBuf = new Uint8Array(6);
+        crypto.getRandomValues(randomBuf);
+        const secureRandom = Array.from(randomBuf).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+
+        const backupBuf = new Uint8Array(3);
+        crypto.getRandomValues(backupBuf);
+        const secureBackup = Array.from(backupBuf).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+
+        const qrHash = `ECLIPSE-TICKET-${ticketId}-${secureRandom}-${cleanDni}`;
+        const backupCode = `BAC-ECL-${secureBackup}-${cleanDni.slice(-4)}`;
+
         const newTicket = {
           id: ticketId,
           qrHash: qrHash,
@@ -70,19 +101,24 @@ export default function TicketPurchaseModal({
           venue: "Sede Campestre (En Tu Entrada Digital)",
           fullAddress: "Ubicación Confidencial Activada",
           mapsUrl: "#",
-          tierName: selectedTier.name,
+          tierName: selectedTier.name + (safeQty > 1 ? ` (Pase ${i + 1} de ${safeQty})` : ""),
           tierDescription: selectedTier.description,
-          quantity: quantity,
-          totalPrice: totalAmount,
-          holderName: formData.name,
-          holderDni: formData.dni,
-          holderEmail: formData.email,
+          quantity: 1,
+          totalPrice: totalAmount / safeQty,
+          holderName: trimmedName,
+          holderDni: cleanDni,
+          holderEmail: trimmedEmail,
           status: 'VALIDA',
           purchaseDate: new Date().toLocaleDateString('es-CO')
         };
+        generatedTickets.push(newTicket);
+      }
 
-        onTicketPurchased(newTicket);
-        setPurchasedTicket(newTicket);
+      const issueTicketPass = () => {
+        generatedTickets.forEach(t => onTicketPurchased(t));
+        setPurchasedTicket(generatedTickets[0]);
+        setAllIssuedTickets(generatedTickets);
+        setSelectedTicketIndex(0);
         setIsProcessing(false);
         setStep(3);
 
@@ -101,11 +137,18 @@ export default function TicketPurchaseModal({
           } else {
             await wompiService.openCheckout({
               amountInCop: totalAmount,
-              reference: `ECLIPSE-PAY-${ticketId}`,
-              customerEmail: formData.email,
-              customerFullName: formData.name,
+              reference: `ECLIPSE-PAY-${baseId}`,
+              customerEmail: trimmedEmail,
+              customerFullName: trimmedName,
               customerPhoneNumber: formData.phone || '3000000000',
-              customerDni: formData.dni,
+              customerDni: cleanDni,
+              tierName: selectedTier.name,
+              tierDescription: selectedTier.description,
+              quantity: safeQty,
+              eventId: event.id,
+              eventTitle: event.title,
+              eventDate: event.formattedDate,
+              eventTime: event.time,
               onSuccess: (transaction) => {
                 if (transaction && transaction.status === 'APPROVED') {
                   issueTicketPass();
@@ -134,6 +177,8 @@ export default function TicketPurchaseModal({
   const handleClose = () => {
     setStep(1);
     setPurchasedTicket(null);
+    setAllIssuedTickets([]);
+    setSelectedTicketIndex(0);
     onClose();
   };
 
@@ -486,12 +531,38 @@ export default function TicketPurchaseModal({
 
                 <div>
                   <h3 className="font-heading font-black text-3xl text-white">
-                    ¡Boleta Emitida con Éxito!
+                    ¡{allIssuedTickets.length > 1 ? `${allIssuedTickets.length} Boletas Emitidas con Éxito!` : 'Boleta Emitida con Éxito!'}
                   </h3>
                   <p className="text-slate-300 text-xs mt-1">
-                    Se asignó la <strong className="text-[#ff0033]">{purchasedTicket.seatNumber}</strong> a nombre de <strong>{purchasedTicket.holderName}</strong>.
+                    Acceso General Oficial a nombre de <strong>{purchasedTicket.holderName}</strong> (C.C. {purchasedTicket.holderDni}).
                   </p>
                 </div>
+
+                {/* Multiple tickets tab switcher if quantity > 1 */}
+                {allIssuedTickets.length > 1 && (
+                  <div className="flex items-center justify-center gap-2 flex-wrap bg-white/5 p-2 rounded-2xl border border-white/10">
+                    <span className="text-[10px] uppercase font-bold text-slate-400 block w-full text-center mb-1">
+                      Selecciona para ver cada pase individual con su QR único:
+                    </span>
+                    {allIssuedTickets.map((_, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          setSelectedTicketIndex(idx);
+                          setPurchasedTicket(allIssuedTickets[idx]);
+                        }}
+                        className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                          selectedTicketIndex === idx
+                            ? 'bg-[#ff0033] text-white shadow-[0_0_10px_rgba(255,0,51,0.5)]'
+                            : 'bg-white/10 text-slate-300 hover:bg-white/20'
+                        }`}
+                      >
+                        Pase {idx + 1} de {allIssuedTickets.length}
+                      </button>
+                    ))}
+                  </div>
+                )}
 
                 {/* Custom Ticket Pass */}
                 <DigitalTicketPass ticket={purchasedTicket} />

@@ -108,6 +108,13 @@ export const wompiService = {
     customerFullName,
     customerPhoneNumber,
     customerDni,
+    tierName,
+    tierDescription,
+    quantity = 1,
+    eventId,
+    eventTitle,
+    eventDate,
+    eventTime,
     onSuccess,
     onError
   }) {
@@ -119,14 +126,26 @@ export const wompiService = {
     const cleanDni = (customerDni || '').replace(/\D/g, '') || '1098765432';
 
     try {
-      // Save pending purchase details in local session for redirect verification
-      sessionStorage.setItem('eclipse_pending_ref', reference);
-      sessionStorage.setItem(`eclipse_pending_info_${reference}`, JSON.stringify({
+      const pendingPayload = {
         customerEmail,
         customerFullName,
         customerDni: cleanDni,
-        amountInCop: effectiveAmountCop
-      }));
+        customerPhoneNumber: customerPhoneNumber || '',
+        amountInCop: effectiveAmountCop,
+        tierName: tierName || "Boleta VIP",
+        tierDescription: tierDescription || "Acceso preferencial + Eclipse Drinks Adicional incluido.",
+        quantity: Math.max(1, Math.min(10, Number(quantity) || 1)),
+        eventId: eventId || "evt-monthly-main",
+        eventTitle: eventTitle || "ECLIPSE NEON FESTIVAL 2026",
+        eventDate: eventDate || "Sábado, 24 de Octubre, 2026",
+        eventTime: eventTime || "08:00 PM - 06:00 AM",
+        createdAt: Date.now()
+      };
+
+      // Save pending purchase details in both session and local storage for cross-window reliability
+      sessionStorage.setItem('eclipse_pending_ref', reference);
+      sessionStorage.setItem(`eclipse_pending_info_${reference}`, JSON.stringify(pendingPayload));
+      localStorage.setItem(`eclipse_pending_info_${reference}`, JSON.stringify(pendingPayload));
 
       // Direct Web Checkout Redirection to Wompi official payment portal
       const checkoutUrl = await this.buildWebCheckoutUrl({

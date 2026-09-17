@@ -43,7 +43,8 @@ export default function QRValidatorModal({ isOpen, onClose, tickets, onValidateT
 
   const handleScan = (hashToTest) => {
     const target = hashToTest || inputHash;
-    if (!target.trim()) return;
+    if (!target || !target.trim()) return;
+    if (scanResult) return; // Guard: prevent double-scanning the same frame or duplicate calls
 
     const result = onValidateTicket(target.trim());
     playAudioFeedback(result.success);
