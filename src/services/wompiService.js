@@ -42,7 +42,7 @@ export const wompiService = {
     });
   },
 
-  // Launch official Wompi Checkout Widget with Integrity Signature & Minimum 1,500 COP API threshold
+  // Launch official Wompi Checkout Widget - STRICT PAYMENT VERIFICATION
   async openCheckout({
     amountInCop,
     reference,
@@ -53,7 +53,6 @@ export const wompiService = {
     onSuccess,
     onError
   }) {
-    // Wompi API minimum threshold in Colombia is 1,500 COP (150,000 cents)
     const effectiveAmountCop = Math.max(1500, Number(amountInCop) || 1500);
     const amountInCents = Math.round(effectiveAmountCop * 100);
     const currency = 'COP';
@@ -61,10 +60,8 @@ export const wompiService = {
     try {
       await this.loadScript();
 
-      // Generar firma de integridad para la transacción
       const integrityHash = await generateIntegritySignature(reference, amountInCents, currency, WOMPI_INTEGRITY_SECRET);
 
-      // Clean customer input formats
       const cleanPhone = (customerPhoneNumber || '').replace(/\D/g, '').slice(-10) || '3000000000';
       const cleanDni = (customerDni || '').replace(/\D/g, '') || '1098765432';
 
@@ -99,13 +96,11 @@ export const wompiService = {
           handled = true;
 
           const transaction = result?.transaction;
+          // STRICT SECURITY RULE: Ticket is ONLY issued if Wompi returns APPROVED or PENDING!
           if (transaction && (transaction.status === 'APPROVED' || transaction.status === 'PENDING')) {
             onSuccess(transaction);
-          } else if (transaction && transaction.status === 'DECLINED') {
-            onError(transaction || { message: 'Transacción declinada.' });
           } else {
-            // Emisión limpia al completar o cerrar la ventana de pago de prueba
-            onSuccess(transaction || { status: 'APPROVED', reference: reference });
+            onError(transaction || { status: 'CANCELLED', message: 'El pago no fue aprobado ni completado.' });
           }
         });
 
@@ -118,11 +113,11 @@ export const wompiService = {
         }
         window.open(checkoutUrl, '_blank');
         
-        onSuccess({ status: 'APPROVED', reference: reference });
+        onError({ status: 'REDIRECTED', message: 'Redirigido a la pasarela Wompi para completar el pago.' });
       }
     } catch (err) {
-      console.warn('Wompi Widget fallback:', err);
-      onSuccess({ status: 'APPROVED', reference: reference });
+      console.error('Error inicializando Wompi:', err);
+      onError({ status: 'ERROR', message: 'Error al conectar con Wompi. La boleta no ha sido emitida.' });
     }
   }
 };

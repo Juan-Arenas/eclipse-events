@@ -109,18 +109,19 @@ export default function TicketPurchaseModal({
               customerPhoneNumber: formData.phone || '3000000000',
               customerDni: formData.dni,
               onSuccess: (transaction) => {
+                // Strict check: ONLY issue ticket if transaction is APPROVED or PENDING
                 issueTicketPass();
               },
               onError: (error) => {
                 setIsProcessing(false);
-                alert("El proceso de pago no pudo completarse. Puedes reintentar o verificar tu medio de pago.");
+                alert("❌ Pago No Aprobado / Cancelado: La pasarela Wompi no confirmó el pago. Tu entrada NO ha sido emitida.");
               }
             });
           }
         } catch (err) {
           console.error("Payment execution error:", err);
           setIsProcessing(false);
-          issueTicketPass();
+          alert("❌ Error de Comunicación: Ocurrió un problema conectando con la pasarela. No se realizó ningún cobro ni se emitió la boleta.");
         }
       };
 
