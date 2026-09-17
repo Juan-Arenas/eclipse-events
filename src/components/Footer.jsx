@@ -86,16 +86,37 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
           {/* Contact & Support */}
           <div>
             <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Contacto & Soporte</h4>
-            <div className="space-y-2 text-xs text-slate-400">
+            <div className="space-y-2.5 text-xs text-slate-400">
               <p className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-slate-500" />
-                <span>contacto@eclipseevents.com</span>
+                <Mail className="w-3.5 h-3.5 text-[#ff0033]" />
+                <a href="mailto:fullvibessss@gmail.com" className="hover:text-white transition-colors">
+                  fullvibessss@gmail.com
+                </a>
               </p>
               <p className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-slate-500" />
-                <span>+57 310 987 6543</span>
+                <Phone className="w-3.5 h-3.5 text-[#ff0033]" />
+                <a 
+                  href="https://wa.me/573105019591" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-white transition-colors font-mono"
+                  title="Escribir por WhatsApp"
+                >
+                  +57 310 501 9591
+                </a>
               </p>
-              <div className="pt-3">
+              <div className="pt-1">
+                <a
+                  href="https://wa.me/573105019591?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20las%20boletas%20del%20Eclipse%20Festival"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/25 hover:text-emerald-300 transition-all text-xs font-bold"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>WhatsApp Soporte VIP</span>
+                </a>
+              </div>
+              <div className="pt-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold">
                   <ShieldCheck className="w-3 h-3" /> Sistema de Boletería Verificado
                 </span>

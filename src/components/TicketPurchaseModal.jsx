@@ -140,7 +140,7 @@ export default function TicketPurchaseModal({
               reference: `ECLIPSE-PAY-${baseId}`,
               customerEmail: trimmedEmail,
               customerFullName: trimmedName,
-              customerPhoneNumber: formData.phone || '3000000000',
+              customerPhoneNumber: formData.phone || '3105019591',
               customerDni: cleanDni,
               tierName: selectedTier.name,
               tierDescription: selectedTier.description,

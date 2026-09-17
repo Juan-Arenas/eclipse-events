@@ -129,7 +129,7 @@ export default function AdminDashboardModal({
       totalPrice: isDemoZeroMode ? 0 : 1,
       holderName: cleanName,
       holderDni: cleanDni,
-      holderEmail: manualData.email ? manualData.email.trim() : 'venta_presencial@eclipse.com',
+      holderEmail: manualData.email ? manualData.email.trim() : 'fullvibessss@gmail.com',
       status: 'VALIDA',
       purchaseDate: new Date().toLocaleDateString('es-CO')
     };

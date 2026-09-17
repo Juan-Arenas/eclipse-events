@@ -63,7 +63,7 @@ export default function App() {
       totalPrice: 0,
       holderName: 'Juan Arenas',
       holderDni: '1098765432',
-      holderEmail: 'juan@eclipseevents.com',
+      holderEmail: 'fullvibessss@gmail.com',
       status: 'VALIDA',
       purchaseDate: new Date().toLocaleDateString('es-CO')
     }
