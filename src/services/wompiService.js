@@ -1,14 +1,20 @@
 // Wompi Payment Gateway Integration (Colombia - PSE, Nequi, Tarjetas, Bancolombia, Efecty)
 
-const WOMPI_PUBLIC_KEY = import.meta.env.VITE_WOMPI_PUBLIC_KEY || 'pub_test_BxqdnnJ5nBqjJ4EOgnB75bTyjog6uLhL';
-const WOMPI_INTEGRITY_SECRET = import.meta.env.VITE_WOMPI_INTEGRITY_SECRET || 'test_integrity_2DuweczveeZzwcDUYGNUmG3TikImzHNK';
+const getWompiPublicKey = () => {
+  return localStorage.getItem('eclipse_wompi_public_key') || import.meta.env.VITE_WOMPI_PUBLIC_KEY || 'pub_test_BxqdnnJ5nBqjJ4EOgnB75bTyjog6uLhL';
+};
+
+const getWompiIntegritySecret = () => {
+  return localStorage.getItem('eclipse_wompi_integrity_secret') || import.meta.env.VITE_WOMPI_INTEGRITY_SECRET || 'test_integrity_2DuweczveeZzwcDUYGNUmG3TikImzHNK';
+};
+
 const WOMPI_WIDGET_SCRIPT_URL = 'https://checkout.wompi.co/widget.js';
 
 /**
  * Genera la firma de integridad SHA-256 requerida por Wompi
  * Cadena concatenada: (referencia + montoEnCentavos + moneda + secretoIntegridad)
  */
-async function generateIntegritySignature(reference, amountInCents, currency = 'COP', secret = WOMPI_INTEGRITY_SECRET) {
+async function generateIntegritySignature(reference, amountInCents, currency = 'COP', secret = getWompiIntegritySecret()) {
   if (!secret) return null;
   try {
     const rawString = `${reference}${amountInCents}${currency}${secret}`;
@@ -53,6 +59,10 @@ export const wompiService = {
     onSuccess,
     onError
   }) {
+    const publicKey = getWompiPublicKey();
+    const integritySecret = getWompiIntegritySecret();
+
+    // Wompi API minimum threshold in Colombia is 1,500 COP (150,000 cents)
     const effectiveAmountCop = Math.max(1500, Number(amountInCop) || 1500);
     const amountInCents = Math.round(effectiveAmountCop * 100);
     const currency = 'COP';
@@ -60,7 +70,7 @@ export const wompiService = {
     try {
       await this.loadScript();
 
-      const integrityHash = await generateIntegritySignature(reference, amountInCents, currency, WOMPI_INTEGRITY_SECRET);
+      const integrityHash = await generateIntegritySignature(reference, amountInCents, currency, integritySecret);
 
       const cleanPhone = (customerPhoneNumber || '').replace(/\D/g, '').slice(-10) || '3000000000';
       const cleanDni = (customerDni || '').replace(/\D/g, '') || '1098765432';
@@ -70,7 +80,7 @@ export const wompiService = {
           currency: currency,
           amountInCents: amountInCents,
           reference: reference,
-          publicKey: WOMPI_PUBLIC_KEY,
+          publicKey: publicKey,
           redirectUrl: window.location.href,
           defaultInstallments: 1, // Pago de una sola cuota (sin cuotas)
           customerData: {
@@ -109,7 +119,7 @@ export const wompiService = {
       } else {
         // Fallback Web Checkout URL
         const redirectUrl = encodeURIComponent(window.location.href);
-        let checkoutUrl = `https://checkout.wompi.co/p/?public-key=${WOMPI_PUBLIC_KEY}&currency=${currency}&amount-in-cents=${amountInCents}&reference=${reference}&redirect-url=${redirectUrl}`;
+        let checkoutUrl = `https://checkout.wompi.co/p/?public-key=${publicKey}&currency=${currency}&amount-in-cents=${amountInCents}&reference=${reference}&redirect-url=${redirectUrl}`;
         if (integrityHash) {
           checkoutUrl += `&signature:integrity=${integrityHash}`;
         }
