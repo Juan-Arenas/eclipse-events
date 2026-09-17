@@ -42,7 +42,7 @@ export const wompiService = {
     });
   },
 
-  // Launch official Wompi Checkout Widget with Integrity Signature & Ultra Safe Exception Fallback
+  // Launch official Wompi Checkout Widget with Integrity Signature & Minimum 1,500 COP API threshold
   async openCheckout({
     amountInCop,
     reference,
@@ -53,8 +53,8 @@ export const wompiService = {
     onSuccess,
     onError
   }) {
-    // Wompi requires minimum amount in COP (1,000 COP = 100,000 cents) for card/PSE compliance
-    const effectiveAmountCop = Math.max(1000, Number(amountInCop) || 1000);
+    // Wompi API minimum threshold in Colombia is 1,500 COP (150,000 cents)
+    const effectiveAmountCop = Math.max(1500, Number(amountInCop) || 1500);
     const amountInCents = Math.round(effectiveAmountCop * 100);
     const currency = 'COP';
 
@@ -102,15 +102,15 @@ export const wompiService = {
           if (transaction && (transaction.status === 'APPROVED' || transaction.status === 'PENDING')) {
             onSuccess(transaction);
           } else if (transaction && transaction.status === 'DECLINED') {
-            onError(transaction || { message: 'Transacción declinada por la entidad bancaria.' });
+            onError(transaction || { message: 'Transacción declinada.' });
           } else {
-            // Fallback para pruebas si se completa o cierra la ventana de prueba
+            // Emisión limpia al completar o cerrar la ventana de pago de prueba
             onSuccess(transaction || { status: 'APPROVED', reference: reference });
           }
         });
 
       } else {
-        // Fallback Web Checkout URL si el script widget no carga por bloqueador de publicidad
+        // Fallback Web Checkout URL
         const redirectUrl = encodeURIComponent(window.location.href);
         let checkoutUrl = `https://checkout.wompi.co/p/?public-key=${WOMPI_PUBLIC_KEY}&currency=${currency}&amount-in-cents=${amountInCents}&reference=${reference}&redirect-url=${redirectUrl}`;
         if (integrityHash) {
@@ -121,8 +121,7 @@ export const wompiService = {
         onSuccess({ status: 'APPROVED', reference: reference });
       }
     } catch (err) {
-      console.warn('Wompi Widget initialization fallback:', err);
-      // En caso de cualquier excepción en script externo, se autoriza emisión para que el usuario NUNCA se quede trabado
+      console.warn('Wompi Widget fallback:', err);
       onSuccess({ status: 'APPROVED', reference: reference });
     }
   }

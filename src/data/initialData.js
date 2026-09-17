@@ -10,8 +10,8 @@ export const INITIAL_MONTHLY_EVENT = {
   time: "08:00 PM - 06:00 AM",
   category: "Festival VIP / Neón",
   image: "/images/finca/IMG_0239.jpg",
-  priceMin: 1,
-  tags: ["EDICIÓN ESPECIAL NEÓN ⚡", "BOLETAS TEST WOMPI $1 COP", "AFORO EXCLUSIVO 300 BOLETAS"],
+  priceMin: 1500,
+  tags: ["EDICIÓN ESPECIAL NEÓN ⚡", "BOLETAS TEST WOMPI $1.500 COP", "AFORO EXCLUSIVO 300 BOLETAS"],
   description: "Prepárate para el festival neón más impresionante del año. Eclipse Events presenta su producción oficial: sonido de alta fidelidad, show láser, DJs de Melodic Techno & Progressive House, piscina nocturna y palcos VIP.",
   lineup: ["ALEXANDER SKY (Melodic Techno)", "NEON PULSE (Live Set)", "VALENTINA ROSS", "LUNAR ECHOES"],
   earlyBirdPromo: {
@@ -23,18 +23,18 @@ export const INITIAL_MONTHLY_EVENT = {
     { 
       id: "sencilla", 
       name: "Boleta General", 
-      priceNormal: 1,
-      pricePromo: 1,
-      price: 1, // $1 COP para pruebas con Wompi
+      priceNormal: 1500,
+      pricePromo: 1500,
+      price: 1500, // $1.500 COP (Mínimo API Wompi en Colombia)
       quota: 300, 
       description: "Únicamente acceso al evento." 
     },
     { 
       id: "vip", 
       name: "Boleta VIP", 
-      priceNormal: 1,
-      pricePromo: 1,
-      price: 1, // $1 COP para pruebas con Wompi
+      priceNormal: 1500,
+      pricePromo: 1500,
+      price: 1500, // $1.500 COP (Mínimo API Wompi en Colombia)
       quota: 100, 
       description: "Acceso preferencial al evento + 1 Cóctel de bienvenida incluido." 
     }

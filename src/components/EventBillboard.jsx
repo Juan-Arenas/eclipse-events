@@ -83,7 +83,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               <div className="p-4 rounded-2xl bg-gradient-to-r from-[#ff0033]/20 via-black/60 to-[#ff0033]/10 border border-[#ff0033]/40 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
-                    <Zap className="w-4 h-4 text-[#ff0033] animate-bounce" /> PROMO DE PRUEBAS WOMPI $1 COP
+                    <Zap className="w-4 h-4 text-[#ff0033] animate-bounce" /> PROMO DE PRUEBAS WOMPI $1.500 COP
                   </span>
                   <span className="text-[10px] font-mono text-amber-300 font-bold">
                     Quedan 14/20 cupos
@@ -97,7 +97,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
                     <div className="flex items-baseline gap-1.5 mt-0.5">
                       <span className="line-through text-slate-500 text-[11px]">$25.000</span>
                       <span className="font-heading font-black text-emerald-400 text-sm">
-                        {isDemoZeroMode ? "$0 COP (DEMO)" : "$1 COP"}
+                        {isDemoZeroMode ? "$0 COP (DEMO)" : "$1.500 COP"}
                       </span>
                     </div>
                   </div>
@@ -108,7 +108,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
                     <div className="flex items-baseline gap-1.5 mt-0.5">
                       <span className="line-through text-slate-500 text-[11px]">$28.000</span>
                       <span className="font-heading font-black text-emerald-400 text-sm">
-                        {isDemoZeroMode ? "$0 COP (DEMO)" : "$1 COP"}
+                        {isDemoZeroMode ? "$0 COP (DEMO)" : "$1.500 COP"}
                       </span>
                     </div>
                   </div>

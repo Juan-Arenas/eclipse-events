@@ -23,7 +23,7 @@ export default function App() {
       parsed.image = '/images/finca/IMG_0239.jpg';
       parsed.venue = 'Ubicación en tu Entrada Digital';
       if (parsed.tiers) {
-        parsed.tiers = parsed.tiers.map(t => ({ ...t, price: 1, pricePromo: 1, priceNormal: 1 }));
+        parsed.tiers = parsed.tiers.map(t => ({ ...t, price: 1500, pricePromo: 1500, priceNormal: 1500 }));
       }
       return parsed;
     } catch (e) {
