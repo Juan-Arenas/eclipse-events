@@ -77,9 +77,12 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
             <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Ubicación del Evento</h4>
             <div className="space-y-2 text-xs text-slate-400">
               <p className="text-white font-semibold flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Sede Campestre Privada
+                <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Finca Mi Terrenito
               </p>
-              <p>📍 La ubicación exacta y el mapa en GPS se activan únicamente en tu pase digital al comprar tu entrada.</p>
+              <p>📍 Sede oficial del evento. Paraje de fácil acceso con parqueadero privado.</p>
+              <a href="https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158519,-75.6294989,756m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer" className="text-emerald-400 font-bold underline">
+                Ver en Google Maps
+              </a>
             </div>
           </div>
 

@@ -161,7 +161,7 @@ export default function DigitalTicketPass({ ticket, onOpenGallery }) {
           </div>
 
           <h4 className="font-heading font-black text-base text-white">
-            {ticket.venue || "Sede Campestre (En Tu Entrada Digital)"}
+            {ticket.venue || "Finca Mi Terrenito"}
           </h4>
 
           <p className="text-[11px] text-slate-300 font-mono mt-0.5">

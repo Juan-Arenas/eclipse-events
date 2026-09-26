@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, MapPin, Ticket, Sparkles, Lock, Music, Zap, Image as ImageIcon, Flame, Tag, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Calendar, Clock, MapPin, Ticket, Sparkles, Lock, Music, Zap, Image as ImageIcon, Flame, Tag, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
 import { FINCA_PHOTOS } from '../data/initialData';
 import ScrollReveal from './ScrollReveal';
 
@@ -26,7 +26,8 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               <img
                 src={monthlyEvent.image}
                 alt={monthlyEvent.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+                className="w-full h-full object-cover transform-gpu md:group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e16]/40 via-transparent to-black/30"></div>
 
@@ -55,42 +56,35 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
                   <Calendar className="w-4 h-4 text-[#ff0033]" /> {monthlyEvent.formattedDate}
                 </span>
                 <span className="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[11px] font-bold uppercase">
-                  +16 Años <u className="underline font-black decoration-rose-400 decoration-2">con un adulto responsable</u>
+                  +18 Años
                 </span>
               </div>
 
-              {/* EARLY BIRD PROMO DISCOUNT BADGES */}
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-[#ff0033]/20 via-black/60 to-[#ff0033]/10 border border-[#ff0033]/40 space-y-2">
+              {/* TICKETS INFO */}
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-500/20 via-black/60 to-purple-500/10 border border-purple-500/40 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
-                    <Zap className="w-4 h-4 text-[#ff0033] animate-bounce" /> PROMO DE PRUEBAS WOMPI $1.500 COP
-                  </span>
-                  <span className="text-[10px] font-mono text-amber-300 font-bold">
-                    Quedan 14/20 cupos
+                    <Ticket className="w-4 h-4 text-purple-400" /> TICKETS OFICIALES
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs pt-1">
-                  {/* GENERAL */}
-                  <div className="bg-black/60 p-2.5 rounded-xl border border-white/10">
-                    <span className="text-[10px] text-slate-400 block font-bold">BOLETA GENERAL</span>
-                    <div className="flex items-baseline gap-1.5 mt-0.5">
-                      <span className="line-through text-slate-500 text-[11px]">$25.000</span>
-                      <span className="font-heading font-black text-emerald-400 text-sm">
-                        {isDemoZeroMode ? "$0 COP (DEMO)" : "$1.500 COP"}
-                      </span>
-                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs pt-1">
+                  {/* NORMAL */}
+                  <div className="bg-black/60 p-2.5 rounded-xl border border-white/10 flex flex-col items-center text-center">
+                    <Ticket className="w-4 h-4 text-slate-300 mb-1" />
+                    <span className="text-[10px] text-slate-400 block font-bold">ENTRADA NORMAL</span>
                   </div>
 
                   {/* VIP */}
-                  <div className="bg-black/60 p-2.5 rounded-xl border border-[#ff0033]/30">
-                    <span className="text-[10px] text-[#ff0033] block font-bold">BOLETA VIP (+ Eclipse Drinks Adicional)</span>
-                    <div className="flex items-baseline gap-1.5 mt-0.5">
-                      <span className="line-through text-slate-500 text-[11px]">$28.000</span>
-                      <span className="font-heading font-black text-emerald-400 text-sm">
-                        {isDemoZeroMode ? "$0 COP (DEMO)" : "$1.500 COP"}
-                      </span>
-                    </div>
+                  <div className="bg-black/60 p-2.5 rounded-xl border border-[#ff0033]/30 flex flex-col items-center text-center">
+                    <Zap className="w-4 h-4 text-[#ff0033] mb-1" />
+                    <span className="text-[10px] text-[#ff0033] block font-bold">ENTRADA VIP</span>
+                  </div>
+
+                  {/* 2X1 MUJERES */}
+                  <div className="bg-black/60 p-2.5 rounded-xl border border-pink-500/30 flex flex-col items-center text-center">
+                    <Users className="w-4 h-4 text-pink-400 mb-1" />
+                    <span className="text-[10px] text-pink-400 block font-bold">2x1 MUJERES</span>
                   </div>
                 </div>
               </div>
@@ -113,19 +107,16 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
                 </div>
               </div>
 
-              {/* LOCATION TEASER */}
+              {/* LOCATION */}
               <div className="bg-white/5 p-3.5 rounded-2xl border border-white/10 space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-white text-xs flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Ubicación del Evento (En Tu Boleta)
-                  </span>
-                  <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> INFORMACIÓN EN TU ENTRADA
+                    <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Finca Mi Terrenito
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 leading-tight">
-                  La dirección exacta y ubicación en GPS se activan en tu boleta digital tras recibir tu entrada.
-                </p>
+                <a href="https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158519,-75.6294989,756m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer" className="text-[11px] text-emerald-400 font-bold underline block mt-1">
+                  Ver ubicación en Google Maps
+                </a>
               </div>
 
             </div>
@@ -133,11 +124,11 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
             {/* DIRECT BUY BUTTON FIRST */}
             <div className="pt-3 border-t border-white/10 space-y-3">
               <button
-                onClick={onSelectEvent}
+                onClick={() => { window.location.href = "https://api.underaccess.com/functions/v1/comprar?org=eclipseevents&event=eclipse-fest&r=ef5f0e8e-169b-4a8e-a187-8c43c6f82b5b"; }}
                 className="w-full btn-neon-red py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(255,0,51,0.6)]"
               >
                 <Ticket className="w-5 h-5" />
-                <span>COMPRAR BOLETAS / RESERVAR AHORA</span>
+                <span>COMPRAR BOLETAS</span>
               </button>
 
               <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">

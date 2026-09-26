@@ -22,35 +22,35 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
             <div className="space-y-6">
               <h3 className="font-heading font-bold text-2xl text-white flex items-center gap-2">
                 <MapPin className="w-6 h-6 text-[#ff0033]" />
-                <span>Instalaciones y Amenidades VIP</span>
+                <span>Instalaciones y Amenidades</span>
               </h3>
 
               <p className="text-slate-300 text-sm leading-relaxed">
-                Nuestra sede VIP cuenta con amplias zonas verdes, arquitectura moderna, piscina tropical temperada y la logística ideal para la producción de eventos con aforo exclusivo.
+                Nuestra sede cuenta con amplias zonas verdes, arquitectura moderna, piscina tropical temperada y la logística ideal para la producción de eventos con aforo exclusivo.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white text-sm">Escenario Neón Principal</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Estructura para montaje de luces láser y sonido envolvente.</p>
+                    <h4 className="font-bold text-white text-sm">Zonas Verdes</h4>
+                    <p className="text-xs text-slate-400 mt-0.5">Amplias áreas verdes para disfrutar al aire libre.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white text-sm">Piscina Nocturna VIP</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Iluminación LED subacuática y zona de camastros.</p>
+                    <h4 className="font-bold text-white text-sm">Piscina</h4>
+                    <p className="text-xs text-slate-400 mt-0.5">Piscina campestre rodeada de naturaleza.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white text-sm">Palcos Elevados</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Zonas reservadas con atención de mesero y botellas.</p>
+                    <h4 className="font-bold text-white text-sm">Áreas Sociales</h4>
+                    <p className="text-xs text-slate-400 mt-0.5">Diferentes espacios de esparcimiento y descanso.</p>
                   </div>
                 </div>
 
@@ -58,7 +58,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold text-white text-sm">Parqueadero Privado</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Estacionamiento custodiado con control de acceso QR.</p>
+                    <p className="text-xs text-slate-400 mt-0.5">Estacionamiento privado para tu comodidad.</p>
                   </div>
                 </div>
               </div>
@@ -67,43 +67,63 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
 
           {/* LOCATION NOTICE BOX - Slide Right */}
           <ScrollReveal direction="slide-right" duration={1100} delay={120} once={false} className="lg:col-span-1 h-full">
-            <div className="bg-gradient-to-b from-[#141420] to-[#0a0a0f] p-6 rounded-2xl border-2 border-[#ff0033]/40 flex flex-col justify-between relative overflow-hidden shadow-2xl h-full">
-              <div className="absolute top-0 right-0 bg-[#ff0033] text-white text-[10px] font-black uppercase px-3 py-1 rounded-bl-xl">
-                EN TU BOLETA
+            <div className="bg-gradient-to-b from-[#141420] to-[#0a0a0f] p-6 rounded-2xl border-2 border-emerald-500/40 flex flex-col justify-between relative overflow-hidden shadow-2xl h-full">
+              <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-bl-xl">
+                UBICACIÓN PÚBLICA
               </div>
 
               <div>
-                <div className="w-12 h-12 rounded-full bg-[#ff0033]/20 border border-[#ff0033]/40 text-[#ff0033] flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mb-4">
                   <MapPin className="w-6 h-6" />
                 </div>
                 
                 <h4 className="font-heading font-black text-xl text-white mb-2">
-                  Ubicación del Evento
+                  Finca Mi Terrenito
                 </h4>
 
                 <p className="text-slate-300 text-xs leading-relaxed mb-4">
-                  Por organización de logística y control de aforo, la dirección exacta y enlace directo de navegación GPS <strong className="text-white">se incluyen ordenadamente en tu entrada digital</strong>.
+                  Vive la experiencia en nuestras instalaciones equipadas con todo lo necesario para un evento inolvidable.
                 </p>
 
                 <div className="p-3.5 bg-black/60 rounded-xl border border-white/10 text-xs text-slate-400 space-y-1">
                   <p className="flex items-center gap-1.5 text-white font-semibold">
-                    <Navigation className="w-3.5 h-3.5 text-[#ff0033]" /> Ubicación en tu Pase Digital
+                    <Navigation className="w-3.5 h-3.5 text-emerald-400" /> Sede Oficial Confirmada
                   </p>
                   <p className="text-[11px] text-slate-400 pt-1">
-                    📍 Al comprar tu entrada, tu Pase Digital QR revelará el nombre de la finca, la dirección exacta y la ruta directa a Google Maps.
+                    📍 La ubicación de la Finca Mi Terrenito es de fácil acceso y cuenta con parqueadero privado para tu comodidad.
                   </p>
                 </div>
               </div>
 
               <div className="pt-4 border-t border-white/10 mt-4 text-center">
-                <span className="text-[11px] text-emerald-400 font-bold uppercase tracking-wider block">
-                  ✓ Información completa de ruta en tu Pase Digital
-                </span>
+                <a href="https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158519,-75.6294989,756m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer" className="text-[11px] text-emerald-400 font-bold uppercase tracking-wider block bg-emerald-500/10 py-2 rounded-xl border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">
+                  ABRIR EN GOOGLE MAPS
+                </a>
               </div>
             </div>
           </ScrollReveal>
 
         </div>
+
+        {/* Photos Grid */}
+        <ScrollReveal direction="fade-up" duration={1100} delay={200} once={false}>
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {previewPhotos.map((photo) => (
+              <div 
+                key={photo.id} 
+                className="relative group rounded-2xl overflow-hidden border border-white/10 aspect-[4/3] cursor-pointer"
+                onClick={onOpenGallery}
+              >
+                <img src={photo.url} alt={photo.title} loading="lazy" className="w-full h-full object-cover transform-gpu md:group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 left-0 p-4 w-full">
+                  <span className="text-[10px] font-bold uppercase text-[#ff0033] bg-[#ff0033]/20 px-2 py-0.5 rounded border border-[#ff0033]/40">{photo.category}</span>
+                  <p className="text-white text-sm font-bold mt-1 leading-tight">{photo.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
 
       </div>
     </section>

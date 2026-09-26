@@ -93,7 +93,7 @@ export default function FincaGalleryModal({ isOpen, onClose }) {
 
         {/* Footer info */}
         <div className="p-4 border-t border-white/10 bg-black/60 text-center text-xs text-slate-400">
-          Sede Campestre Oficial del Evento
+          Finca Mi Terrenito
         </div>
 
       </div>

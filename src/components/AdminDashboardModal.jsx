@@ -28,7 +28,7 @@ export default function AdminDashboardModal({
   const [formData, setFormData] = useState({
     title: monthlyEvent?.title || '',
     subtitle: monthlyEvent?.subtitle || '',
-    venue: monthlyEvent?.venue || 'Sede Campestre (En Tu Entrada Digital)',
+    venue: monthlyEvent?.venue || 'Finca Mi Terrenito',
     date: monthlyEvent?.date || '',
     time: monthlyEvent?.time || '08:00 PM - 06:00 AM',
     category: monthlyEvent?.category || 'Electrónica / Festival VIP',
@@ -120,7 +120,7 @@ export default function AdminDashboardModal({
       eventTitle: monthlyEvent.title,
       eventDate: monthlyEvent.formattedDate,
       eventTime: monthlyEvent.time,
-      venue: "Sede Campestre (En Tu Entrada Digital)",
+      venue: "Finca Mi Terrenito",
       fullAddress: "Ubicación Confidencial Activada",
       mapsUrl: "#",
       tierName: isVip ? "Boleta VIP" : "Boleta General",

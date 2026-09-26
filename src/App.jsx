@@ -54,7 +54,7 @@ export default function App() {
       eventTitle: 'ECLIPSE NEON FESTIVAL 2026',
       eventDate: 'Sábado, 24 de Octubre, 2026',
       eventTime: '08:00 PM - 06:00 AM',
-      venue: 'Sede Campestre (En Tu Entrada Digital)',
+      venue: 'Finca Mi Terrenito',
       fullAddress: 'Ubicación Confidencial Activada',
       mapsUrl: '#',
       tierName: 'Boleta VIP',
@@ -74,7 +74,7 @@ export default function App() {
     const raw = saved ? JSON.parse(saved) : initialDefaultTickets;
     return raw.map(t => ({
       ...t,
-      venue: 'Sede Campestre (En Tu Entrada Digital)',
+      venue: 'Finca Mi Terrenito',
       fullAddress: 'Ubicación Confidencial Activada',
       mapsUrl: '#'
     }));
@@ -191,7 +191,7 @@ export default function App() {
               eventTitle: pendingInfo.eventTitle || monthlyEvent.title,
               eventDate: pendingInfo.eventDate || monthlyEvent.formattedDate,
               eventTime: pendingInfo.eventTime || monthlyEvent.time,
-              venue: "Sede Campestre (En Tu Entrada Digital)",
+              venue: "Finca Mi Terrenito",
               fullAddress: "Ubicación Confidencial Activada",
               mapsUrl: "#",
               tierName: tierName + (numTickets > 1 ? ` (Pase ${i + 1} de ${numTickets})` : ""),

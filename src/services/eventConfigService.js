@@ -82,7 +82,7 @@ export const eventConfigService = {
           event_title: eventData.title || 'ECLIPSE NEON FESTIVAL 2026',
           event_date: eventData.date || '2026-10-24',
           event_time: eventData.time || '08:00 PM - 06:00 AM',
-          venue: eventData.venue || 'Sede Campestre (En Tu Entrada Digital)',
+          venue: eventData.venue || 'Finca Mi Terrenito',
           full_address: 'CONFIG',
           maps_url: '#',
           tier_name: 'CONFIG',

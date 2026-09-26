@@ -98,7 +98,7 @@ export default function TicketPurchaseModal({
           eventTitle: event.title,
           eventDate: event.formattedDate,
           eventTime: event.time,
-          venue: "Sede Campestre (En Tu Entrada Digital)",
+          venue: "Finca Mi Terrenito",
           fullAddress: "Ubicación Confidencial Activada",
           mapsUrl: "#",
           tierName: selectedTier.name + (safeQty > 1 ? ` (Pase ${i + 1} de ${safeQty})` : ""),

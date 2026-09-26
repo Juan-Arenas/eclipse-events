@@ -2,13 +2,13 @@ export const INITIAL_MONTHLY_EVENT = {
   id: "evt-monthly-main",
   title: "ECLIPSE NEON FESTIVAL 2026",
   subtitle: "Noche neón VIP, producción de sonido envolvente, show de luces láser, palcos y la experiencia de música electrónica más impactante del año.",
-  venue: "Sede Campestre (En Tu Entrada Digital)",
-  unlockedVenue: "Sede Campestre Exclusiva",
-  unlockedAddress: "Ubicación confidencial desbloqueada en tu pase digital al comprar",
+  venue: "Finca Mi Terrenito",
+  unlockedVenue: "Finca Mi Terrenito",
+  unlockedAddress: "Ubicación pública de la finca",
   date: "2026-10-24",
   formattedDate: "Sábado, 24 de Octubre, 2026",
   time: "08:00 PM - 06:00 AM",
-  category: "Festival VIP / Neón",
+  category: "Festival / Neón",
   image: "/images/finca/IMG_0239.jpg",
   priceMin: 1500,
   tags: ["EDICIÓN ESPECIAL NEÓN ⚡", "BOLETAS TEST WOMPI $1.500 COP", "AFORO EXCLUSIVO 300 BOLETAS"],
@@ -22,21 +22,30 @@ export const INITIAL_MONTHLY_EVENT = {
   tiers: [
     { 
       id: "sencilla", 
-      name: "Boleta General", 
-      priceNormal: 1500,
-      pricePromo: 1500,
-      price: 1500, // $1.500 COP (Mínimo API Wompi en Colombia)
+      name: "Entrada Normal", 
+      priceNormal: 25000,
+      pricePromo: 15000,
+      price: 25000,
       quota: 300, 
-      description: "Únicamente acceso al evento." 
+      description: "Acceso general al evento." 
     },
     { 
       id: "vip", 
-      name: "Boleta VIP", 
-      priceNormal: 1500,
-      pricePromo: 1500,
-      price: 1500, // $1.500 COP (Mínimo API Wompi en Colombia)
+      name: "Entrada VIP", 
+      priceNormal: 35000,
+      pricePromo: 25000,
+      price: 35000,
       quota: 100, 
-      description: "Acceso preferencial al evento + Eclipse Drinks Adicional incluido." 
+      description: "Acceso preferencial." 
+    },
+    { 
+      id: "2x1", 
+      name: "2x1 Mujeres", 
+      priceNormal: 40000,
+      pricePromo: 30000,
+      price: 40000,
+      quota: 50, 
+      description: "Ingreso para dos mujeres con una sola entrada." 
     }
   ]
 };
@@ -44,46 +53,46 @@ export const INITIAL_MONTHLY_EVENT = {
 export const FINCA_PHOTOS = [
   {
     id: "finca-1",
-    title: "Escenario Principal & Mansión Nocturna",
-    category: "Nocturna",
+    title: "Fachada Principal",
+    category: "Exterior",
     url: "/images/finca/IMG_0239.jpg",
-    desc: "Vista real de la mansión iluminada con montaje para producción de eventos VIP."
+    desc: "Vista real de la casa principal y sus instalaciones."
   },
   {
     id: "finca-2",
-    title: "Piscina Neón & Zona de Cócteles",
+    title: "Piscina y Zonas Húmedas",
     category: "Piscina",
     url: "/images/finca/IMG_0240.jpg",
-    desc: "Piscina campestre con zona de asoleadoras e iluminación ambiente nocturna."
+    desc: "Piscina campestre rodeada de zonas verdes."
   },
   {
     id: "finca-3",
-    title: "Montaje Técnico & Luces Láser",
-    category: "Escenario",
+    title: "Área Social",
+    category: "Social",
     url: "/images/finca/IMG_0241.jpg",
-    desc: "Estructura para montaje de sonido envolvente de alta fidelidad y efectos de pirotecnia fría."
+    desc: "Amplia área social cubierta y zonas comunes."
   },
   {
     id: "finca-4",
-    title: "Palco VIP & Lounge Exclusivo",
-    category: "VIP",
+    title: "Zonas de Estar",
+    category: "Descanso",
     url: "/images/finca/IMG_0242.jpg",
-    desc: "Salón VIP elevado reservado con atención de meseros y atención personalizada."
+    desc: "Múltiples zonas de descanso y esparcimiento al aire libre."
   },
   {
     id: "finca-5",
-    title: "Zonas Verdes & Arquitectura Campestre",
-    category: "Instalaciones",
+    title: "Zonas Verdes",
+    category: "Naturaleza",
     url: "/images/finca/IMG_0243.jpg",
-    desc: "Amplias áreas verdes y espacios abiertos ideales para eventos de gran aforo."
+    desc: "Amplias áreas verdes naturales y jardines."
   },
   {
     id: "finca-6",
-    title: "Parqueadero Privado Custodiado",
+    title: "Parqueadero Privado",
     category: "Acceso",
     url: "/images/finca/IMG_0244.jpg",
-    desc: "Estacionamiento privado dentro de las instalaciones con control de acceso por QR."
+    desc: "Estacionamiento privado dentro de las instalaciones."
   }
 ];
 
-export const GOOGLE_MAPS_LINK = "#";
+export const GOOGLE_MAPS_LINK = "https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158519,-75.6294989,756m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D";

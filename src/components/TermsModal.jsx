@@ -19,7 +19,7 @@ export default function TermsModal({ isOpen, onClose }) {
                 Términos, Condiciones & Política de Privacidad
               </h3>
               <p className="text-slate-400 text-xs">
-                Cláusulas legales y restricción de edad (+16 Años <u className="underline font-bold text-rose-300">con un adulto responsable</u>) - Eclipse Events.
+                Cláusulas legales y restricción de edad (+18 Años) - Eclipse Events.
               </p>
             </div>
           </div>
@@ -40,13 +40,13 @@ export default function TermsModal({ isOpen, onClose }) {
             <UserCheck className="w-8 h-8 text-rose-400 shrink-0 mt-1" />
             <div>
               <h4 className="font-heading font-black text-base text-white uppercase tracking-wider">
-                ⚠️ CONDICIÓN DE INGRESO Y EXONERACIÓN: INGRESO PERMITIDO DESDE LOS +16 AÑOS <u className="underline font-black decoration-rose-400 decoration-2">CON UN ADULTO RESPONSABLE</u>
+                ⚠️ CONDICIÓN DE INGRESO: INGRESO EXCLUSIVO PARA MAYORES DE EDAD (+18 AÑOS)
               </h4>
               <p className="text-slate-200 text-xs mt-2 leading-relaxed">
-                Eclipse Events autoriza el ingreso de asistentes a partir de los <strong>16 años de edad</strong>, con la condición expresa de que los menores de edad asistan bajo la supervisión, custodia y autorización directa de un <u className="underline font-bold text-white">adulto responsable acompañante</u>. 
+                Eclipse Events autoriza el ingreso de asistentes exclusivamente a partir de los <strong>18 años de edad</strong>. 
               </p>
               <p className="text-rose-300 text-xs mt-2 leading-relaxed font-semibold bg-black/50 p-3 rounded-xl border border-rose-500/30">
-                ⚖️ <strong>EXONERACIÓN TOTAL DE RESPONSABILIDAD:</strong> Todo menor de 18 años (16 y 17 años) ingresa bajo la <u className="underline font-black text-white">exclusiva, absoluta e indelegable responsabilidad de sus padres, acudientes legales o adulto responsable acompañante</u>. Eclipse Events, sus organizadores, patrocinadores y la administración del recinto quedan <u className="underline font-black text-white">completamente exonerados de cualquier responsabilidad civil, médica, legal o penal</u> derivada del comportamiento, incidentes, extravío de pertenencias o actos imputables al menor durante o después del evento. Se exigirá documento de identidad original con foto en puerta.
+                ⚖️ <strong>EXONERACIÓN TOTAL DE RESPONSABILIDAD:</strong> El evento es estrictamente para mayores de edad. Se exigirá documento de identidad original con foto (cédula o pasaporte) en la puerta de ingreso para verificar la mayoría de edad.
               </p>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default function TermsModal({ isOpen, onClose }) {
             onClick={onClose}
             className="btn-neon-red px-8 py-3 rounded-xl text-xs font-black uppercase tracking-wider"
           >
-            Entendido y Acepto Términos (+16 Años con Adulto Responsable)
+            Entendido y Acepto Términos (+18 Años)
           </button>
         </div>
 

@@ -15,7 +15,7 @@ export default function ScrollReveal({
   duration = 1100,
   threshold = 0.05,
   rootMargin = '0px 0px -40px 0px',
-  once = false
+  once = true
 }) {
   const domRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -46,12 +46,6 @@ export default function ScrollReveal({
           if (once) {
             observer.unobserve(el);
           }
-        } else if (!once) {
-          // Si el usuario sube y los elementos de abajo salen por la parte inferior de la pantalla,
-          // se ocultan suavemente en reversa (entry.boundingClientRect.top > 0)
-          if (entry.boundingClientRect.top > 0) {
-            setIsVisible(false);
-          }
         }
       },
       {
@@ -67,34 +61,21 @@ export default function ScrollReveal({
     };
   }, [threshold, rootMargin, once]);
 
-  // Transformación inicial (antes de entrar o al guardarse en reversa)
   const getInitialTransform = () => {
-    if (isMobile) {
-      switch (direction) {
-        case 'slide-left':
-        case 'slide-right':
-        case 'fade-up':
-          return 'translate3d(0, 36px, 0) scale(0.95)';
-        case 'fade-scale':
-        default:
-          return 'translate3d(0, 26px, 0) scale(0.93)';
-      }
-    }
-
     switch (direction) {
       case 'slide-left':
-        return 'translate3d(-48px, 0, 0) scale(0.95)';
+        return 'translate3d(-20px, 0, 0)';
       case 'slide-right':
-        return 'translate3d(48px, 0, 0) scale(0.95)';
+        return 'translate3d(20px, 0, 0)';
       case 'fade-up':
-        return 'translate3d(0, 42px, 0) scale(0.95)';
+        return 'translate3d(0, 20px, 0)';
       case 'fade-scale':
       default:
-        return 'translate3d(0, 30px, 0) scale(0.93)';
+        return 'translate3d(0, 15px, 0)';
     }
   };
 
-  const currentTransform = isVisible ? 'translate3d(0, 0, 0) scale(1)' : getInitialTransform();
+  const currentTransform = isVisible ? 'translate3d(0, 0, 0)' : getInitialTransform();
   const currentOpacity = isVisible ? 1 : 0;
 
   return (

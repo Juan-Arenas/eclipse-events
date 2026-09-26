@@ -7,7 +7,7 @@ export default function Hero({ onExplore, onSpotlightFinca }) {
     <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden py-12 sm:py-16 bg-metallic-dark">
       
       {/* Background Neon Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#ff0033]/20 blur-[150px] rounded-full pointer-events-none animate-pulse"></div>
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#ff0033]/20 blur-[150px] rounded-full pointer-events-none"></div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 flex flex-col items-center">
         
