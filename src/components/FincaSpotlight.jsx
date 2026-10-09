@@ -78,11 +78,11 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                 </div>
                 
                 <h4 className="font-heading font-black text-xl text-white mb-2">
-                  Finca Mi Terrenito
+                  Finca Villa Luisa
                 </h4>
 
                 <p className="text-slate-300 text-xs leading-relaxed mb-4">
-                  Vive la experiencia en nuestras instalaciones equipadas con todo lo necesario para un evento inolvidable.
+                  Vive la experiencia en nuestras instalaciones campestres en Pereira, equipadas con todo lo necesario para un evento inolvidable.
                 </p>
 
                 <div className="p-3.5 bg-black/60 rounded-xl border border-white/10 text-xs text-slate-400 space-y-1">
@@ -90,13 +90,13 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                     <Navigation className="w-3.5 h-3.5 text-emerald-400" /> Sede Oficial Confirmada
                   </p>
                   <p className="text-[11px] text-slate-400 pt-1">
-                    📍 La ubicación de la Finca Mi Terrenito es de fácil acceso y cuenta con parqueadero privado para tu comodidad.
+                    📍 La ubicación de la Finca Villa Luisa (Av. El Pital, Pereira) es de fácil acceso y cuenta con parqueadero privado custodiado para tu comodidad.
                   </p>
                 </div>
               </div>
 
               <div className="pt-4 border-t border-white/10 mt-4 text-center">
-                <a href="https://www.google.com/maps/place/Finca+Mi+Terrenito/@4.9158519,-75.6294989,756m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8e477f0030099ba3:0x4518ed58d1ca7593!8m2!3d4.9158519!4d-75.626924!16s%2Fg%2F11xmksv4dm?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer" className="text-[11px] text-emerald-400 font-bold uppercase tracking-wider block bg-emerald-500/10 py-2 rounded-xl border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">
+                <a href="https://www.google.com/maps/place/Finca+Villa+Luisa/@4.851732,-76.0227041,48386m/data=!3m1!1e3!4m10!1m2!2m1!1sfinca+villa+luisa!3m6!1s0x8e387f969ae79a53:0x23bb40ddf4358b4b!8m2!3d4.851732!4d-75.734313!15sChFmaW5jYSB2aWxsYSBsdWlzYZIBCnBsYXlncm91bmTgAQA!16s%2Fg%2F11fljjf5vq?entry=ttu&g_ep=EgoyMDI2MTAwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer" className="text-[11px] text-emerald-400 font-bold uppercase tracking-wider block bg-emerald-500/10 py-2 rounded-xl border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">
                   ABRIR EN GOOGLE MAPS
                 </a>
               </div>

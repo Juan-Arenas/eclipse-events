@@ -98,7 +98,7 @@ export default function TicketPurchaseModal({
           eventTitle: event.title,
           eventDate: event.formattedDate,
           eventTime: event.time,
-          venue: "Finca Mi Terrenito",
+          venue: "Finca Villa Luisa",
           fullAddress: "Ubicación Confidencial Activada",
           mapsUrl: "#",
           tierName: selectedTier.name + (safeQty > 1 ? ` (Pase ${i + 1} de ${safeQty})` : ""),

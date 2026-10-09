@@ -28,7 +28,7 @@ export default function AdminDashboardModal({
   const [formData, setFormData] = useState({
     title: monthlyEvent?.title || '',
     subtitle: monthlyEvent?.subtitle || '',
-    venue: monthlyEvent?.venue || 'Finca Mi Terrenito',
+    venue: monthlyEvent?.venue || 'Finca Villa Luisa',
     date: monthlyEvent?.date || '',
     time: monthlyEvent?.time || '08:00 PM - 06:00 AM',
     category: monthlyEvent?.category || 'Electrónica / Festival VIP',
@@ -120,7 +120,7 @@ export default function AdminDashboardModal({
       eventTitle: monthlyEvent.title,
       eventDate: monthlyEvent.formattedDate,
       eventTime: monthlyEvent.time,
-      venue: "Finca Mi Terrenito",
+      venue: "Finca Villa Luisa",
       fullAddress: "Ubicación Confidencial Activada",
       mapsUrl: "#",
       tierName: isVip ? "Boleta VIP" : "Boleta General",
