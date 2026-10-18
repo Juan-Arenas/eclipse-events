@@ -1,6 +1,6 @@
 import React from 'react';
-import { MapPin, Lock, Image as ImageIcon, Sparkles, ShieldCheck, CheckCircle2, Navigation } from 'lucide-react';
-import { FINCA_PHOTOS } from '../data/initialData';
+import { MapPin, Lock, Image as ImageIcon, Sparkles, ShieldCheck, CheckCircle2, Navigation, MessageCircle } from 'lucide-react';
+import { FINCA_PHOTOS, GOOGLE_MAPS_LINK, WHATSAPP_INFO_MESSAGE, WHATSAPP_NUMBER } from '../data/initialData';
 import ScrollReveal from './ScrollReveal';
 
 export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
@@ -22,11 +22,11 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
             <div className="space-y-6">
               <h3 className="font-heading font-bold text-2xl text-white flex items-center gap-2">
                 <MapPin className="w-6 h-6 text-[#ff0033]" />
-                <span>Instalaciones y Amenidades</span>
+                <span>Instalaciones y Amenidades Oficiales</span>
               </h3>
 
               <p className="text-slate-300 text-sm leading-relaxed">
-                Nuestra sede cuenta con amplias zonas verdes, arquitectura moderna, piscina tropical temperada y la logística ideal para la producción de eventos con aforo exclusivo.
+                Nuestra sede oficial en <strong>Finca Hotel Villa Luisa</strong> cuenta con amplias zonas verdes, arquitectura campestre de primer nivel, piscina tropical, show de luces láser y la logística ideal para la producción de eventos con aforo exclusivo.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -34,7 +34,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold text-white text-sm">Zonas Verdes</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Amplias áreas verdes para disfrutar al aire libre.</p>
+                    <p className="text-xs text-slate-400 mt-0.5">Amplias áreas verdes y naturaleza en Santa Rosa de Cabal.</p>
                   </div>
                 </div>
 
@@ -42,23 +42,23 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold text-white text-sm">Piscina</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Piscina campestre rodeada de naturaleza.</p>
+                    <p className="text-xs text-slate-400 mt-0.5">Piscina campestre rodeada de naturaleza y áreas de descanso.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white text-sm">Áreas Sociales</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Diferentes espacios de esparcimiento y descanso.</p>
+                    <h4 className="font-bold text-white text-sm">Áreas Sociales & VIP</h4>
+                    <p className="text-xs text-slate-400 mt-0.5">Espacios de esparcimiento, palcos y áreas lounge exclusivas.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white text-sm">Parqueadero Privado</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Estacionamiento privado para tu comodidad.</p>
+                    <h4 className="font-bold text-white text-sm">Parqueadero Privado Custodiado</h4>
+                    <p className="text-xs text-slate-400 mt-0.5">Control de acceso y estacionamiento privado para asistentes.</p>
                   </div>
                 </div>
               </div>
@@ -67,9 +67,9 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
 
           {/* LOCATION NOTICE BOX - Slide Right */}
           <ScrollReveal direction="slide-right" duration={1100} delay={120} once={false} className="lg:col-span-1 h-full">
-            <div className="bg-gradient-to-b from-[#141420] to-[#0a0a0f] p-6 rounded-2xl border-2 border-emerald-500/40 flex flex-col justify-between relative overflow-hidden shadow-2xl h-full">
+            <div className="bg-gradient-to-b from-[#141420] to-[#0a0a0f] p-6 rounded-2xl border-2 border-emerald-500/40 flex flex-col justify-between relative overflow-hidden shadow-2xl h-full space-y-4">
               <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-black uppercase px-3 py-1 rounded-bl-xl">
-                UBICACIÓN PÚBLICA
+                SEDE OFICIAL CONFIRMADA
               </div>
 
               <div>
@@ -78,32 +78,52 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                 </div>
                 
                 <h4 className="font-heading font-black text-xl text-white mb-2">
-                  Finca Villa Luisa
+                  Finca Hotel Villa Luisa
                 </h4>
 
                 <p className="text-slate-300 text-xs leading-relaxed mb-4">
-                  Vive la experiencia en nuestras instalaciones campestres en Pereira, equipadas con todo lo necesario para un evento inolvidable.
+                  Vive la experiencia en nuestras instalaciones campestres en Santa Rosa de Cabal, Risaralda, equipadas con todo lo necesario para un evento inolvidable.
                 </p>
 
-                <div className="p-3.5 bg-black/60 rounded-xl border border-white/10 text-xs text-slate-400 space-y-1">
+                <div className="p-3.5 bg-black/60 rounded-xl border border-white/10 text-xs text-slate-400 space-y-1.5">
                   <p className="flex items-center gap-1.5 text-white font-semibold">
-                    <Navigation className="w-3.5 h-3.5 text-emerald-400" /> Sede Oficial Confirmada
+                    <Navigation className="w-3.5 h-3.5 text-emerald-400" /> Dirección Verificada:
                   </p>
-                  <p className="text-[11px] text-slate-400 pt-1">
-                    📍 La ubicación de la Finca Villa Luisa (Av. El Pital, Pereira) es de fácil acceso y cuenta con parqueadero privado custodiado para tu comodidad.
+                  <p className="text-[11px] text-slate-300 font-medium">
+                    📍 Vereda El Lembo, Santa Rosa de Cabal, Risaralda, Colombia.
+                  </p>
+                  <p className="text-[10px] text-slate-400 pt-1">
+                    Fácil acceso para vehículos particulares y transporte privado con vigilancia oficial.
                   </p>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/10 mt-4 text-center">
-                <a href="https://www.google.com/maps/place/Finca+Villa+Luisa/@4.851732,-76.0227041,48386m/data=!3m1!1e3!4m10!1m2!2m1!1sfinca+villa+luisa!3m6!1s0x8e387f969ae79a53:0x23bb40ddf4358b4b!8m2!3d4.851732!4d-75.734313!15sChFmaW5jYSB2aWxsYSBsdWlzYZIBCnBsYXlncm91bmTgAQA!16s%2Fg%2F11fljjf5vq?entry=ttu&g_ep=EgoyMDI2MTAwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer" className="text-[11px] text-emerald-400 font-bold uppercase tracking-wider block bg-emerald-500/10 py-2 rounded-xl border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors">
-                  ABRIR EN GOOGLE MAPS
+              <div className="pt-2 space-y-2 text-center">
+                <a 
+                  href={GOOGLE_MAPS_LINK} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-full text-xs text-white font-bold uppercase tracking-wider flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 py-3 rounded-xl border border-emerald-400/30 shadow-lg transition-all"
+                >
+                  <Navigation className="w-4 h-4 text-white" />
+                  <span>CÓMO LLEGAR (GOOGLE MAPS)</span>
+                </a>
+
+                <a
+                  href={WHATSAPP_INFO_MESSAGE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full text-xs text-emerald-400 font-bold uppercase tracking-wider flex items-center justify-center gap-2 bg-emerald-500/10 hover:bg-emerald-500/20 py-2.5 rounded-xl border border-emerald-500/30 transition-all"
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-400" />
+                  <span>MÁS INFORMACIÓN POR WHATSAPP</span>
                 </a>
               </div>
             </div>
           </ScrollReveal>
 
         </div>
+
 
         {/* Photos Grid */}
         <ScrollReveal direction="fade-up" duration={1100} delay={200} once={false}>

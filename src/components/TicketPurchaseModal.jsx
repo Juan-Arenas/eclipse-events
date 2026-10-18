@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { X, Ticket, CheckCircle2, ShieldCheck, CreditCard, User, Mail, Phone, Hash, Sparkles, ArrowRight, ArrowLeft, Wine, ShieldAlert, FileText } from 'lucide-react';
+import { X, Ticket, CheckCircle2, ShieldCheck, CreditCard, User, Mail, Phone, Hash, Sparkles, ArrowRight, ArrowLeft, Wine, ShieldAlert, FileText, MessageCircle, AlertTriangle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import DigitalTicketPass from './DigitalTicketPass';
 import TermsModal from './TermsModal';
-import { GOOGLE_MAPS_LINK } from '../data/initialData';
+import { GOOGLE_MAPS_LINK, WHATSAPP_BUY_MESSAGE, WHATSAPP_NUMBER } from '../data/initialData';
 import { wompiService } from '../services/wompiService';
 
 export default function TicketPurchaseModal({ 
@@ -12,12 +12,13 @@ export default function TicketPurchaseModal({
   onClose, 
   onTicketPurchased, 
   currentSeatIndex,
-  isDemoZeroMode = true 
+  isDemoZeroMode = false,
+  tickets = []
 }) {
   if (!isOpen || !event) return null;
 
   const [step, setStep] = useState(1); // 1: Tier, 2: Info & Payment, 3: Success
-  const [selectedTier, setSelectedTier] = useState(event.tiers[0] || { id: "sencilla", name: "Boleta General", priceNormal: 1500, pricePromo: 1500, price: 1500, description: "Únicamente acceso al evento." });
+  const [selectedTier, setSelectedTier] = useState(event.tiers?.[0] || { id: "sencilla", name: "Entrada Normal", priceNormal: 25000, pricePromo: 20000, price: 25000, quota: 300, description: "Acceso general al evento." });
   const [quantity, setQuantity] = useState(1);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
@@ -34,15 +35,51 @@ export default function TicketPurchaseModal({
   const [allIssuedTickets, setAllIssuedTickets] = useState([]);
   const [selectedTicketIndex, setSelectedTicketIndex] = useState(0);
 
+  // Helper to calculate remaining stock for any tier based on real issued tickets
+  const getTierRemaining = (tier) => {
+    if (!tier) return 0;
+    const quota = tier.quota || 100;
+    const tierId = (tier.id || '').toLowerCase();
+
+    const sold = (tickets || []).filter(t => {
+      if (t.status === 'ANULADA' || t.status === 'SYSTEM_CONFIG') return false;
+      const name = (t.tierName || '').toLowerCase();
+      if (tierId === 'vip') return name.includes('vip');
+      if (tierId === '2x1') return name.includes('2x1') || name.includes('mujeres');
+      return !name.includes('vip') && !name.includes('2x1') && !name.includes('mujeres');
+    }).reduce((sum, t) => sum + (Number(t.quantity) || 1), 0);
+
+    return Math.max(0, quota - sold);
+  };
+
+  const currentTierRemaining = getTierRemaining(selectedTier);
+
   // Price calculation
-  const unitPrice = isDemoZeroMode ? 0 : (selectedTier.pricePromo || selectedTier.priceNormal || 0);
+  const unitPrice = isDemoZeroMode ? 0 : (selectedTier.pricePromo || selectedTier.priceNormal || selectedTier.price || 25000);
   const totalAmount = unitPrice * quantity;
 
   const handleNextStep = (e) => {
     e.preventDefault();
     if (step === 1) {
+      // ANTI-OVERSELL PROTECTION
+      if (currentTierRemaining <= 0) {
+        alert(`❌ Aforo Agotado: La localidad "${selectedTier.name}" no tiene boletas disponibles.`);
+        return;
+      }
+      if (quantity > currentTierRemaining) {
+        alert(`⚠️ Aforo Insuficiente: Solo quedan ${currentTierRemaining} boletas disponibles para "${selectedTier.name}". Por favor selecciona como máximo ${currentTierRemaining} unidades.`);
+        return;
+      }
       setStep(2);
     } else if (step === 2) {
+      // Re-verify anti-oversell right before payment/issuing
+      const freshRemaining = getTierRemaining(selectedTier);
+      if (quantity > freshRemaining) {
+        alert(`⚠️ Aforo insuficiente en este momento: Solo quedan ${freshRemaining} boletas disponibles. Por favor ajusta tu cantidad.`);
+        setStep(1);
+        return;
+      }
+
       const trimmedName = formData.name.trim();
       const cleanDni = formData.dni.replace(/[^a-zA-Z0-9]/g, '').trim();
       const trimmedEmail = formData.email.trim();
@@ -94,13 +131,13 @@ export default function TicketPurchaseModal({
           qrHash: qrHash,
           backupCode: backupCode,
           seatNumber: "AFORO GENERAL",
-          eventId: event.id,
-          eventTitle: event.title,
-          eventDate: event.formattedDate,
-          eventTime: event.time,
-          venue: "Finca Villa Luisa",
-          fullAddress: "Ubicación Confidencial Activada",
-          mapsUrl: "#",
+          eventId: event.id || 'evt-monthly-main',
+          eventTitle: event.title || 'ECLIPSE FESTIVAL 2026',
+          eventDate: event.formattedDate || 'Sábado, 28 de Noviembre, 2026',
+          eventTime: event.time || 'Hora por confirmar (Apertura 08:00 PM)',
+          venue: event.venue || "Finca Hotel Villa Luisa",
+          fullAddress: event.unlockedAddress || "Vereda El Lembo, Santa Rosa de Cabal, Risaralda",
+          mapsUrl: GOOGLE_MAPS_LINK,
           tierName: selectedTier.name + (safeQty > 1 ? ` (Pase ${i + 1} de ${safeQty})` : ""),
           tierDescription: selectedTier.description,
           quantity: 1,
@@ -140,7 +177,7 @@ export default function TicketPurchaseModal({
               reference: `ECLIPSE-PAY-${baseId}`,
               customerEmail: trimmedEmail,
               customerFullName: trimmedName,
-              customerPhoneNumber: formData.phone || '3105019591',
+              customerPhoneNumber: formData.phone || '3135238896',
               customerDni: cleanDni,
               tierName: selectedTier.name,
               tierDescription: selectedTier.description,
@@ -159,7 +196,7 @@ export default function TicketPurchaseModal({
               },
               onError: (error) => {
                 setIsProcessing(false);
-                alert("❌ Pago No Aprobado / Cancelado: La pasarela Wompi no confirmó el pago. Tu entrada NO ha sido emitida.");
+                alert("❌ Pago No Aprobado / Cancelado: La pasarela no confirmó el pago. Tu entrada NO ha sido emitida.");
               }
             });
           }
@@ -226,91 +263,84 @@ export default function TicketPurchaseModal({
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                      Selecciona tu Entrada:
+                      Selecciona tu Localidad:
                     </label>
                     <span className="text-[10px] text-amber-300 font-bold bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/30">
-                      ⚡ Promo Primeros 20 Compradores
+                      ⚡ Disponibilidad Oficial en Tiempo Real
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    
-                    {/* BOLETA GENERAL */}
-                    <div
-                      onClick={() => setSelectedTier(event.tiers[0])}
-                      className={`p-5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between space-y-4 ${
-                        selectedTier.id === event.tiers[0].id
-                          ? 'bg-[#ff0033]/15 border-[#ff0033] shadow-[0_0_25px_rgba(255,0,51,0.35)]'
-                          : 'bg-white/5 border-white/10 hover:border-white/20'
-                      }`}
-                    >
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-heading font-black text-lg text-white">Boleta General</h4>
-                          {selectedTier.id === event.tiers[0].id && (
-                            <CheckCircle2 className="w-5 h-5 text-[#ff0033]" />
-                          )}
-                        </div>
-                        <span className="text-xs font-bold text-slate-300 block mb-1">
-                          Beneficio:
-                        </span>
-                        <p className="text-xs text-slate-400 bg-black/40 p-2.5 rounded-xl border border-white/10">
-                          • Únicamente acceso al evento.
-                        </p>
-                      </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {(event.tiers || []).map((tier) => {
+                      const tierRem = getTierRemaining(tier);
+                      const isSelected = selectedTier.id === tier.id;
+                      const isSoldOut = tierRem <= 0;
+                      const priceToShow = isDemoZeroMode ? 0 : (tier.pricePromo || tier.priceNormal || tier.price || 25000);
 
-                      <div className="pt-2 border-t border-white/10 flex items-baseline justify-between">
-                        <span className="text-xs text-slate-400">Precio Promo</span>
-                        {isDemoZeroMode ? (
-                          <span className="font-heading font-black text-xl text-emerald-400">$0 COP</span>
-                        ) : (
-                          <div className="text-right">
-                            <span className="font-heading font-black text-lg text-emerald-400">$1.500 COP</span>
+                      return (
+                        <div
+                          key={tier.id}
+                          onClick={() => {
+                            if (!isSoldOut) setSelectedTier(tier);
+                          }}
+                          className={`p-4 rounded-2xl border transition-all flex flex-col justify-between space-y-3 ${
+                            isSoldOut
+                              ? 'bg-black/40 border-white/10 opacity-50 cursor-not-allowed'
+                              : isSelected
+                                ? 'bg-[#ff0033]/20 border-[#ff0033] shadow-[0_0_20px_rgba(255,0,51,0.35)] cursor-pointer'
+                                : 'bg-white/5 border-white/10 hover:border-white/20 cursor-pointer'
+                          }`}
+                        >
+                          <div>
+                            <div className="flex items-center justify-between mb-1.5">
+                              <h4 className="font-heading font-black text-base text-white">{tier.name}</h4>
+                              {isSelected && !isSoldOut && (
+                                <CheckCircle2 className="w-4 h-4 text-[#ff0033]" />
+                              )}
+                              {isSoldOut && (
+                                <span className="text-[9px] font-bold text-rose-400 bg-rose-500/20 px-1.5 py-0.5 rounded">AGOTADO</span>
+                              )}
+                            </div>
+
+                            <p className="text-[11px] text-slate-400 bg-black/40 p-2 rounded-xl border border-white/5 min-h-[44px]">
+                              {tier.description}
+                            </p>
                           </div>
-                        )}
-                      </div>
-                    </div>
 
-                    {/* BOLETA VIP */}
-                    <div
-                      onClick={() => setSelectedTier(event.tiers[1] || event.tiers[0])}
-                      className={`p-5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between space-y-4 ${
-                        selectedTier.id === (event.tiers[1]?.id || 'vip')
-                          ? 'bg-[#ff0033]/20 border-[#ff0033] shadow-[0_0_25px_rgba(255,0,51,0.4)]'
-                          : 'bg-white/5 border-white/10 hover:border-white/20'
-                      }`}
-                    >
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-heading font-black text-lg text-white flex items-center gap-1.5">
-                            <Wine className="w-4 h-4 text-[#ff0033]" /> Boleta VIP
-                          </span>
-                          {selectedTier.id === (event.tiers[1]?.id || 'vip') && (
-                            <CheckCircle2 className="w-5 h-5 text-[#ff0033]" />
-                          )}
-                        </div>
-                        <span className="text-xs font-bold text-slate-300 block mb-1">
-                          Beneficios:
-                        </span>
-                        <p className="text-xs text-slate-300 bg-black/40 p-2.5 rounded-xl border border-white/10">
-                          • Acceso preferencial sin filas.<br />
-                          • <strong>Eclipse Drinks Adicional incluido.</strong>
-                        </p>
-                      </div>
-
-                      <div className="pt-2 border-t border-white/10 flex items-baseline justify-between">
-                        <span className="text-xs text-slate-400">Precio Promo</span>
-                        {isDemoZeroMode ? (
-                          <span className="font-heading font-black text-xl text-emerald-400">$0 COP</span>
-                        ) : (
-                          <div className="text-right">
-                            <span className="font-heading font-black text-lg text-emerald-400">$1.500 COP</span>
+                          <div className="pt-2 border-t border-white/10 space-y-1">
+                            <div className="flex items-baseline justify-between">
+                              <span className="text-[10px] text-slate-400 uppercase">Precio</span>
+                              <span className="font-heading font-black text-base text-emerald-400">
+                                ${priceToShow.toLocaleString('es-CO')} COP
+                              </span>
+                            </div>
+                            <div className="flex justify-between items-center text-[10px] font-mono">
+                              <span className="text-slate-400">Disponibles:</span>
+                              <span className={tierRem <= 15 ? 'text-[#ff0033] font-bold' : 'text-purple-300 font-bold'}>
+                                {tierRem} de {tier.quota || 100}
+                              </span>
+                            </div>
                           </div>
-                        )}
-                      </div>
-                    </div>
-
+                        </div>
+                      );
+                    })}
                   </div>
+                </div>
+
+                {/* Direct WhatsApp Option */}
+                <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-2 text-slate-200">
+                    <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>¿Prefieres comprar o reservar por WhatsApp?</span>
+                  </div>
+                  <a
+                    href={WHATSAPP_BUY_MESSAGE}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 transition-colors shadow-sm"
+                  >
+                    <span>Escribir al {WHATSAPP_NUMBER}</span>
+                  </a>
                 </div>
 
                 {/* Quantity */}

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import EventCountdown from './components/EventCountdown';
+import TicketStockCounter from './components/TicketStockCounter';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 import FincaSpotlight from './components/FincaSpotlight';
 import FincaGalleryModal from './components/FincaGalleryModal';
 import EventBillboard from './components/EventBillboard';
@@ -11,7 +14,7 @@ import SecretAdminAuthModal from './components/SecretAdminAuthModal';
 import AdminDashboardModal from './components/AdminDashboardModal';
 import ScrollReveal from './components/ScrollReveal';
 import Footer from './components/Footer';
-import { INITIAL_MONTHLY_EVENT } from './data/initialData';
+import { INITIAL_MONTHLY_EVENT, GOOGLE_MAPS_LINK } from './data/initialData';
 import { ticketService } from './services/ticketService';
 import { wompiService } from './services/wompiService';
 import { eventConfigService } from './services/eventConfigService';
@@ -22,10 +25,18 @@ export default function App() {
     if (!saved) return INITIAL_MONTHLY_EVENT;
     try {
       const parsed = JSON.parse(saved);
+      // Migrate if old date or old venue was cached
+      if (parsed.date === '2026-10-24' || !parsed.date) {
+        parsed.date = '2026-11-28';
+        parsed.formattedDate = 'Sábado, 28 de Noviembre, 2026';
+        parsed.time = 'Hora por confirmar (Apertura 08:00 PM)';
+      }
+      parsed.venue = INITIAL_MONTHLY_EVENT.venue;
+      parsed.unlockedVenue = INITIAL_MONTHLY_EVENT.unlockedVenue;
+      parsed.unlockedAddress = INITIAL_MONTHLY_EVENT.unlockedAddress;
       parsed.image = '/images/finca/IMG_0239.jpg';
-      parsed.venue = 'Ubicación en tu Entrada Digital';
-      if (parsed.tiers) {
-        parsed.tiers = parsed.tiers.map(t => ({ ...t, price: 1500, pricePromo: 1500, priceNormal: 1500 }));
+      if (!parsed.tiers || parsed.tiers.length < 3) {
+        parsed.tiers = INITIAL_MONTHLY_EVENT.tiers;
       }
       return parsed;
     } catch (e) {
@@ -51,12 +62,12 @@ export default function App() {
       backupCode: 'BAC-ECL-8821-5432',
       seatNumber: 'AFORO GENERAL',
       eventId: 'evt-monthly-main',
-      eventTitle: 'ECLIPSE NEON FESTIVAL 2026',
-      eventDate: 'Sábado, 24 de Octubre, 2026',
-      eventTime: '08:00 PM - 06:00 AM',
-      venue: 'Finca Villa Luisa',
-      fullAddress: 'Ubicación Confidencial Activada',
-      mapsUrl: '#',
+      eventTitle: 'ECLIPSE FESTIVAL 2026',
+      eventDate: 'Sábado, 28 de Noviembre, 2026',
+      eventTime: 'Hora por confirmar (Apertura 08:00 PM)',
+      venue: 'Finca Hotel Villa Luisa',
+      fullAddress: 'Vereda El Lembo, Santa Rosa de Cabal, Risaralda',
+      mapsUrl: GOOGLE_MAPS_LINK,
       tierName: 'Boleta VIP',
       tierDescription: 'Acceso preferencial + Eclipse Drinks Adicional incluido.',
       quantity: 1,
@@ -74,9 +85,9 @@ export default function App() {
     const raw = saved ? JSON.parse(saved) : initialDefaultTickets;
     return raw.map(t => ({
       ...t,
-      venue: 'Finca Villa Luisa',
-      fullAddress: 'Ubicación Confidencial Activada',
-      mapsUrl: '#'
+      venue: 'Finca Hotel Villa Luisa',
+      fullAddress: 'Vereda El Lembo, Santa Rosa de Cabal, Risaralda',
+      mapsUrl: GOOGLE_MAPS_LINK
     }));
   });
 
@@ -191,9 +202,9 @@ export default function App() {
               eventTitle: pendingInfo.eventTitle || monthlyEvent.title,
               eventDate: pendingInfo.eventDate || monthlyEvent.formattedDate,
               eventTime: pendingInfo.eventTime || monthlyEvent.time,
-              venue: "Finca Villa Luisa",
-              fullAddress: "Ubicación Confidencial Activada",
-              mapsUrl: "#",
+              venue: monthlyEvent.venue || "Finca Hotel Villa Luisa",
+              fullAddress: monthlyEvent.unlockedAddress || "Vereda El Lembo, Santa Rosa de Cabal, Risaralda",
+              mapsUrl: GOOGLE_MAPS_LINK,
               tierName: tierName + (numTickets > 1 ? ` (Pase ${i + 1} de ${numTickets})` : ""),
               tierDescription: tierDescription,
               quantity: 1,
@@ -318,14 +329,27 @@ export default function App() {
         onTriggerSecretAuth={() => setIsSecretAuthModalOpen(true)}
       />
 
-      {/* Main Content (BUYING TICKETS & MAIN EVENT SPOTLIGHT FIRST AS REQUESTED) */}
-      <main className="flex-1 space-y-12">
+      {/* Main Content */}
+      <main className="flex-1 space-y-8 sm:space-y-12">
         <Hero
           onExplore={() => handleNavigate('cartelera')}
           onSpotlightFinca={() => handleNavigate('finca')}
         />
 
-        {/* 1. TICKET BUYING SHOWCASE FIRST WITH INTEGRATED VENUE PHOTOS & EARLY BIRD DISCOUNTS */}
+        {/* 1. CUENTA REGRESIVA DINÁMICA: SÁBADO 28 DE NOVIEMBRE DE 2026 */}
+        <EventCountdown
+          targetDate={monthlyEvent.date || "2026-11-28"}
+          tentativeTime="20:00"
+        />
+
+        {/* 2. DISPONIBILIDAD REAL DE BOLETAS Y AFORO OFICIAL EN TIEMPO REAL */}
+        <TicketStockCounter
+          monthlyEvent={monthlyEvent}
+          tickets={tickets}
+          onSelectBuy={handleOpenPurchase}
+        />
+
+        {/* 3. CARTELERA DEL EVENTO Y COMPRA DE BOLETAS */}
         <EventBillboard
           monthlyEvent={monthlyEvent}
           onSelectEvent={handleOpenPurchase}
@@ -333,7 +357,7 @@ export default function App() {
           isDemoZeroMode={isDemoZeroMode}
         />
 
-        {/* 2. Venue Features & Amenity Details */}
+        {/* 4. SEDE OFICIAL: FINCA HOTEL VILLA LUISA & CÓMO LLEGAR */}
         <FincaSpotlight
           onOpenGallery={() => setIsGalleryOpen(true)}
           onSelectEvent={handleOpenPurchase}
@@ -346,6 +370,9 @@ export default function App() {
         onOpenGallery={() => setIsGalleryOpen(true)}
         openQRModal={() => setIsQRModalOpen(true)}
       />
+
+      {/* BOTÓN FLOTANTE OFICIAL DE WHATSAPP (313 523 8896) */}
+      <FloatingWhatsApp />
 
       {/* MODALS */}
       <FincaGalleryModal
@@ -360,6 +387,7 @@ export default function App() {
         onTicketPurchased={handleTicketPurchased}
         currentSeatIndex={seatCounter}
         isDemoZeroMode={isDemoZeroMode}
+        tickets={tickets}
       />
 
       <MyTicketsModal

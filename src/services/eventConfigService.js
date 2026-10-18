@@ -32,6 +32,10 @@ export const eventConfigService = {
             date: parsed.date || fallbackEvent.date,
             time: parsed.time || fallbackEvent.time,
             category: parsed.category || fallbackEvent.category,
+            venue: parsed.venue || fallbackEvent.venue,
+            unlockedVenue: parsed.unlockedVenue || fallbackEvent.unlockedVenue,
+            unlockedAddress: parsed.unlockedAddress || fallbackEvent.unlockedAddress,
+            mapsUrl: parsed.mapsUrl || fallbackEvent.mapsUrl,
           };
 
           if (typeof window !== 'undefined') {
@@ -79,12 +83,12 @@ export const eventConfigService = {
           backup_code: 'CFG-0001',
           seat_number: 'CONFIG',
           event_id: eventData.id || 'evt-monthly-main',
-          event_title: eventData.title || 'ECLIPSE NEON FESTIVAL 2026',
-          event_date: eventData.date || '2026-10-24',
-          event_time: eventData.time || '08:00 PM - 06:00 AM',
-          venue: eventData.venue || 'Finca Villa Luisa',
-          full_address: 'CONFIG',
-          maps_url: '#',
+          event_title: eventData.title || 'ECLIPSE FESTIVAL 2026',
+          event_date: eventData.date || '2026-11-28',
+          event_time: eventData.time || 'Hora por confirmar (Apertura 08:00 PM)',
+          venue: eventData.venue || 'Finca Hotel Villa Luisa',
+          full_address: eventData.unlockedAddress || 'Vereda El Lembo, Santa Rosa de Cabal, Risaralda',
+          maps_url: 'https://maps.app.goo.gl/h8N3erdc6PaDp6gy8?g_st=iw',
           tier_name: 'CONFIG',
           tier_description: JSON.stringify({
             lineup: eventData.lineup || [],
@@ -92,7 +96,11 @@ export const eventConfigService = {
             subtitle: eventData.subtitle,
             date: eventData.date,
             time: eventData.time,
-            category: eventData.category
+            category: eventData.category,
+            venue: eventData.venue,
+            unlockedVenue: eventData.unlockedVenue,
+            unlockedAddress: eventData.unlockedAddress,
+            mapsUrl: 'https://maps.app.goo.gl/h8N3erdc6PaDp6gy8?g_st=iw'
           }),
           quantity: 0,
           total_price: 0,

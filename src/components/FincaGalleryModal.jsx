@@ -92,8 +92,8 @@ export default function FincaGalleryModal({ isOpen, onClose }) {
         </div>
 
         {/* Footer info */}
-        <div className="p-4 border-t border-white/10 bg-black/60 text-center text-xs text-slate-400">
-          Finca Villa Luisa • Av. El Pital, Pereira, Risaralda
+        <div className="p-4 border-t border-white/10 bg-black/60 text-center text-xs text-slate-300 font-medium">
+          Finca Hotel Villa Luisa • Vereda El Lembo, Santa Rosa de Cabal, Risaralda, Colombia
         </div>
 
       </div>

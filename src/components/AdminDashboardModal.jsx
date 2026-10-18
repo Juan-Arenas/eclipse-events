@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, LayoutDashboard, Edit3, PlusCircle, CheckCircle2, QrCode, Zap, ToggleLeft, ToggleRight, Music, Trash2, Plus } from 'lucide-react';
+import { GOOGLE_MAPS_LINK } from '../data/initialData';
 
 export default function AdminDashboardModal({ 
   isOpen, 
@@ -28,9 +29,9 @@ export default function AdminDashboardModal({
   const [formData, setFormData] = useState({
     title: monthlyEvent?.title || '',
     subtitle: monthlyEvent?.subtitle || '',
-    venue: monthlyEvent?.venue || 'Finca Villa Luisa',
-    date: monthlyEvent?.date || '',
-    time: monthlyEvent?.time || '08:00 PM - 06:00 AM',
+    venue: monthlyEvent?.venue || 'Finca Hotel Villa Luisa',
+    date: monthlyEvent?.date || '2026-11-28',
+    time: monthlyEvent?.time || 'Hora por confirmar (Apertura 08:00 PM)',
     category: monthlyEvent?.category || 'Electrónica / Festival VIP',
     image: monthlyEvent?.image || '/images/finca_main.jpg',
     lineupStr: monthlyEvent?.lineup ? monthlyEvent.lineup.join(', ') : 'ALEXANDER SKY, NEON PULSE, VALENTINA ROSS',
@@ -120,9 +121,9 @@ export default function AdminDashboardModal({
       eventTitle: monthlyEvent.title,
       eventDate: monthlyEvent.formattedDate,
       eventTime: monthlyEvent.time,
-      venue: "Finca Villa Luisa",
-      fullAddress: "Ubicación Confidencial Activada",
-      mapsUrl: "#",
+      venue: monthlyEvent?.venue || "Finca Hotel Villa Luisa",
+      fullAddress: monthlyEvent?.unlockedAddress || "Vereda El Lembo, Santa Rosa de Cabal, Risaralda",
+      mapsUrl: GOOGLE_MAPS_LINK,
       tierName: isVip ? "Boleta VIP" : "Boleta General",
       tierDescription: isVip ? "Acceso preferencial + Eclipse Drinks Adicional incluido." : "Únicamente acceso al evento.",
       quantity: 1,

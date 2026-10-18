@@ -1,10 +1,11 @@
 import React from 'react';
-import { Ticket, Sparkles, MapPin, Zap } from 'lucide-react';
+import { Ticket, Sparkles, MapPin, Zap, MessageCircle } from 'lucide-react';
 import Interactive3DTitle from './Interactive3DTitle';
+import { WHATSAPP_BUY_MESSAGE } from '../data/initialData';
 
 export default function Hero({ onExplore, onSpotlightFinca }) {
   return (
-    <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden py-12 sm:py-16 bg-metallic-dark">
+    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden py-10 sm:py-14 bg-metallic-dark">
       
       {/* Background Neon Glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#ff0033]/20 blur-[150px] rounded-full pointer-events-none"></div>
@@ -22,23 +23,25 @@ export default function Hero({ onExplore, onSpotlightFinca }) {
           <Interactive3DTitle />
         </div>
 
-        {/* CTA Buttons (Under Mirage Reflection with clean clearance) */}
+        {/* CTA Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4 mb-8 z-10">
           <button
             onClick={onExplore}
-            className="btn-neon-red px-8 py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center gap-3 text-white shadow-[0_0_30px_rgba(255,0,51,0.6)]"
+            className="btn-neon-red px-8 py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center gap-3 text-white shadow-[0_0_30px_rgba(255,0,51,0.6)] cursor-pointer"
           >
             <Ticket className="w-5 h-5" />
-            <span>Explorar Próximo Evento</span>
+            <span>Comprar Boletas</span>
           </button>
 
-          <button
-            onClick={onExplore}
-            className="btn-silver px-8 py-4 rounded-2xl text-sm font-bold uppercase tracking-wider flex items-center gap-3"
+          <a
+            href={WHATSAPP_BUY_MESSAGE}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-7 py-4 rounded-2xl text-sm font-bold uppercase tracking-wider flex items-center gap-3 bg-emerald-600/90 hover:bg-emerald-500 text-white border border-emerald-400/40 shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all cursor-pointer"
           >
-            <Sparkles className="w-5 h-5 text-[#ff0033]" />
-            <span>Ver Boletas & Precios</span>
-          </button>
+            <MessageCircle className="w-5 h-5 text-white" />
+            <span>Reservar por WhatsApp</span>
+          </a>
         </div>
 
         {/* User Quote / Slogan */}

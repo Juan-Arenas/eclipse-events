@@ -77,18 +77,24 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
             <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Ubicación del Evento</h4>
             <div className="space-y-2 text-xs text-slate-400">
               <p className="text-white font-semibold flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Finca Villa Luisa
+                <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Finca Hotel Villa Luisa
               </p>
-              <p>📍 Sede oficial del evento: Av. El Pital, Pereira, Risaralda. Fácil acceso con parqueadero privado.</p>
-              <a href="https://www.google.com/maps/place/Finca+Villa+Luisa/@4.851732,-76.0227041,48386m/data=!3m1!1e3!4m10!1m2!2m1!1sfinca+villa+luisa!3m6!1s0x8e387f969ae79a53:0x23bb40ddf4358b4b!8m2!3d4.851732!4d-75.734313!15sChFmaW5jYSB2aWxsYSBsdWlzYZIBCnBsYXlncm91bmTgAQA!16s%2Fg%2F11fljjf5vq?entry=ttu&g_ep=EgoyMDI2MTAwNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noreferrer" className="text-emerald-400 font-bold underline">
-                Ver en Google Maps
+              <p>📍 Sede oficial: Vereda El Lembo, Santa Rosa de Cabal, Risaralda. Fácil acceso y parqueadero privado custodiado.</p>
+              <a 
+                href={GOOGLE_MAPS_LINK} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="text-emerald-400 font-bold underline inline-flex items-center gap-1 hover:text-emerald-300 transition-colors"
+              >
+                <span>Ver en Google Maps</span>
+                <ExternalLink className="w-3 h-3" />
               </a>
             </div>
           </div>
 
           {/* Contact & Support */}
           <div>
-            <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Contacto & Soporte</h4>
+            <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Contacto & Soporte Oficial</h4>
             <div className="space-y-2.5 text-xs text-slate-400">
               <p className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#ff0033]" />
@@ -99,24 +105,24 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
               <p className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#ff0033]" />
                 <a 
-                  href="https://wa.me/573105019591" 
+                  href="https://wa.me/573135238896" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="hover:text-white transition-colors font-mono"
-                  title="Escribir por WhatsApp"
+                  className="hover:text-white transition-colors font-mono font-bold"
+                  title="Escribir al WhatsApp oficial"
                 >
-                  +57 310 501 9591
+                  +57 313 523 8896
                 </a>
               </p>
               <div className="pt-1">
                 <a
-                  href="https://wa.me/573105019591?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20las%20boletas%20del%20Eclipse%20Festival"
+                  href="https://wa.me/573135238896?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20las%20boletas%20del%20evento%20Eclipse%20del%2028%20de%20noviembre"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/25 hover:text-emerald-300 transition-all text-xs font-bold"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
-                  <span>WhatsApp Soporte VIP</span>
+                  <span>WhatsApp Soporte & Ventas VIP</span>
                 </a>
               </div>
               <div className="pt-2">
