@@ -73,4 +73,4 @@ Panel Wompi simplificado: Retiro de llaves del panel para mayor limpieza visual.
 
 Filtro +18 Años: Checkbox obligatorio y modal de Términos, Condiciones y Política de Privacidad de Eclipse Events.
 
-Redes Oficiales: Botón oficial con enlace a Instagram @eclipse_fullvibes_events.
+Redes Oficiales: Botón oficial con enlace a Instagram @eclipse_._events.

@@ -43,14 +43,14 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a
-                href="https://instagram.com/eclipse_fullvibes_events"
+                href="https://www.instagram.com/eclipse_._events"
                 target="_blank"
                 rel="noopener noreferrer"
-                title="Instagram Oficial @eclipse_fullvibes_events"
+                title="Instagram Oficial @eclipse_._events"
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-[#ff0033]/40 text-slate-200 hover:text-white hover:bg-[#ff0033]/20 hover:border-[#ff0033] transition-all text-xs font-semibold shadow-[0_0_15px_rgba(255,0,51,0.25)]"
               >
                 <InstagramIcon className="w-4 h-4 text-[#ff0033]" />
-                <span className="font-mono text-[11px]">@eclipse_fullvibes_events</span>
+                <span className="font-mono text-[11px]">@eclipse_._events</span>
               </a>
             </div>
           </div>
