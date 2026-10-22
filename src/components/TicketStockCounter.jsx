@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ticket, Flame, ShieldCheck, Zap, Users, AlertTriangle, ArrowRight, MessageCircle } from 'lucide-react';
-import { WHATSAPP_BUY_MESSAGE } from '../data/initialData';
+import { WHATSAPP_BUY_MESSAGE, UNDERACCESS_BUY_LINK } from '../data/initialData';
 
 export default function TicketStockCounter({ monthlyEvent, tickets = [], onSelectBuy }) {
   if (!monthlyEvent || !monthlyEvent.tiers) return null;
@@ -156,19 +156,20 @@ export default function TicketStockCounter({ monthlyEvent, tickets = [], onSelec
 
           {/* Quick Action Buttons (Compra + WhatsApp) */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-            <button
-              onClick={onSelectBuy}
-              disabled={totalAvailable === 0}
+            <a
+              href={UNDERACCESS_BUY_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`w-full sm:w-auto px-8 py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all ${
                 totalAvailable > 0
-                  ? 'btn-neon-red shadow-[0_0_20px_rgba(255,0,51,0.5)]'
-                  : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                  ? 'btn-neon-red shadow-[0_0_20px_rgba(255,0,51,0.5)] cursor-pointer'
+                  : 'bg-slate-800 text-slate-500 cursor-not-allowed pointer-events-none'
               }`}
             >
               <Ticket className="w-4 h-4" />
               <span>{totalAvailable > 0 ? "Comprar Boletas en Línea" : "Boletas Agotadas"}</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </a>
 
             <a
               href={WHATSAPP_BUY_MESSAGE}

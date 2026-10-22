@@ -6,6 +6,8 @@ export const WHATSAPP_INFO_MESSAGE = "https://wa.me/573135238896?text=Hola%2C%20
 
 export const GOOGLE_MAPS_LINK = "https://maps.app.goo.gl/h8N3erdc6PaDp6gy8?g_st=iw";
 
+export const UNDERACCESS_BUY_LINK = "https://api.underaccess.com/functions/v1/comprar?org=eclipseevents&event=eclipse-fest&r=ef5f0e8e-169b-4a8e-a187-8c43c6f82b5b";
+
 export const INITIAL_MONTHLY_EVENT = {
   id: "evt-monthly-main",
   title: "ECLIPSE FESTIVAL 2026",

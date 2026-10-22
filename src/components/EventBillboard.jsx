@@ -1,6 +1,6 @@
 import React from 'react';
 import { Calendar, Clock, MapPin, Ticket, Sparkles, Lock, Music, Zap, Image as ImageIcon, Flame, Tag, CheckCircle2, ShieldCheck, Users, Navigation, MessageCircle } from 'lucide-react';
-import { FINCA_PHOTOS, GOOGLE_MAPS_LINK, WHATSAPP_BUY_MESSAGE, WHATSAPP_NUMBER } from '../data/initialData';
+import { FINCA_PHOTOS, GOOGLE_MAPS_LINK, WHATSAPP_BUY_MESSAGE, WHATSAPP_NUMBER, UNDERACCESS_BUY_LINK } from '../data/initialData';
 import ScrollReveal from './ScrollReveal';
 
 export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGallery, isDemoZeroMode }) {
@@ -158,13 +158,15 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
 
             {/* ACTION BUTTONS (ONLINE PURCHASE + DIRECT WHATSAPP) */}
             <div className="pt-3 border-t border-white/10 space-y-2.5">
-              <button
-                onClick={onSelectEvent}
+              <a
+                href={UNDERACCESS_BUY_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full btn-neon-red py-4 rounded-2xl text-sm font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(255,0,51,0.6)] cursor-pointer"
               >
                 <Ticket className="w-5 h-5" />
                 <span>COMPRAR BOLETAS EN LÍNEA</span>
-              </button>
+              </a>
 
               <a
                 href={WHATSAPP_BUY_MESSAGE}

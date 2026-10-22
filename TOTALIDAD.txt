@@ -24,14 +24,8 @@ Slide-Left (Entrada izquierda): Póster del evento y amenidades de la finca.
 Slide-Right (Entrada derecha): Panel de compra de boletas y recuadro de ubicación.
 
 
-Integración oficial con Wompi: Tarjetas de crédito/débito, PSE, Nequi y Bancolombia.
-Firma criptográfica de integridad SHA-256: 
-
-Concatenación de referencia, centavos, COP y secreto de integridad para máxima seguridad bancaria.
-
-Redirección segura a Web Checkout: Redirección directa que elimina fallos o bloqueos por extensiones en el navegador.
-
-Verificación automática: Detección de retorno de pasarela y verificación por API REST (/transactions/:id).
+Integración oficial con pasarela Underaccess: Pago directo de boletería oficial en línea.
+Redirección segura a pasarela: Redirección directa que asegura máxima rapidez y compatibilidad.
 
 Regla estricta de seguridad: La boleta SÓLO se emite si el banco devuelve el estado APPROVED. Transacciones declinadas o en error no generan boleta.
 
@@ -69,7 +63,6 @@ Emisión manual de boletas: Para generar entradas oficiales con QR a clientes qu
 
 Gestor de eventos: Cambio de fechas, alineación de DJs, precios y aforo.
 Métricas en vivo: Total de entradas vendidas, dinero recaudado y tabla de compradores.
-Panel Wompi simplificado: Retiro de llaves del panel para mayor limpieza visual.
 
 Filtro +18 Años: Checkbox obligatorio y modal de Términos, Condiciones y Política de Privacidad de Eclipse Events.
 

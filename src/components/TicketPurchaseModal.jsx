@@ -3,8 +3,7 @@ import { X, Ticket, CheckCircle2, ShieldCheck, CreditCard, User, Mail, Phone, Ha
 import confetti from 'canvas-confetti';
 import DigitalTicketPass from './DigitalTicketPass';
 import TermsModal from './TermsModal';
-import { GOOGLE_MAPS_LINK, WHATSAPP_BUY_MESSAGE, WHATSAPP_NUMBER } from '../data/initialData';
-import { wompiService } from '../services/wompiService';
+import { GOOGLE_MAPS_LINK, WHATSAPP_BUY_MESSAGE, WHATSAPP_NUMBER, UNDERACCESS_BUY_LINK } from '../data/initialData';
 
 export default function TicketPurchaseModal({ 
   event, 
@@ -167,44 +166,11 @@ export default function TicketPurchaseModal({
         });
       };
 
-      const executePaymentFlow = async () => {
-        try {
-          if (isDemoZeroMode || totalAmount === 0) {
-            setTimeout(issueTicketPass, 800);
-          } else {
-            await wompiService.openCheckout({
-              amountInCop: totalAmount,
-              reference: `ECLIPSE-PAY-${baseId}`,
-              customerEmail: trimmedEmail,
-              customerFullName: trimmedName,
-              customerPhoneNumber: formData.phone || '3135238896',
-              customerDni: cleanDni,
-              tierName: selectedTier.name,
-              tierDescription: selectedTier.description,
-              quantity: safeQty,
-              eventId: event.id,
-              eventTitle: event.title,
-              eventDate: event.formattedDate,
-              eventTime: event.time,
-              onSuccess: (transaction) => {
-                if (transaction && transaction.status === 'APPROVED') {
-                  issueTicketPass();
-                } else {
-                  setIsProcessing(false);
-                  alert("❌ Pago No Aprobado: La transacción no fue autorizada por el banco. Tu entrada NO ha sido emitida.");
-                }
-              },
-              onError: (error) => {
-                setIsProcessing(false);
-                alert("❌ Pago No Aprobado / Cancelado: La pasarela no confirmó el pago. Tu entrada NO ha sido emitida.");
-              }
-            });
-          }
-        } catch (err) {
-          console.error("Payment execution error:", err);
-          setIsProcessing(false);
-          alert("❌ Error de Comunicación: Ocurrió un problema conectando con la pasarela. No se realizó ningún cobro ni se emitió la boleta.");
-        }
+      const executePaymentFlow = () => {
+        setIsProcessing(true);
+        setTimeout(() => {
+          window.location.href = UNDERACCESS_BUY_LINK;
+        }, 200);
       };
 
       executePaymentFlow();
@@ -474,38 +440,7 @@ export default function TicketPurchaseModal({
                   </span>
                 </div>
 
-                {/* Sandbox Info Callout for Test Mode */}
-                {wompiService.isSandboxMode() && !isDemoZeroMode && (
-                  <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-amber-300 flex items-center gap-1.5">
-                        <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Wompi en Modo Sandbox (Pruebas)
-                      </span>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-bold border border-amber-400/40">
-                        SIMULACIÓN
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-amber-100/80 leading-relaxed">
-                      Wompi <strong>rechaza tarjetas reales</strong> en modo pruebas. Para aprobar el pago en la pasarela, usa la tarjeta de prueba oficial:
-                    </p>
-                    <div className="bg-black/50 p-2.5 rounded-xl border border-amber-500/20 font-mono text-[11px] text-white flex flex-wrap items-center justify-between gap-2">
-                      <div>
-                        <span className="text-slate-400 text-[10px] block">NÚMERO DE TARJETA:</span>
-                        <strong className="text-amber-300 tracking-wider">4242 4242 4242 4242</strong>
-                      </div>
-                      <div>
-                        <span className="text-slate-400 text-[10px] block">VENCE:</span>
-                        <strong className="text-amber-300">12/28</strong>
-                      </div>
-                      <div>
-                        <span className="text-slate-400 text-[10px] block">CVC:</span>
-                        <strong className="text-amber-300">123</strong>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex gap-3">
+                <div className="flex gap-3 pt-2">
                   <button
                     type="button"
                     onClick={() => setStep(1)}
@@ -517,38 +452,29 @@ export default function TicketPurchaseModal({
                   <button
                     type="submit"
                     disabled={isProcessing}
-                    className="flex-1 btn-neon-red py-3.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2"
+                    className="flex-1 btn-neon-red py-3.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,0,51,0.5)] cursor-pointer"
                   >
                     {isProcessing ? (
-                      <span className="animate-pulse">Conectando con Pasarela Wompi...</span>
+                      <span className="animate-pulse">Redirigiendo a Pasarela de Pago...</span>
                     ) : (
                       <>
                         <ShieldCheck className="w-4 h-4" />
-                        <span>Pagar con Wompi (${totalAmount.toLocaleString('es-CO')} COP)</span>
+                        <span>IR A PAGAR EN LÍNEA (${totalAmount.toLocaleString('es-CO')} COP)</span>
                       </>
                     )}
                   </button>
                 </div>
 
-                {isProcessing && !isDemoZeroMode && (
-                  <div className="text-center pt-2 animate-fade-in">
-                    <p className="text-[11px] text-slate-400 mb-1">¿No se abre la ventana desplegable de Wompi?</p>
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        const ticketId = `ECLIPSE-${Math.floor(100000 + Math.random() * 900000)}`;
-                        const url = await wompiService.buildWebCheckoutUrl({
-                          amountInCop: totalAmount,
-                          reference: `ECLIPSE-PAY-${ticketId}`
-                        });
-                        window.location.href = url;
-                      }}
-                      className="text-xs text-[#ff0033] font-bold underline hover:text-white transition-colors"
-                    >
-                      ⚡ Clic aquí para abrir Wompi en Ventana Completa (Redirección Directa)
-                    </button>
-                  </div>
-                )}
+                <div className="text-center pt-2">
+                  <a
+                    href={UNDERACCESS_BUY_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-slate-400 hover:text-[#ff0033] transition-colors"
+                  >
+                    ¿Problemas con la redirección? Clic aquí para abrir la pasarela oficial
+                  </a>
+                </div>
               </form>
             )}
 
