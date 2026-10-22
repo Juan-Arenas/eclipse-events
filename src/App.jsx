@@ -34,7 +34,7 @@ export default function App() {
       parsed.venue = INITIAL_MONTHLY_EVENT.venue;
       parsed.unlockedVenue = INITIAL_MONTHLY_EVENT.unlockedVenue;
       parsed.unlockedAddress = INITIAL_MONTHLY_EVENT.unlockedAddress;
-      parsed.image = '/images/finca/IMG_0239.jpg';
+      parsed.image = INITIAL_MONTHLY_EVENT.image;
       if (!parsed.tiers || parsed.tiers.length < 3) {
         parsed.tiers = INITIAL_MONTHLY_EVENT.tiers;
       }
@@ -114,6 +114,7 @@ export default function App() {
         setMonthlyEvent(prev => ({
           ...prev,
           ...config,
+          image: (config.image && !config.image.includes('IMG_0239')) ? config.image : INITIAL_MONTHLY_EVENT.image,
           lineup: config.lineup || prev.lineup
         }));
       }

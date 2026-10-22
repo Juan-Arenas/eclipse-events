@@ -18,7 +18,7 @@ export const INITIAL_MONTHLY_EVENT = {
   time: "Hora por confirmar (Apertura 08:00 PM)",
   timeStatus: "PENDIENTE_CONFIRMAR",
   category: "Festival / Neón VIP",
-  image: "/images/finca/IMG_0239.jpg",
+  image: "/images/finca/finca_1.jpg",
   priceMin: 25000,
   tags: ["EDICIÓN ESPECIAL NEÓN ⚡", "SÁBADO 28 DE NOVIEMBRE", "AFORO EXCLUSIVO LIMITADO"],
   description: "Prepárate para la experiencia más impresionante del año. Eclipse Events presenta su producción oficial en Finca Hotel Villa Luisa: sonido envolvente de alta fidelidad, show láser de última generación, piscina tropical, áreas sociales y palcos VIP.",
@@ -62,45 +62,45 @@ export const INITIAL_MONTHLY_EVENT = {
 export const FINCA_PHOTOS = [
   {
     id: "finca-1",
-    title: "Fachada Principal & Instalaciones",
-    category: "Exterior",
-    url: "/images/finca/IMG_0239.jpg",
-    desc: "Vista real de las instalaciones campestres en Finca Hotel Villa Luisa, Vereda El Lembo, Santa Rosa de Cabal."
+    title: "Panorámica General & Chalet Campestre",
+    category: "Instalaciones",
+    url: "/images/finca/finca_1.jpg",
+    desc: "Vista panorámica de la finca con extensos jardines, senderos adoquinados, arquitectura tipo chalet y piscina."
   },
   {
     id: "finca-2",
-    title: "Piscina y Zonas Húmedas",
+    title: "Piscina & Zona Húmeda Panorámica",
     category: "Piscina",
-    url: "/images/finca/IMG_0240.jpg",
-    desc: "Piscina campestre con entorno natural en Finca Hotel Villa Luisa."
+    url: "/images/finca/finca_2.jpg",
+    desc: "Piscina campestre con cerramiento panorámico en vidrio templado y vista abierta a la naturaleza."
   },
   {
     id: "finca-3",
-    title: "Escenario Principal & Show Láser",
-    category: "Escenario",
-    url: "/images/finca/IMG_0241.jpg",
-    desc: "Área de montaje de sonido envolvente, pantallas y show de luces láser."
+    title: "Sendero & Palmeras Neón VIP",
+    category: "Nocturna",
+    url: "/images/finca/finca_3.jpg",
+    desc: "Iluminación neón especial en palmeras y sendero principal hacia las cabañas durante la noche."
   },
   {
     id: "finca-4",
-    title: "Palco VIP & Lounge Exclusivo",
-    category: "VIP",
-    url: "/images/finca/IMG_0242.jpg",
-    desc: "Terraza VIP cubierta con vista directa a la zona del show."
+    title: "Cancha Abierta & Zona de Escenario",
+    category: "Escenario",
+    url: "/images/finca/finca_4.jpg",
+    desc: "Gran explanada verde de césped natural para la producción de tarima principal, sonido y show láser."
   },
   {
     id: "finca-5",
-    title: "Zonas Verdes & Paisaje Cafetero",
-    category: "Naturaleza",
-    url: "/images/finca/IMG_0243.jpg",
-    desc: "Amplias áreas verdes naturales en Santa Rosa de Cabal, Risaralda."
+    title: "Salón de Juegos & Lounge Techado",
+    category: "VIP",
+    url: "/images/finca/finca_5.jpg",
+    desc: "Zona social y de entretenimiento con mesas de billar, tenis de mesa y espacio lounge cubierto."
   },
   {
     id: "finca-6",
-    title: "Parqueadero Privado Custodiado",
+    title: "Senderos Iluminados & Cabañas",
     category: "Acceso",
-    url: "/images/finca/IMG_0244.jpg",
-    desc: "Estacionamiento privado con control de acceso oficial en Finca Hotel Villa Luisa."
+    url: "/images/finca/finca_6.jpg",
+    desc: "Recorrido nocturno por senderos de adoquín rodeados de pinos y arquitectura campestre iluminada."
   }
 ];
 

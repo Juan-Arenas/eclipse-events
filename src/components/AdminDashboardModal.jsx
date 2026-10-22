@@ -33,7 +33,7 @@ export default function AdminDashboardModal({
     date: monthlyEvent?.date || '2026-11-28',
     time: monthlyEvent?.time || 'Hora por confirmar (Apertura 08:00 PM)',
     category: monthlyEvent?.category || 'Electrónica / Festival VIP',
-    image: monthlyEvent?.image || '/images/finca_main.jpg',
+    image: monthlyEvent?.image || '/images/finca/finca_1.jpg',
     lineupStr: monthlyEvent?.lineup ? monthlyEvent.lineup.join(', ') : 'ALEXANDER SKY, NEON PULSE, VALENTINA ROSS',
   });
 

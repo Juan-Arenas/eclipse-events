@@ -52,7 +52,9 @@ export const eventConfigService = {
       const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          parsed.image = fallbackEvent.image;
+          return parsed;
         } catch (e) {}
       }
     }
