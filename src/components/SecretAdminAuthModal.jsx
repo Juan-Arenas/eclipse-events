@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { X, Lock, ShieldAlert, Sparkles, KeyRound } from 'lucide-react';
 
 export default function SecretAdminAuthModal({ isOpen, onClose, onSuccessAuth }) {
-  if (!isOpen) return null;
-
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
+
+  if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();

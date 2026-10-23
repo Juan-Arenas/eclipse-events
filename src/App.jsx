@@ -48,6 +48,11 @@ export default function App() {
     return saved ? JSON.parse(saved) : 2;
   });
 
+  const [isDemoZeroMode, setIsDemoZeroMode] = useState(() => {
+    const saved = localStorage.getItem('eclipse_demo_zero_mode');
+    return saved !== null ? JSON.parse(saved) : false;
+  });
+
   const initialDefaultTickets = [
     {
       id: 'ECLIPSE-774921',
@@ -240,6 +245,7 @@ export default function App() {
           monthlyEvent={monthlyEvent}
           onSelectEvent={handleOpenPurchase}
           onOpenGallery={() => setIsGalleryOpen(true)}
+          isDemoZeroMode={isDemoZeroMode}
         />
 
         {/* 4. SEDE OFICIAL: FINCA HOTEL VILLA LUISA & CÓMO LLEGAR */}
@@ -271,6 +277,7 @@ export default function App() {
         onClose={() => setIsPurchaseModalOpen(false)}
         onTicketPurchased={handleTicketPurchased}
         currentSeatIndex={seatCounter}
+        isDemoZeroMode={isDemoZeroMode}
         tickets={tickets}
       />
 

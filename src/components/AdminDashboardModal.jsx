@@ -14,8 +14,6 @@ export default function AdminDashboardModal({
   setIsDemoZeroMode,
   openQRModal 
 }) {
-  if (!isOpen) return null;
-
   const [tab, setTab] = useState('manual_issue');
 
   const [manualData, setManualData] = useState({
@@ -161,6 +159,8 @@ export default function AdminDashboardModal({
     setSavedSuccess(true);
     setTimeout(() => setSavedSuccess(false), 3000);
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fade-in overflow-y-auto">
