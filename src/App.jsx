@@ -34,9 +34,8 @@ export default function App() {
       parsed.unlockedVenue = INITIAL_MONTHLY_EVENT.unlockedVenue;
       parsed.unlockedAddress = INITIAL_MONTHLY_EVENT.unlockedAddress;
       parsed.image = INITIAL_MONTHLY_EVENT.image;
-      if (!parsed.tiers || parsed.tiers.length < 3) {
-        parsed.tiers = INITIAL_MONTHLY_EVENT.tiers;
-      }
+      parsed.tiers = INITIAL_MONTHLY_EVENT.tiers;
+      parsed.priceMin = INITIAL_MONTHLY_EVENT.priceMin;
       return parsed;
     } catch (e) {
       return INITIAL_MONTHLY_EVENT;
@@ -233,14 +232,7 @@ export default function App() {
           tentativeTime="20:00"
         />
 
-        {/* 2. DISPONIBILIDAD REAL DE BOLETAS Y AFORO OFICIAL EN TIEMPO REAL */}
-        <TicketStockCounter
-          monthlyEvent={monthlyEvent}
-          tickets={tickets}
-          onSelectBuy={handleOpenPurchase}
-        />
-
-        {/* 3. CARTELERA DEL EVENTO Y COMPRA DE BOLETAS */}
+        {/* 2. CARTELERA DEL EVENTO Y COMPRA DE BOLETAS */}
         <EventBillboard
           monthlyEvent={monthlyEvent}
           onSelectEvent={handleOpenPurchase}

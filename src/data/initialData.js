@@ -20,8 +20,8 @@ export const INITIAL_MONTHLY_EVENT = {
   time: "Hora por confirmar (Apertura 08:00 PM)",
   timeStatus: "PENDIENTE_CONFIRMAR",
   category: "Festival / Neón VIP",
-  image: "/images/finca/finca_1.jpg",
-  priceMin: 25000,
+  image: "/images/flyer.jpeg",
+  priceMin: 32000,
   tags: ["EDICIÓN ESPECIAL NEÓN ⚡", "SÁBADO 28 DE NOVIEMBRE", "AFORO EXCLUSIVO LIMITADO"],
   description: "Prepárate para la experiencia más impresionante del año. Eclipse Events presenta su producción oficial en Finca Hotel Villa Luisa: sonido envolvente de alta fidelidad, show láser de última generación, piscina tropical, áreas sociales y palcos VIP.",
   lineup: ["DJs Invitados (Por Confirmar)", "Show Láser Neón", "Sonido Envolvente VIP", "Zona Experiencial"],
@@ -33,28 +33,28 @@ export const INITIAL_MONTHLY_EVENT = {
   tiers: [
     { 
       id: "sencilla", 
-      name: "Entrada Normal", 
-      priceNormal: 25000,
-      pricePromo: 20000,
-      price: 25000,
+      name: "General", 
+      priceNormal: 32000,
+      pricePromo: 32000,
+      price: 32000,
       quota: 300, 
       description: "Acceso general al evento y zonas comunes." 
     },
     { 
       id: "vip", 
-      name: "Entrada VIP", 
-      priceNormal: 35000,
-      pricePromo: 30000,
-      price: 35000,
+      name: "VIP + Eclipse drinks", 
+      priceNormal: 38000,
+      pricePromo: 38000,
+      price: 38000,
       quota: 100, 
-      description: "Acceso preferencial exclusivo y zona VIP." 
+      description: "Acceso preferencial exclusivo, zona VIP y Eclipse drinks." 
     },
     { 
       id: "2x1", 
-      name: "2x1 Mujeres", 
-      priceNormal: 40000,
-      pricePromo: 35000,
-      price: 40000,
+      name: "2x1 MUJERES", 
+      priceNormal: 39000,
+      pricePromo: 39000,
+      price: 39000,
       quota: 50, 
       description: "Ingreso para dos mujeres con una sola entrada." 
     }

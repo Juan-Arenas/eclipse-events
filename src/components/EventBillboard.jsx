@@ -80,25 +80,25 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs pt-1">
-                  {/* NORMAL */}
+                  {/* GENERAL */}
                   <div className="bg-black/60 p-2.5 rounded-xl border border-white/10 flex flex-col items-center text-center">
                     <Ticket className="w-4 h-4 text-slate-300 mb-1" />
-                    <span className="text-[10px] text-slate-400 block font-bold">ENTRADA NORMAL</span>
-                    <span className="text-xs text-white font-black mt-1">$25.000 COP</span>
+                    <span className="text-[10px] text-slate-400 block font-bold">GENERAL</span>
+                    <span className="text-xs text-white font-black mt-1">$32.000 COP</span>
                   </div>
 
-                  {/* VIP */}
+                  {/* VIP + ECLIPSE DRINKS */}
                   <div className="bg-black/60 p-2.5 rounded-xl border border-[#ff0033]/30 flex flex-col items-center text-center">
                     <Zap className="w-4 h-4 text-[#ff0033] mb-1" />
-                    <span className="text-[10px] text-[#ff0033] block font-bold">ENTRADA VIP</span>
-                    <span className="text-xs text-white font-black mt-1">$35.000 COP</span>
+                    <span className="text-[10px] text-[#ff0033] block font-bold">VIP + ECLIPSE DRINKS</span>
+                    <span className="text-xs text-white font-black mt-1">$38.000 COP</span>
                   </div>
 
                   {/* 2X1 MUJERES */}
                   <div className="bg-black/60 p-2.5 rounded-xl border border-pink-500/30 flex flex-col items-center text-center">
                     <Users className="w-4 h-4 text-pink-400 mb-1" />
                     <span className="text-[10px] text-pink-400 block font-bold">2x1 MUJERES</span>
-                    <span className="text-xs text-white font-black mt-1">$40.000 COP</span>
+                    <span className="text-xs text-white font-black mt-1">$39.000 COP</span>
                   </div>
                 </div>
               </div>

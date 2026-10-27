@@ -17,7 +17,7 @@ export default function TicketPurchaseModal({
   if (!isOpen || !event) return null;
 
   const [step, setStep] = useState(1); // 1: Tier, 2: Info & Payment, 3: Success
-  const [selectedTier, setSelectedTier] = useState(event.tiers?.[0] || { id: "sencilla", name: "Entrada Normal", priceNormal: 25000, pricePromo: 20000, price: 25000, quota: 300, description: "Acceso general al evento." });
+  const [selectedTier, setSelectedTier] = useState(event.tiers?.[0] || { id: "sencilla", name: "General", priceNormal: 32000, pricePromo: 32000, price: 32000, quota: 300, description: "Acceso general al evento." });
   const [quantity, setQuantity] = useState(1);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
