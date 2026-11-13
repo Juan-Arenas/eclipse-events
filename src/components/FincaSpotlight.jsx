@@ -26,23 +26,23 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
               </h3>
 
               <p className="text-slate-300 text-sm leading-relaxed">
-                Nuestra sede oficial en <strong>Finca Hotel Villa Luisa</strong> cuenta con amplias zonas verdes, arquitectura campestre de primer nivel, piscina tropical, show de luces láser y la logística ideal para la producción de eventos con aforo exclusivo.
+                Nuestra sede oficial en <strong>Finca Villa Amparo</strong> cuenta con amplias zonas verdes, arquitectura campestre de primer nivel, piscina con kiosko, terraza de billar panorámica, deck de hamacas y la logística ideal para la producción de eventos con aforo exclusivo.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white text-sm">Zonas Verdes</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Amplias áreas verdes y naturaleza en Santa Rosa de Cabal.</p>
+                    <h4 className="font-bold text-white text-sm">Zonas Verdes & Mirador</h4>
+                    <p className="text-xs text-slate-400 mt-0.5">Amplios jardines naturales, mirador y entorno campestre en Santa Rosa de Cabal.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 bg-white/5 p-4 rounded-xl border border-white/10">
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white text-sm">Piscina</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Piscina campestre rodeada de naturaleza y áreas de descanso.</p>
+                    <h4 className="font-bold text-white text-sm">Piscina Campestre</h4>
+                    <p className="text-xs text-slate-400 mt-0.5">Piscina con tobogán, kiosko techado y áreas de integración al aire libre.</p>
                   </div>
                 </div>
 
@@ -50,7 +50,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                   <CheckCircle2 className="w-5 h-5 text-[#ff0033] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold text-white text-sm">Áreas Sociales & VIP</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">Espacios de esparcimiento, palcos y áreas lounge exclusivas.</p>
+                    <p className="text-xs text-slate-400 mt-0.5">Salón de juegos con billar panorámico y deck cubierto de hamacas.</p>
                   </div>
                 </div>
 
@@ -78,7 +78,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                 </div>
                 
                 <h4 className="font-heading font-black text-xl text-white mb-2">
-                  Finca Hotel Villa Luisa
+                  Finca Villa Amparo
                 </h4>
 
                 <p className="text-slate-300 text-xs leading-relaxed mb-4">
@@ -90,7 +90,7 @@ export default function FincaSpotlight({ onOpenGallery, onSelectEvent }) {
                     <Navigation className="w-3.5 h-3.5 text-emerald-400" /> Dirección Verificada:
                   </p>
                   <p className="text-[11px] text-slate-300 font-medium">
-                    📍 Vereda El Lembo, Santa Rosa de Cabal, Risaralda, Colombia.
+                    📍 Finca Villa Amparo, Santa Rosa de Cabal, Risaralda, Colombia.
                   </p>
                   <p className="text-[10px] text-slate-400 pt-1">
                     Fácil acceso para vehículos particulares y transporte privado con vigilancia oficial.

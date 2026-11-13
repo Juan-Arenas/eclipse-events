@@ -1,4 +1,5 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { GOOGLE_MAPS_LINK } from '../data/initialData';
 
 const CONFIG_RECORD_ID = 'ECLIPSE_GLOBAL_EVENT_CONFIG';
 const LOCAL_STORAGE_KEY = 'eclipse_monthly_event';
@@ -88,9 +89,9 @@ export const eventConfigService = {
           event_title: eventData.title || 'ECLIPSE FESTIVAL 2026',
           event_date: eventData.date || '2026-11-28',
           event_time: eventData.time || 'Hora por confirmar (Apertura 08:00 PM)',
-          venue: eventData.venue || 'Finca Hotel Villa Luisa',
-          full_address: eventData.unlockedAddress || 'Vereda El Lembo, Santa Rosa de Cabal, Risaralda',
-          maps_url: 'https://maps.app.goo.gl/h8N3erdc6PaDp6gy8?g_st=iw',
+          venue: eventData.venue || 'Finca Villa Amparo',
+          full_address: eventData.unlockedAddress || 'Finca Villa Amparo, Santa Rosa de Cabal, Risaralda',
+          maps_url: eventData.mapsUrl || GOOGLE_MAPS_LINK,
           tier_name: 'CONFIG',
           tier_description: JSON.stringify({
             lineup: eventData.lineup || [],
@@ -99,10 +100,10 @@ export const eventConfigService = {
             date: eventData.date,
             time: eventData.time,
             category: eventData.category,
-            venue: eventData.venue,
-            unlockedVenue: eventData.unlockedVenue,
-            unlockedAddress: eventData.unlockedAddress,
-            mapsUrl: 'https://maps.app.goo.gl/h8N3erdc6PaDp6gy8?g_st=iw'
+            venue: eventData.venue || 'Finca Villa Amparo',
+            unlockedVenue: eventData.unlockedVenue || 'Finca Villa Amparo',
+            unlockedAddress: eventData.unlockedAddress || 'Finca Villa Amparo, Santa Rosa de Cabal, Risaralda',
+            mapsUrl: eventData.mapsUrl || GOOGLE_MAPS_LINK
           }),
           quantity: 0,
           total_price: 0,

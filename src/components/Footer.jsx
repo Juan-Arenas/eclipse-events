@@ -77,9 +77,9 @@ export default function Footer({ onNavigate, onOpenGallery, openQRModal }) {
             <h4 className="font-heading font-bold text-white text-sm uppercase tracking-wider mb-4">Ubicación del Evento</h4>
             <div className="space-y-2 text-xs text-slate-400">
               <p className="text-white font-semibold flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Finca Hotel Villa Luisa
+                <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> Finca Villa Amparo
               </p>
-              <p>📍 Sede oficial: Vereda El Lembo, Santa Rosa de Cabal, Risaralda. Fácil acceso y parqueadero privado custodiado.</p>
+              <p>📍 Sede oficial: Finca Villa Amparo, Santa Rosa de Cabal, Risaralda. Fácil acceso y parqueadero privado custodiado.</p>
               <a 
                 href={GOOGLE_MAPS_LINK} 
                 target="_blank" 

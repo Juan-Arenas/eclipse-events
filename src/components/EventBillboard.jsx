@@ -48,7 +48,7 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
                 </p>
                 <p className="text-xs text-slate-300 mt-1 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#ff0033]" />
-                  {monthlyEvent.venue || "Finca Hotel Villa Luisa"}
+                  {monthlyEvent.venue || "Finca Villa Amparo"}
                 </p>
               </div>
             </div>
@@ -125,14 +125,14 @@ export default function EventBillboard({ monthlyEvent, onSelectEvent, onOpenGall
               <div className="bg-white/5 p-4 rounded-2xl border border-white/10 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-white text-xs flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> {monthlyEvent.venue || "Finca Hotel Villa Luisa"}
+                    <MapPin className="w-3.5 h-3.5 text-[#ff0033]" /> {monthlyEvent.venue || "Finca Villa Amparo"}
                   </span>
                   <span className="text-[10px] text-emerald-400 font-bold uppercase bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
                     Sede Oficial
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-300">
-                  📍 {monthlyEvent.unlockedAddress || "Vereda El Lembo, Santa Rosa de Cabal, Risaralda"}
+                  📍 {monthlyEvent.unlockedAddress || "Finca Villa Amparo, Santa Rosa de Cabal, Risaralda"}
                 </p>
                 <div className="pt-1 flex flex-wrap items-center gap-2">
                   <a 

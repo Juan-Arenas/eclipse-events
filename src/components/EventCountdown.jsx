@@ -94,7 +94,7 @@ export default function EventCountdown({ targetDate = "2026-11-28", tentativeTim
                 ¡EL EVENTO HA COMENZADO!
               </h3>
               <p className="text-slate-200 text-sm max-w-md mx-auto">
-                Las puertas de Finca Hotel Villa Luisa están abiertas. Presenta tu entrada digital en portería.
+                Las puertas de Finca Villa Amparo están abiertas. Presenta tu entrada digital en portería.
               </p>
             </div>
           ) : timeLeft.status === 'ENDED' ? (

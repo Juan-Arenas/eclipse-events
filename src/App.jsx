@@ -62,8 +62,8 @@ export default function App() {
       eventTitle: 'ECLIPSE FESTIVAL 2026',
       eventDate: 'Sábado, 28 de Noviembre, 2026',
       eventTime: 'Hora por confirmar (Apertura 08:00 PM)',
-      venue: 'Finca Hotel Villa Luisa',
-      fullAddress: 'Vereda El Lembo, Santa Rosa de Cabal, Risaralda',
+      venue: 'Finca Villa Amparo',
+      fullAddress: 'Finca Villa Amparo, Santa Rosa de Cabal, Risaralda',
       mapsUrl: GOOGLE_MAPS_LINK,
       tierName: 'Boleta VIP',
       tierDescription: 'Acceso preferencial + Eclipse Drinks Adicional incluido.',
@@ -82,8 +82,8 @@ export default function App() {
     const raw = saved ? JSON.parse(saved) : initialDefaultTickets;
     return raw.map(t => ({
       ...t,
-      venue: 'Finca Hotel Villa Luisa',
-      fullAddress: 'Vereda El Lembo, Santa Rosa de Cabal, Risaralda',
+      venue: 'Finca Villa Amparo',
+      fullAddress: 'Finca Villa Amparo, Santa Rosa de Cabal, Risaralda',
       mapsUrl: GOOGLE_MAPS_LINK
     }));
   });
@@ -240,7 +240,7 @@ export default function App() {
           isDemoZeroMode={isDemoZeroMode}
         />
 
-        {/* 4. SEDE OFICIAL: FINCA HOTEL VILLA LUISA & CÓMO LLEGAR */}
+        {/* 4. SEDE OFICIAL: FINCA VILLA AMPARO & CÓMO LLEGAR */}
         <FincaSpotlight
           onOpenGallery={() => setIsGalleryOpen(true)}
           onSelectEvent={handleOpenPurchase}
