@@ -9,10 +9,10 @@ export default function DigitalTicketPass({ ticket, onOpenGallery }) {
 
   return (
     <div className="relative max-w-sm sm:max-w-md mx-auto my-4 text-left font-sans animate-fade-in select-none">
-      
+
       {/* Outer Glow & Metallic Container (Classic Ticket Stub from TIKET 2.webp) */}
       <div className="relative bg-gradient-to-b from-[#181826] via-[#0c0c14] to-[#141422] border-2 border-[#ff0033]/60 rounded-[32px] p-6 sm:p-7 shadow-[0_0_50px_rgba(255,0,51,0.35)] overflow-hidden">
-        
+
         {/* Ticket Side Stub Cutouts */}
         <div className="absolute top-[48%] -left-4 -translate-y-1/2 w-8 h-8 rounded-full bg-[#07070a] border-r-2 border-[#ff0033]/60 z-20"></div>
         <div className="absolute top-[48%] -right-4 -translate-y-1/2 w-8 h-8 rounded-full bg-[#07070a] border-l-2 border-[#ff0033]/60 z-20"></div>
@@ -48,11 +48,10 @@ export default function DigitalTicketPass({ ticket, onOpenGallery }) {
               <CheckCircle2 className="w-3 h-3" /> CONFIRMADA
             </span>
 
-            <span className={`px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
-              isVip
-                ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.7)]'
-                : 'bg-white/10 text-slate-200 border border-white/20'
-            }`}>
+            <span className={`px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${isVip
+              ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.7)]'
+              : 'bg-white/10 text-slate-200 border border-white/20'
+              }`}>
               {ticket.tierName || "Boleta General"}
             </span>
           </div>
@@ -90,28 +89,28 @@ export default function DigitalTicketPass({ ticket, onOpenGallery }) {
 
         {/* 2. CENTER SECTION (LA MITAD): HERO CENTERED QR CODE STUB */}
         <div className="relative border-y-2 border-dashed border-white/20 my-4 py-5 text-center">
-          
+
           <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block mb-2 font-bold">
             ⚡ CÓDIGO QR DE ACCESO A PUERTA ⚡
           </span>
 
           {/* Glowing QR Card Box */}
           <div className="relative bg-white p-4 rounded-3xl inline-block text-center shadow-[0_0_35px_rgba(255,255,255,0.15)] border-4 border-slate-900 overflow-hidden">
-            
+
             {ticket.status === 'USADA' && (
               <div className="absolute inset-0 bg-red-950/90 backdrop-blur-xs z-30 flex flex-col items-center justify-center p-3 animate-fade-in border-4 border-red-600">
                 <span className="px-3 py-1.5 bg-red-600 text-white font-black text-xs uppercase tracking-widest rounded-lg shadow-xl rotate-[-6deg]">
                   ⚠️ BOLETA DAÑADA / CONSUMIDA
                 </span>
                 <p className="text-[10px] font-mono text-red-200 mt-2 font-bold text-center">
-                  INGRESADO EN PUERTA <br/>
+                  INGRESADO EN PUERTA <br />
                   {ticket.usedTimestamp || 'ACCESO REGISTRADO'}
                 </p>
               </div>
             )}
 
             <div className="p-2 bg-[#f8fafc] rounded-2xl inline-block border border-slate-300 shadow-inner">
-              <QRCodeSVG 
+              <QRCodeSVG
                 value={ticket.qrHash}
                 size={175}
                 level="H"

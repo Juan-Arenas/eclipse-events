@@ -25,6 +25,11 @@ export const eventConfigService = {
 
         if (!error && data && data.tier_description) {
           const parsed = JSON.parse(data.tier_description);
+          const venue = (parsed.venue && !parsed.venue.includes('Villa Luisa')) ? parsed.venue : fallbackEvent.venue;
+          const unlockedVenue = (parsed.unlockedVenue && !parsed.unlockedVenue.includes('Villa Luisa')) ? parsed.unlockedVenue : fallbackEvent.unlockedVenue;
+          const unlockedAddress = (parsed.unlockedAddress && !parsed.unlockedAddress.includes('Lembo')) ? parsed.unlockedAddress : fallbackEvent.unlockedAddress;
+          const mapsUrl = (parsed.mapsUrl && !parsed.mapsUrl.includes('h8N3erdc')) ? parsed.mapsUrl : fallbackEvent.mapsUrl;
+
           const merged = {
             ...fallbackEvent,
             lineup: parsed.lineup || fallbackEvent.lineup,
@@ -33,10 +38,10 @@ export const eventConfigService = {
             date: parsed.date || fallbackEvent.date,
             time: parsed.time || fallbackEvent.time,
             category: parsed.category || fallbackEvent.category,
-            venue: parsed.venue || fallbackEvent.venue,
-            unlockedVenue: parsed.unlockedVenue || fallbackEvent.unlockedVenue,
-            unlockedAddress: parsed.unlockedAddress || fallbackEvent.unlockedAddress,
-            mapsUrl: parsed.mapsUrl || fallbackEvent.mapsUrl,
+            venue: venue,
+            unlockedVenue: unlockedVenue,
+            unlockedAddress: unlockedAddress,
+            mapsUrl: mapsUrl,
           };
 
           if (typeof window !== 'undefined') {
@@ -54,6 +59,13 @@ export const eventConfigService = {
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
+          if (parsed.venue && parsed.venue.includes('Villa Luisa')) {
+            parsed.venue = fallbackEvent.venue;
+            parsed.unlockedVenue = fallbackEvent.unlockedVenue;
+            parsed.unlockedAddress = fallbackEvent.unlockedAddress;
+            parsed.mapsUrl = fallbackEvent.mapsUrl;
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsed));
+          }
           parsed.image = fallbackEvent.image;
           return parsed;
         } catch (e) {}

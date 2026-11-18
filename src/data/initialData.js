@@ -31,32 +31,32 @@ export const INITIAL_MONTHLY_EVENT = {
     remainingStock: 14,
   },
   tiers: [
-    { 
-      id: "sencilla", 
-      name: "General", 
+    {
+      id: "sencilla",
+      name: "General",
       priceNormal: 32000,
       pricePromo: 32000,
       price: 32000,
-      quota: 300, 
-      description: "Acceso general al evento y zonas comunes." 
+      quota: 300,
+      description: "Acceso general al evento y zonas comunes."
     },
-    { 
-      id: "vip", 
-      name: "VIP + Eclipse drinks", 
+    {
+      id: "vip",
+      name: "VIP + Eclipse drinks",
       priceNormal: 38000,
       pricePromo: 38000,
       price: 38000,
-      quota: 100, 
-      description: "Acceso preferencial exclusivo, zona VIP y Eclipse drinks." 
+      quota: 100,
+      description: "Acceso preferencial exclusivo, zona VIP y Eclipse drinks."
     },
-    { 
-      id: "2x1", 
-      name: "2x1 MUJERES", 
+    {
+      id: "2x1",
+      name: "2x1 MUJERES",
       priceNormal: 39000,
       pricePromo: 39000,
       price: 39000,
-      quota: 50, 
-      description: "Ingreso para dos mujeres con una sola entrada." 
+      quota: 50,
+      description: "Ingreso para dos mujeres con una sola entrada."
     }
   ]
 };

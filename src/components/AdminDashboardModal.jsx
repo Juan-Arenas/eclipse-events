@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { X, LayoutDashboard, Edit3, PlusCircle, CheckCircle2, QrCode, Zap, ToggleLeft, ToggleRight, Music, Trash2, Plus } from 'lucide-react';
 import { GOOGLE_MAPS_LINK } from '../data/initialData';
 
-export default function AdminDashboardModal({ 
-  isOpen, 
-  onClose, 
-  monthlyEvent, 
-  onUpdateMonthlyEvent, 
+export default function AdminDashboardModal({
+  isOpen,
+  onClose,
+  monthlyEvent,
+  onUpdateMonthlyEvent,
   tickets,
   onTicketPurchased,
   currentSeatIndex,
   isDemoZeroMode,
   setIsDemoZeroMode,
-  openQRModal 
+  openQRModal
 }) {
   const [tab, setTab] = useState('manual_issue');
 
@@ -165,7 +165,7 @@ export default function AdminDashboardModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fade-in overflow-y-auto">
       <div className="relative w-full max-w-4xl max-h-[90vh] bg-[#0c0c14] border border-white/20 rounded-3xl overflow-hidden shadow-2xl flex flex-col my-8">
-        
+
         {/* Header */}
         <div className="p-6 border-b border-white/10 bg-black/50 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -219,36 +219,32 @@ export default function AdminDashboardModal({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setTab('manual_issue')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${
-                tab === 'manual_issue' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${tab === 'manual_issue' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
+                }`}
             >
               <PlusCircle className="w-4 h-4" /> Emitir Boleta Manual
             </button>
 
             <button
               onClick={() => setTab('edit_event')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${
-                tab === 'edit_event' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${tab === 'edit_event' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
+                }`}
             >
               <Edit3 className="w-4 h-4" /> Editar Evento
             </button>
 
             <button
               onClick={() => setTab('artists')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${
-                tab === 'artists' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-1.5 ${tab === 'artists' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
+                }`}
             >
               <Music className="w-4 h-4" /> DJs & Artistas
             </button>
 
             <button
               onClick={() => setTab('metrics')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all ${
-                tab === 'metrics' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
-              }`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all ${tab === 'metrics' ? 'bg-[#ff0033] text-white shadow-[0_0_12px_rgba(255,0,51,0.5)]' : 'text-slate-300 hover:bg-white/10'
+                }`}
             >
               Boletas ({tickets.length})
             </button>
@@ -265,11 +261,11 @@ export default function AdminDashboardModal({
 
         {/* Tab Body */}
         <div className="p-6 sm:p-8 overflow-y-auto flex-1">
-          
+
           {/* TAB 1: MANUAL ISSUE */}
           {tab === 'manual_issue' && (
             <div className="space-y-6">
-              
+
               {issuedSuccess && (
                 <div className="p-5 rounded-2xl bg-emerald-500/20 border border-emerald-500 text-slate-100 space-y-2 animate-fade-in">
                   <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
@@ -511,9 +507,8 @@ export default function AdminDashboardModal({
                           <td className="p-3">{t.holderDni}</td>
                           <td className="p-3 text-white font-bold">{t.tierName}</td>
                           <td className="p-3">
-                            <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
-                              t.status === 'VALIDA' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
-                            }`}>
+                            <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${t.status === 'VALIDA' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'
+                              }`}>
                               {t.status}
                             </span>
                           </td>

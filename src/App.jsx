@@ -111,6 +111,10 @@ export default function App() {
         setMonthlyEvent(prev => ({
           ...prev,
           ...config,
+          venue: (config.venue && !config.venue.includes('Villa Luisa')) ? config.venue : INITIAL_MONTHLY_EVENT.venue,
+          unlockedVenue: (config.unlockedVenue && !config.unlockedVenue.includes('Villa Luisa')) ? config.unlockedVenue : INITIAL_MONTHLY_EVENT.unlockedVenue,
+          unlockedAddress: (config.unlockedAddress && !config.unlockedAddress.includes('Lembo')) ? config.unlockedAddress : INITIAL_MONTHLY_EVENT.unlockedAddress,
+          mapsUrl: (config.mapsUrl && !config.mapsUrl.includes('h8N3erdc')) ? config.mapsUrl : INITIAL_MONTHLY_EVENT.mapsUrl,
           image: (config.image && !config.image.includes('IMG_0239')) ? config.image : INITIAL_MONTHLY_EVENT.image,
           lineup: config.lineup || prev.lineup
         }));
@@ -122,6 +126,10 @@ export default function App() {
       setMonthlyEvent(prev => ({
         ...prev,
         ...updated,
+        venue: (updated.venue && !updated.venue.includes('Villa Luisa')) ? updated.venue : INITIAL_MONTHLY_EVENT.venue,
+        unlockedVenue: (updated.unlockedVenue && !updated.unlockedVenue.includes('Villa Luisa')) ? updated.unlockedVenue : INITIAL_MONTHLY_EVENT.unlockedVenue,
+        unlockedAddress: (updated.unlockedAddress && !updated.unlockedAddress.includes('Lembo')) ? updated.unlockedAddress : INITIAL_MONTHLY_EVENT.unlockedAddress,
+        mapsUrl: (updated.mapsUrl && !updated.mapsUrl.includes('h8N3erdc')) ? updated.mapsUrl : INITIAL_MONTHLY_EVENT.mapsUrl,
         lineup: updated.lineup || prev.lineup
       }));
     });
